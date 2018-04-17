@@ -7,6 +7,9 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { push } from 'react-router-redux';
+import * as noticeDialogActions from '../../data/noticeDialog/actions';
+import * as signUpActions from './data/signUp/actions';
+import * as authActions from '../../data/auth/actions';
 import Layout from './components/Layout';
 import Form from './components/Form';
 import Terms from './components/Terms';
@@ -15,11 +18,37 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      view: 'form',
+      view: 'terms',
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.open && nextProps.open) {
+      this.setState({
+        view: 'terms',
+      });
+    }
+  }
+  handleSignUp = (data) => {
+    this.props.signUpRequest(data)
+      .then(() => {
+        if (this.props.signUp.status === 'FAILURE') {
+          throw this.props.signUp.error;
+        } else {
+          this.props.noticeDialogOn('가입을 환영합니다.');
+          this.props.onClose();
+          this.props.authRequest();
+        }
+      })
+      .catch((error) => {
+        this.props.noticeDialogOn(error);
+      })
+  };
   render() {
-    const { open, onClose } = this.props;
+    const {
+      open,
+      onClose,
+      noticeDialogOn,
+    } = this.props;
     const { view } = this.state;
     return (
       <Layout
@@ -28,17 +57,26 @@ class SignUp extends React.Component {
       >
         {
           view === 'terms' ?
-            <Terms/> : <Form/>
+            <Terms
+              handleNext={() => this.setState({
+                view: 'form',
+              })}
+            /> : <Form
+              handleError={noticeDialogOn}
+              handleSubmit={this.handleSignUp}
+            />
         }
       </Layout>
     );
   }
 }
 const mapStateToProps = state => ({
-  state,
+  signUp: state.SignUp.data.signUp,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
-  changePage: path => push(path),
+  noticeDialogOn: noticeDialogActions.on,
+  signUpRequest: signUpActions.request,
+  authRequest: authActions.request,
 }, dispatch);
 export default withRouter(connect(
   mapStateToProps,

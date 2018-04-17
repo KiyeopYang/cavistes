@@ -12,14 +12,14 @@ export default function({ host, path, fetchOptions, options = {} }) {
     let customHeaders;
     const autoAuth = hasProperty(options, 'autoAuth') && options.autoAuth;
     if (autoAuth) {
-      const apiKey = cookie.get('apiKey');
-      const Authorization = `Bearer ${apiKey}`;
+      const token = cookie.get('token');
+      const Authorization = `Bearer ${token}`;
       if (fetchOptions && fetchOptions.headers) {
         customHeaders = update(fetchOptions.headers, { Authorization });
       } else {
         customHeaders = { Authorization };
       }
-      if (!apiKey) {
+      if (!token) {
         return reject({ message: 'API KEY NOT FOUND' });
       }
     }

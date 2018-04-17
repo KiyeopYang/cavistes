@@ -1,5 +1,6 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
+import Typography from 'material-ui/Typography';
 import Block from './components/Block';
 import EventCalendar from '../../../../components/EventCalendar';
 import LocationMap from '../../../../components/LocationMap';
@@ -25,6 +26,13 @@ class Content extends React.Component {
           className={classes.calendar}
         />
         <Block
+          title="일시"
+          text={`2018년 4월 1일 오후 7시 30분
+          2018년 4월 8일 오후 7시 30분
+          2018년 4월 15일 오후 7시 30분
+          2018년 4월 22일 오후 7시 30분`}
+        />
+        <Block
           title="모임 소개"
           text={`와인 문화 공간 카비시트에서 와인 중급 강좌 3기를 모집합니다.
           강좌는 2회로 이루어지며 프랑스의 각 와인 산지, 세계의 유명한 와인 산지들에 대해 배우고 각 산지의 명품 와인에 대해 듣는 시간을 마련하였습니다.
@@ -40,13 +48,6 @@ class Content extends React.Component {
           Chateau Haut Bailly 2011
           Chateau Haut Bailly 2013
           Chateau Haut Bailly 2018`}
-        />
-        <Block
-          title="일시"
-          text={`2018년 2월 21일 오후 7시 30분
-          2018년 2월 21일 오후 7시 30분
-          2018년 2월 21일 오후 7시 30분
-          2018년 2월 21일 오후 7시 30분`}
         />
         <Block
           title="가격"
@@ -78,6 +79,12 @@ class Content extends React.Component {
           <ul>
             <li>주차 가능</li>
           </ul>
+        </Block>
+        <Block
+          title="문의"
+        >
+          <Typography><strong>전화번호</strong> : 02-622-2222</Typography>
+          <Typography><strong>이메일</strong> : kiyeopyang@gmail.com</Typography>
         </Block>
       </div>
     )

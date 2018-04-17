@@ -9,6 +9,7 @@ import {
 import { push } from 'react-router-redux';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
+import { Element } from 'react-scroll';
 import EventCalendarModal from '../../components/EventCalendarModal';
 import Layout from '../../components/Layout';
 import Title from './components/Title';
@@ -33,18 +34,31 @@ class Main extends React.Component {
     this.props.push('/detail');
   };
   render() {
-    const { isModalOpen, selectedEvent } = this.state;
+    const {
+      auth,
+    } = this.props;
+    const {
+      isModalOpen,
+      selectedEvent,
+    } = this.state;
+    const managerMode = auth.account && auth.account.type === 'manager';
     return (
       <div>
         <Layout>
-          <Title/>
-          <Events
-            handleCalendar={this.handleCalendar}
-            handleClick={this.handleEventClick}
-          />
+          <Element name="about">
+            <Title managerMode={managerMode} />
+          </Element>
+          <Element name="event">
+            <Events
+              handleCalendar={this.handleCalendar}
+              handleClick={this.handleEventClick}
+            />
+          </Element>
           <More />
         </Layout>
-        <Contact/>
+        <Element name="contact">
+          <Contact/>
+        </Element>
         <EventCalendarModal
           selectedEvent={selectedEvent}
           open={isModalOpen}
@@ -55,7 +69,7 @@ class Main extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  state,
+  auth: state.data.auth,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,

@@ -26,6 +26,15 @@ class LocationMapFinder extends React.Component {
       locationDetailStringInput: '',
     };
   }
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.open && nextProps.open) {
+      this.setState({
+        locationStringInput: '',
+        locationString: '',
+        locationDetailStringInput: '',
+      });
+    }
+  }
   handleChange = name => (e) => {
     this.setState({
       [name]: e.target.value,
@@ -82,6 +91,14 @@ class LocationMapFinder extends React.Component {
             {
               locationString !== '' ?
                 <Fragment>
+                  <Typography
+                    gutterBottom
+                    align="center"
+                  >
+                    <strong>
+                    아래 지도에서의 위치를 반드시 확인 부탁드립니다.
+                    </strong>
+                  </Typography>
                   <LocationMap
                     string={locationString}
                     styles={{

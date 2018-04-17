@@ -10,16 +10,16 @@ import {
 const { Strategy } = HttpBearer;
 
 // PASSPORT SETTING
-passport.use(new Strategy(async (apiKey, cb) => {
+passport.use(new Strategy(async (token, cb) => {
   try {
-    const account = await Account.findOne({ apiKey }).lean().exec();
+    const account = await Account.findOne({ token }).lean().exec();
     if (!account) {
-      cb(null, { unauthorized: true });
+      cb(null, null);
     } else {
       cb(null, fromMongo(account));
     }
   } catch (error) {
-    cb(null, { unauthorized: true });
+    cb(null, null);
   }
 }));
 

@@ -181,7 +181,10 @@ class Terms extends React.Component {
     this.setState({ [name]: event.target.checked });
   };
   render() {
-    const { classes }  = this.props;
+    const {
+      classes,
+      handleNext,
+    }  = this.props;
     const {
       isFirstChecked,
       isSecondChecked,
@@ -230,6 +233,7 @@ class Terms extends React.Component {
           variant="raised"
           size="large"
           disabled={!isFirstChecked || !isSecondChecked}
+          onClick={handleNext}
         >
           확인
         </Button>

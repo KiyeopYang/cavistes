@@ -64,6 +64,9 @@ const styles = theme => ({
     marginTop: 16,
   },
 });
+const BANKS = [
+  '국민은행', '신한은행', '기업은행', '우리은행', '농협', '스탠다드차타드', '하나은행',
+];
 class Form extends React.Component {
   constructor(props) {
     super(props);
@@ -88,11 +91,68 @@ class Form extends React.Component {
       shopLocation: '',
       shopLocationDetail: '',
       shopPhone: '',
+      shopAccountBank: '',
+      shopAccountNumber: '',
+      shopAccountName: '',
       isLocationMapFinderOpen: false,
     };
   }
   handleChange = name => event => {
     this.setState({ [name]: event.target.value });
+  };
+  disabled = () => {
+    const {
+      password,
+      passwordCheck,
+      email,
+      name,
+      phone,
+    } = this.state;
+    return (
+      password.length < 8 ||
+      password !== passwordCheck ||
+      email.length < 1 ||
+      name.length < 1 ||
+      phone.length < 1
+    );
+  };
+  handleSubmit = () => {
+    const {
+      type,
+      email,
+      password,
+      name,
+      phone,
+      gender,
+      birthYear,
+      birthMonth,
+      birthDate,
+      shopName,
+      shopLocation,
+      shopLocationDetail,
+      shopPhone,
+      shopAccountBank,
+      shopAccountNumber,
+      shopAccountName,
+    } = this.state;
+    this.props.handleSubmit({
+      email,
+      password,
+      name,
+      phone,
+      gender,
+      birth: new Date(birthYear, birthMonth, birthDate),
+      type,
+      shop: type === 'shop' ? {
+        name: shopName,
+        location: shopLocation,
+        locationDetail: shopLocationDetail,
+        phone: shopPhone,
+        accountBank: shopAccountBank,
+        accountNumber: shopAccountNumber,
+        accountName: shopAccountName,
+      } : null,
+    });
   };
   render() {
     const { classes }  = this.props;
@@ -113,6 +173,9 @@ class Form extends React.Component {
       shopPhone,
       shopLocation,
       shopLocationDetail,
+      shopAccountBank,
+      shopAccountNumber,
+      shopAccountName,
       isLocationMapFinderOpen,
     } = this.state;
 
@@ -179,7 +242,12 @@ class Form extends React.Component {
             margin="dense"
           >
             <InputLabel htmlFor="email">이메일</InputLabel>
-            <Input id="email" value={email} onChange={this.handleChange('email')} />
+            <Input
+              id="email"
+              value={email}
+              onChange={this.handleChange('email')}
+              type="email"
+            />
           </FormControl>
           <div className={classes.wrapperOfTwoForm}>
             <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
@@ -188,8 +256,13 @@ class Form extends React.Component {
                 margin="dense"
                 fullWidth
               >
-                <InputLabel htmlFor="password">비밀번호</InputLabel>
-                <Input id="password" value={password} onChange={this.handleChange('password')} />
+                <InputLabel htmlFor="password">비밀번호 (8자 이상)</InputLabel>
+                <Input
+                  id="password"
+                  value={password}
+                  onChange={this.handleChange('password')}
+                  type="password"
+                />
               </FormControl>
             </div>
             <div className={classNames(classes.rightOfTwoForm, classes.oneOfTwoForm)}>
@@ -199,7 +272,12 @@ class Form extends React.Component {
                 fullWidth
               >
                 <InputLabel htmlFor="passwordCheck">비밀번호 확인</InputLabel>
-                <Input id="passwordCheck" value={passwordCheck} onChange={this.handleChange('passwordCheck')} />
+                <Input
+                  id="passwordCheck"
+                  value={passwordCheck}
+                  onChange={this.handleChange('passwordCheck')}
+                  type="password"
+                />
               </FormControl>
             </div>
           </div>
@@ -373,6 +451,50 @@ class Form extends React.Component {
                     disabled={shopLocation === ''}
                   />
                 </FormControl>
+                <FormControl
+                  required
+                  fullWidth
+                  margin="dense"
+                >
+                  <InputLabel htmlFor="shopAccountBank">은행명</InputLabel>
+                  <Select
+                    onChange={this.handleChange('shopAccountBank')}
+                    native
+                    value={shopAccountBank}
+                    input={<Input id="shopAccountBank" />}
+                  >
+                    <option value="" />
+                    {
+                      BANKS.map(v => (
+                        <option key={v} value={v}>{v}</option>
+                      ))
+                    }
+                  </Select>
+                </FormControl>
+                <FormControl
+                  required
+                  fullWidth
+                  margin="dense"
+                >
+                  <InputLabel htmlFor="shopAccountNumber">입금 계좌번호</InputLabel>
+                  <Input
+                    id="shopAccountNumber"
+                    value={shopAccountNumber}
+                    onChange={this.handleChange('shopAccountNumber')}
+                  />
+                </FormControl>
+                <FormControl
+                  required
+                  fullWidth
+                  margin="dense"
+                >
+                  <InputLabel htmlFor="shopAccountName">예금주</InputLabel>
+                  <Input
+                    id="shopAccountName"
+                    value={shopAccountName}
+                    onChange={this.handleChange('shopAccountName')}
+                  />
+                </FormControl>
                 <LocationMapFinder
                   open={isLocationMapFinderOpen}
                   onClose={() => this.setState({
@@ -391,6 +513,8 @@ class Form extends React.Component {
             variant="raised"
             size="large"
             fullWidth
+            disabled={this.disabled()}
+            onClick={this.handleSubmit}
           >
             가입
           </Button>

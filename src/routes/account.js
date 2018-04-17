@@ -2,6 +2,7 @@ import express from 'express';
 import passport from 'passport';
 import mongoose from 'mongoose';
 import { Account } from '../models';
+import { fromMongo } from '../lib/dbConnector';
 
 const router = express.Router();
 
@@ -11,7 +12,7 @@ router.get(
   (req, res) => {
     if (!req.user) {
       res.clearCookie('account');
-      return res.status(400).json({ message: 'LOGIN AGAIN' });
+      return res.status(400).json({ message: '다시 로그인하십시요.' });
     }
     return res.json({ account: req.user });
   },
@@ -25,21 +26,22 @@ router.post(
     }).exec();
     query.then(async (result) => {
       if (!result) {
-        res.status(400).json({ message: 'not good' });
+        res.status(400).json({ message: '이메일 정보가 없습니다.' });
       } else {
         const valid = await result.passwordIsValid(password);
         if (valid) {
           const account = result.toObject();
           delete account.password;
-          res.cookie('account', account.token);
-          res.json(account);
+          res.json({
+            token: account.token,
+          });
         } else {
-          res.status(400).json({ message: 'not good' });
+          res.status(400).json({ message: '패스워드가 맞지 않습니다.' });
         }
       }
     })
       .catch((error) => {
-        res.status(400).json({ message: 'no User' });
+        res.status(400).json({ message: '오류가 있습니다.' });
         throw error;
       });
   },
@@ -47,85 +49,39 @@ router.post(
 router.post(
   '/',
   (req, res) => {
-    const { email, password } = req.body;
-    const query = new Account({
-      email,
-      password,
-      token: new mongoose.Types.ObjectId(),
-    }).save();
+    const { body } = req;
+    body.token = new mongoose.Types.ObjectId();
+    const query = new Account(body).save();
     query
+      .then(() => res.json({
+        token: body.token,
+        success: true,
+      }))
+      .catch((error) => {
+        res.status(400).json({
+          message: '중복된 계정이 있거나 에러가 있습니다.',
+        });
+        throw error;
+      });
+  },
+);
+router.put(
+  '/',
+  passport.authenticate('bearer', { session: false }),
+  (req, res) => {
+    const { body, user } = req;
+    Account.updateOne({
+      token: user.token,
+    }, {
+      $set: body,
+    }).exec()
       .then(() => res.json({
         success: true,
       }))
       .catch((error) => {
-        res.status(400).json({ success: false });
-        throw error;
-      });
-  },
-);
-router.put(
-  '/name',
-  passport.authenticate('bearer', { session: false }),
-  (req, res) => {
-    const { name } = req.body;
-    const query = Account.updateOne(
-      { _id: req.user._id },
-      { $set: { name } },
-    ).exec();
-    query
-      .then((result) => {
-        res.json(result);
-      })
-      .catch((error) => {
-        res.status(400).json({ success: false });
-        throw error;
-      });
-  },
-);
-router.put(
-  '/size',
-  passport.authenticate('bearer', { session: false }),
-  (req, res) => {
-    const { start, now, goal } = req.body;
-    const query = Account.updateOne(
-      { _id: req.user._id },
-      {
-        $set: {
-          'sizes.start': start,
-          'sizes.now': now,
-          'sizes.goal': goal,
-        },
-      },
-    ).exec();
-    query
-      .then((result) => {
-        res.json(result);
-      })
-      .catch((error) => {
-        res.status(400).json({ success: false });
-        throw error;
-      });
-  },
-);
-router.put(
-  '/routine',
-  passport.authenticate('bearer', { session: false }),
-  (req, res) => {
-    const { routines } = req.body;
-    const query = Account.updateOne(
-      { _id: req.user._id },
-      {
-        $set: {
-          routines,
-        },
-      },
-    ).exec();
-    query
-      .then((result) => {
-        res.json(result);
-      })
-      .catch((error) => {
-        res.status(400).json({ success: false });
+        res.status(400).json({
+          message: '중복된 계정이 있거나 에러가 있습니다.',
+        });
         throw error;
       });
   },
@@ -134,20 +90,39 @@ router.delete(
   '/',
   passport.authenticate('bearer', { session: false }),
   (req, res) => {
-    const query = Account.deleteOne({
-      _id: req.user._id,
-    }).exec();
-    query
-      .then(() => {
-        res.json({
-          success: true,
-        });
-      })
+    const { user } = req;
+    Account.deleteOne({
+      token: user.token,
+    }).exec()
+      .then(() => res.json({
+        success: true,
+      }))
       .catch((error) => {
-        res.status(400).json({ success: false });
+        res.status(400).json({
+          message: '중복된 계정이 있거나 에러가 있습니다.',
+        });
         throw error;
       });
-  },
+    },
+);
+router.get(
+  '/list',
+  (req, res) => {
+    Account
+      .find({})
+      .select({ password: 0 })
+      .lean()
+      .exec()
+      .then((accounts) => res.json({
+        accounts: fromMongo(accounts),
+      }))
+      .catch((error) => {
+        res.status(400).json({
+          message: '에러가 있습니다.',
+        });
+        throw error;
+      });
+    },
 );
 
 export default router;

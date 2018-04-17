@@ -12,16 +12,29 @@ import Front from './components/Front';
 import Layout from './components/Layout';
 import Title from './components/Title';
 import Submit from './components/Submit';
+import ApplicationForm from './components/ApplicationForm';
 
 class Detail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedEvent: [new Date()],
+      selectedEvent: [
+        new Date(2018,4,1),
+        new Date(2018,4,8),
+        new Date(2018,4,15),
+        new Date(2018,4,22),
+      ],
+      isApplicationFormModalOpen: false,
     }
   }
   render() {
-    const { selectedEvent } = this.state;
+    const {
+      auth,
+    } = this.props;
+    const {
+      selectedEvent,
+      isApplicationFormModalOpen,
+    } = this.state;
     return (
       <Fragment>
         <Layout>
@@ -30,13 +43,27 @@ class Detail extends React.Component {
           <hr />
           <Content selectedEvent={selectedEvent}/>
         </Layout>
-        <Submit/>
+        {
+          auth.account && auth.account.type === 'default' ?
+            <Submit
+              onSubmit={() => this.setState({
+                isApplicationFormModalOpen: true,
+              })}
+            /> : null
+        }
+        <ApplicationForm
+          open={isApplicationFormModalOpen}
+          onClose={() => this.setState({
+            isApplicationFormModalOpen: false,
+          })}
+          
+        />
       </Fragment>
     );
   }
 }
 const mapStateToProps = state => ({
-  state,
+  auth: state.data.auth,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
   changePage: path => push(path),

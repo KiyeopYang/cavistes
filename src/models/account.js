@@ -17,10 +17,6 @@ const Account = new Schema({
   },
   name: {
     type: String,
-    index: {
-      unique: true,
-      sparse: true,
-    },
   },
   phone: {
     type: String,
@@ -32,13 +28,20 @@ const Account = new Schema({
   birth: {
     type: Date,
   },
-  isShop: {
-    type: Boolean,
-    required: true,
-  },
+  type: String,
   shop: {
     name: String,
     location: String,
+    locationDetail: String,
+    phone: String,
+    accountBank: String,
+    accountNumber: String,
+    accountName: String,
+  },
+  token: String,
+  confirmed: {
+    type: Boolean,
+    default: false,
   },
 });
 

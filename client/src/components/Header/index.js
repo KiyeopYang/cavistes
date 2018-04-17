@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import AppBar from 'material-ui/AppBar';
@@ -25,6 +25,7 @@ const styles = theme => ({
     padding: 8,
     paddingTop: 8,
     paddingBottom: 8,
+    cursor: 'pointer',
     [theme.breakpoints.up('sm')]: {
       fontSize: 32,
     },
@@ -72,6 +73,8 @@ class Header extends React.Component {
     const {
       classes,
       user,
+      onClick,
+      onClickUserMenu,
       onClickLogin,
       onClickSignUp,
     } = this.props;
@@ -114,24 +117,57 @@ class Header extends React.Component {
                     <MoreIcon color="inherit"/>
                   </div>
               }
-              <Menu
-                id="menu-user"
-                anchorEl={userAnchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={open.user}
-                onClose={this.handleMenuClose('userAnchorEl')}
-              >
-                <MenuItem onClick={this.handleMenuClose('userAnchorEl')}>내 정보</MenuItem>
-                <MenuItem onClick={this.handleMenuClose('userAnchorEl')}>참여내역</MenuItem>
-                <MenuItem onClick={this.handleMenuClose('userAnchorEl')}>로그아웃</MenuItem>
-              </Menu>
+              {
+                user ?
+                  <Menu
+                    id="menu-user"
+                    anchorEl={userAnchorEl}
+                    anchorOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                      vertical: 'top',
+                      horizontal: 'right',
+                    }}
+                    open={open.user}
+                    onClose={this.handleMenuClose('userAnchorEl')}
+                  >
+                    <MenuItem onClick={() => {
+                      this.handleMenuClose('userAnchorEl')();
+                      onClickUserMenu('myInfo');
+                    }}>
+                      내 정보
+                    </MenuItem>
+                    <MenuItem
+                      onClick={() => {
+                        this.handleMenuClose('userAnchorEl')();
+                        onClickUserMenu('logout');
+                      }}
+                    >
+                      로그아웃
+                    </MenuItem>
+                    {
+                      user.type === 'default' ?
+                        <MenuItem
+                          onClick={this.handleMenuClose('userAnchorEl')}
+                        >
+                          참여내역
+                        </MenuItem> :
+                        user.type === 'manager' ?
+                          <Fragment>
+                            <MenuItem
+                              onClick={() => {
+                                this.handleMenuClose('userAnchorEl')();
+                                onClickUserMenu('accountManager');
+                              }}
+                            >
+                              계정 관리
+                            </MenuItem>
+                          </Fragment> : null
+                    }
+                  </Menu> : null
+              }
             </Toolbar>
           </AppBar>
           <AppBar position="static" color="default">
@@ -139,13 +175,29 @@ class Header extends React.Component {
               <Typography
                 color="inherit"
                 className={classNames(classes.flex, classes.title)}
+                onClick={() => onClick('about')}
               >
                 CAVISTES
               </Typography>
               <Hidden smDown>
-                <Button size="large">ABOUT</Button>
-                <Button size="large">EVENT</Button>
-                <Button size="large">CONTACT</Button>
+                <Button
+                  size="large"
+                  onClick={() => onClick('about')}
+                >
+                  ABOUT
+                </Button>
+                <Button
+                  size="large"
+                  onClick={() => onClick('event')}
+                >
+                  EVENT
+                </Button>
+                <Button
+                  size="large"
+                  onClick={() => onClick('contact')}
+                >
+                  CONTACT
+                </Button>
               </Hidden>
               <Hidden mdUp>
                 <IconButton
@@ -170,9 +222,30 @@ class Header extends React.Component {
                   open={open.menu}
                   onClose={this.handleMenuClose('menuAnchorEl')}
                 >
-                  <MenuItem onClick={this.handleMenuClose('menuAnchorEl')}>ABOUT</MenuItem>
-                  <MenuItem onClick={this.handleMenuClose('menuAnchorEl')}>EVENT</MenuItem>
-                  <MenuItem onClick={this.handleMenuClose('menuAnchorEl')}>CONTACT</MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleMenuClose('menuAnchorEl');
+                      onClick('about');
+                    }}
+                  >
+                    ABOUT
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleMenuClose('menuAnchorEl');
+                      onClick('event');
+                    }}
+                  >
+                    EVENT
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleMenuClose('menuAnchorEl');
+                      onClick('contact');
+                    }}
+                  >
+                    CONTACT
+                  </MenuItem>
                 </Menu>
               </Hidden>
             </Toolbar>

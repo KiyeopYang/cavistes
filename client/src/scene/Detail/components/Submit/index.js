@@ -12,7 +12,11 @@ const styles = {
 };
 class Submit extends React.Component {
   render() {
-    const { classes, children } = this.props;
+    const {
+      classes,
+      children,
+      onSubmit,
+    } = this.props;
     return (
       <Button
         className={classes.root}
@@ -21,6 +25,7 @@ class Submit extends React.Component {
         variant="raised"
         size="large"
         fullWidth
+        onClick={onSubmit}
       >
         신청하기
       </Button>

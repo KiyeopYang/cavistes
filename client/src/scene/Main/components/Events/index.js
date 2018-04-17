@@ -29,8 +29,9 @@ class Events extends React.Component {
         <Typography className={classes.title} variant="headline">Event</Typography>
         <div className={classes.events}>
           {
-            Array.apply(null, { length: 5 }).map(() => (
+            Array.apply(null, { length: 5 }).map((o, i) => (
               <Event
+                key={i}
                 handleCalendar={handleCalendar}
                 handleClick={handleClick}
               />

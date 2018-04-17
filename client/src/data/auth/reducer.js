@@ -8,7 +8,7 @@ import {
 const initialState = {
   status: 'INIT',
   error: null,
-  client: null,
+  account: null,
 };
 
 export default (state = initialState, action) => {
@@ -22,13 +22,13 @@ export default (state = initialState, action) => {
       return update(state, {
         status: { $set: 'SUCCESS' },
         error: { $set: null },
-        client: { $set: action.client },
+        account: { $set: action.account },
       });
     case FAILURE:
       return update(state, {
         status: { $set: 'FAILURE' },
         error: { $set: action.error },
-        client: { $set: null },
+        account: { $set: null },
       });
     default:
       return state;

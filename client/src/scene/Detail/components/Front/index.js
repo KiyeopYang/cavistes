@@ -8,8 +8,6 @@ const styles = {
     paddingBottom: 40,
     overflow: 'hidden',
   },
-  imgWrapper: {
-  },
   img: {
     width: '100%',
     height: 'auto',
@@ -29,24 +27,10 @@ class Front extends React.Component {
     return (
       <div className={classes.root}>
         <Slider {...settings}>
-          <div className={classes.imgWrapper}>
-            <img className={classes.img} src="one.jpg" />
-          </div>
-          <div className={classes.imgWrapper}>
-            <img className={classes.img} src="two.jpg" />
-          </div>
-          <div className={classes.imgWrapper}>
-            <img className={classes.img} src="title.jpg" />
-          </div>
-          <div className={classes.imgWrapper}>
-            <img className={classes.img} src="one.jpg" />
-          </div>
-          <div className={classes.imgWrapper}>
-            <img className={classes.img} src="one.jpg" />
-          </div>
-          <div className={classes.imgWrapper}>
-            <img className={classes.img} src="one.jpg" />
-          </div>
+          <img className={classes.img} src="title1.jpg" />
+          <img className={classes.img} src="title2.jpg" />
+          <img className={classes.img} src="title3.jpg" />
+          <img className={classes.img} src="title4.jpg" />
         </Slider>
       </div>
     );

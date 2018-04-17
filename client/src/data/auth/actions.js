@@ -11,10 +11,10 @@ const waiting = () => {
     type: WAITING,
   };
 };
-const success = (client) => {
+const success = (account) => {
   return {
     type: SUCCESS,
-    client,
+    account,
   };
 };
 const failure = (error) => {
@@ -28,21 +28,22 @@ export const request = () => {
     dispatch(waiting());
     try {
       const data = await fetchHelper({
-        path: '/api/client',
+        path: '/api/account',
         options: {
           autoAuth: true,
         },
       });
-      const { client } = data;
-      return dispatch(success(client));
+      const { account } = data;
+      return dispatch(success(account));
     } catch (error) {
+      cookie.remove('token');
       return dispatch(failure(error));
     }
   };
 };
 export const logout = () => {
   return (dispatch) => {
-    cookie.remove('apiKey');
+    cookie.remove('token');
     return dispatch(failure({ message: '로그아웃' }));
   };
 };

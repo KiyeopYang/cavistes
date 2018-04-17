@@ -62,7 +62,7 @@ class Title extends React.Component {
         </div>
         <div>
           <Typography className={classes.subHeading} gutterBottom>
-            <IconEvent className={classes.icon}/><strong>2018/12/30</strong>
+            <IconEvent className={classes.icon}/><strong>2018/4/1부터 (4회)</strong>
           </Typography>
           <Typography className={classes.subHeading} gutterBottom>
             <IconPrice className={classes.icon}/><strong>참가비 200,000원</strong>

@@ -13,8 +13,32 @@ const styles = {
   },
 };
 class Form extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+    };
+  }
+  handleChange = name => e => this.setState({
+    [name]: e.target.value,
+  });
+  disabled = () => {
+    const { email, password } = this.state;
+    return !email.length || !password.length;
+  };
+  handleSubmit = () => {
+    this.props.handleSubmit(this.state);
+  };
   render() {
-    const { classes }  = this.props;
+    const {
+      classes,
+      handlePasswordFind,
+    }  = this.props;
+    const {
+      email,
+      password,
+    } = this.state;
     return (
       <Fragment>
         <Typography
@@ -23,29 +47,41 @@ class Form extends React.Component {
         >
           CAVISTES
         </Typography>
-        <TextField
-          label="이메일"
-          fullWidth
-          margin="dense"
-        />
-        <TextField
-          label="비밀번호"
-          fullWidth
-          margin="dense"
-        />
+        <form>
+          <TextField
+            label="이메일"
+            fullWidth
+            margin="dense"
+            onChange={this.handleChange('email')}
+            value={email}
+          />
+          <TextField
+            label="비밀번호"
+            fullWidth
+            margin="dense"
+            type="password"
+            onChange={this.handleChange('password')}
+            value={password}
+          />
+          <Button
+            type="submit"
+            className={classes.login}
+            fullWidth
+            color="primary"
+            variant="raised"
+            size="large"
+            onClick={(e) => {
+              e.preventDefault();
+              this.handleSubmit(e);
+            }}
+            disabled={this.disabled()}
+          >
+            로그인
+          </Button>
+        </form>
         <Button
-          className={classes.login}
-          fullWidth
-          color="primary"
-          variant="raised"
-          size="large"
+          onClick={handlePasswordFind}
         >
-          로그인
-        </Button>
-        <Button>
-          회원가입
-        </Button>
-        <Button>
           비밀번호 찾기
         </Button>
       </Fragment>
