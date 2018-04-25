@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux';
 import { reducer as accountReducer } from './account/reducer';
+import { reducer as serviceReducer } from './service/reducer';
 
-export const reducer = combineReducers({
+export default combineReducers({
   account: accountReducer,
+  service: serviceReducer,
 });

@@ -3,6 +3,7 @@ import { withStyles } from 'material-ui/styles';
 import Slider from 'react-slick';
 import Button from 'material-ui/Button';
 import SettingIcon from '@material-ui/icons/Settings';
+import ImageUploaderModal from '../../../../components/ImageUploaderModal';
 
 const styles = {
   root: {
@@ -21,10 +22,21 @@ const styles = {
   },
 };
 class Title extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isImageUploaderModalOpen: false,
+    };
+  }
   render() {
+    const {
+      isImageUploaderModalOpen,
+    } = this.state;
     const {
       classes,
       managerMode,
+      titleImages,
+      handleUpdate,
     } = this.props;
     const settings = {
       dots: true,
@@ -37,23 +49,37 @@ class Title extends React.Component {
     return (
       <div className={classes.root}>
         {
-          managerMode && null ? // 차후 다시
+          managerMode ?// 차후 다시
             <div className={classes.settingWrapper}>
               <Button
                 mini
                 variant="fab"
                 color="primary"
+                onClick={() => this.setState({
+                  isImageUploaderModalOpen: true,
+                })}
               >
                 <SettingIcon/>
               </Button>
             </div> : null
         }
-        <Slider {...settings}>
-          <img className={classes.img} src="title1.jpg" />
-          <img className={classes.img} src="title2.jpg" />
-          <img className={classes.img} src="title3.jpg" />
-          <img className={classes.img} src="title4.jpg" />
-        </Slider>
+        {
+          titleImages.length ?
+            <Slider {...settings}>
+              {
+                titleImages.map((img) => (
+                  <img key={img.path} className={classes.img} src={img.path} />
+                ))
+              }
+            </Slider> : null
+        }
+        <ImageUploaderModal
+          open={isImageUploaderModalOpen}
+          onClose={() => this.setState({
+            isImageUploaderModalOpen: false,
+          })}
+          onSubmit={handleUpdate}
+        />
       </div>
     )
   }

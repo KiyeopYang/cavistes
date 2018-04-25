@@ -50,6 +50,7 @@ class Content extends React.Component {
     const {
       classes,
       handleClick,
+      event,
     } = this.props;
     return (
       <div className={classes.root}>
@@ -58,13 +59,13 @@ class Content extends React.Component {
           onClick={handleClick}
         >
           <Typography className={classes.title} gutterBottom>
-            <strong>남프랑스의 그랑크뤼, 도마스가삭 시음회</strong>
+            <strong>{event.title}</strong>
           </Typography>
           <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
-            <strong>참가비 200,000원</strong>
+            <strong>{`참가비 ${event.price}원`}</strong>
           </Typography>
           <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
-            <strong>카비스트 삼성점</strong>
+            <strong>{event.shop.name}</strong>
           </Typography>
         </div>
         <div style={{ height: 130, overflowY: 'scroll' }}>
@@ -73,15 +74,7 @@ class Content extends React.Component {
             noWrap
             gutterBottom
           >
-            {`1.Daumas Gassac Rose Frizant 2016 미수입
-              2.Daumas Gassac Blanc 2016
-              3.Moulin de Gassac Pinot Noir 2016
-              1.Daumas Gassac Rose Frizant 2016 미수입
-              2.Daumas Gassac Blanc 2016
-              3.Moulin de Gassac Pinot Noir 2016
-              1.Daumas Gassac Rose Frizant 2016 미수입
-              2.Daumas Gassac Blanc 2016
-              3.Moulin de Gassac Pinot Noir 2016`}
+            {event.subTitle}
           </Typography>
         </div>
         <div style={{ height: 50 }}>
@@ -91,7 +84,9 @@ class Content extends React.Component {
             className={classes.redText}
             gutterBottom
           >
-            2/10명 신청
+            {
+              `${event.attendees.length}/${event.maxPeople}명 신청`
+            }
           </Typography>
         </div>
       </div>

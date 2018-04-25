@@ -5,6 +5,7 @@ import Login from './scene/Login/reducer';
 import SignUp from './scene/SignUp/reducer';
 import MyInfo from './scene/MyInfo/reducer';
 import AccountManager from './scene/AccountManager/reducer';
+import Main from './scene/Main/reducer';
 
 export default combineReducers({
   routing: routerReducer,
@@ -13,4 +14,5 @@ export default combineReducers({
   SignUp,
   MyInfo,
   AccountManager,
+  Main,
 });

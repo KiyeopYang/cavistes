@@ -2,7 +2,13 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 const Service = new Schema({
-  titleImages: Array,
+  titleImages: {
+    type: Array,
+    default: [],
+  },
+  accountBank: String,
+  accountNumber: String,
+  accountName: String,
 });
 
 const model = mongoose.model('service', Service);

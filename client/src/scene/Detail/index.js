@@ -7,6 +7,9 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { push } from 'react-router-redux';
+import {
+  getEventByIdRequest,
+} from '../../data/event/actions';
 import Content from './components/Content';
 import Front from './components/Front';
 import Layout from './components/Layout';
@@ -25,23 +28,38 @@ class Detail extends React.Component {
         new Date(2018,4,22),
       ],
       isApplicationFormModalOpen: false,
+    };
+    const { match } = this.props;
+    if (match.params.id) {
+      this.props.getEventByIdRequest(match.params.id)
     }
   }
   render() {
     const {
       auth,
+      getEventById,
     } = this.props;
     const {
-      selectedEvent,
       isApplicationFormModalOpen,
     } = this.state;
+    const { event } = getEventById;
+    if (!event) return null;
+    else {
+      event.datetimes = event.datetimes.map(o => new Date(o));
+    }
     return (
       <Fragment>
         <Layout>
-          <Front/>
-          <Title/>
+          <Front
+            images={event.images}
+          />
+          <Title
+            event={event}
+          />
           <hr />
-          <Content selectedEvent={selectedEvent}/>
+          <Content
+            event={event}
+          />
         </Layout>
         {
           auth.account && auth.account.type === 'default' ?
@@ -56,7 +74,6 @@ class Detail extends React.Component {
           onClose={() => this.setState({
             isApplicationFormModalOpen: false,
           })}
-          
         />
       </Fragment>
     );
@@ -64,9 +81,11 @@ class Detail extends React.Component {
 }
 const mapStateToProps = state => ({
   auth: state.data.auth,
+  getEventById: state.data.event.getEventById,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
-  changePage: path => push(path),
+  push,
+  getEventByIdRequest,
 }, dispatch);
 export default withRouter(connect(
   mapStateToProps,

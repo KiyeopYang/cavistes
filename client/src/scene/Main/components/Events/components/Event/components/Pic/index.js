@@ -34,6 +34,8 @@ class Pic extends React.Component {
       classes,
       handleCalendar,
       handleClick,
+      datetimes,
+      images,
     } = this.props;
     return (
       <div className={classes.root}>
@@ -41,15 +43,23 @@ class Pic extends React.Component {
           <Typography
             className={classes.title}
             variant="subheading"
-            onClick={handleCalendar}
+            onClick={() => handleCalendar(datetimes)}
           >
             <IconEvent style={{ marginRight: 3 }}/>
-            2018/12/30
+            {
+              `${
+                datetimes[0].getUTCFullYear()
+                }/${
+                datetimes[0].getMonth()+1
+                }/${
+                datetimes[0].getDate()
+                }`
+            }
           </Typography>
         </div>
         <img
           className={classes.img}
-          src="one.jpg"
+          src={images[0].path}
           onClick={handleClick}
         />
       </div>

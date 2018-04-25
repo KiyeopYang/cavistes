@@ -32,7 +32,6 @@ class Login extends React.Component {
       })
       .catch((error) => {
         loader(false);
-        console.error(error);
         this.props.notice('something broken');
       })
   };

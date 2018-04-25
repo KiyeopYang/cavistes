@@ -15,7 +15,7 @@ const styles = {
 };
 class Front extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, images } = this.props;
     const settings = {
       dots: true,
       infinite: true,
@@ -27,10 +27,11 @@ class Front extends React.Component {
     return (
       <div className={classes.root}>
         <Slider {...settings}>
-          <img className={classes.img} src="title1.jpg" />
-          <img className={classes.img} src="title2.jpg" />
-          <img className={classes.img} src="title3.jpg" />
-          <img className={classes.img} src="title4.jpg" />
+          {
+            images.map(o => (
+              <img key={o.path} className={classes.img} src={o.path} />
+            ))
+          }
         </Slider>
       </div>
     );

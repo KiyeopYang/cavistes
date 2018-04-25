@@ -9,6 +9,7 @@ import {
 import { push } from 'react-router-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import 'fine-uploader';
 import CssBaseline from 'material-ui/CssBaseline';
 import { scroller } from 'react-scroll';
 import * as cookie from './modules/cookie';
@@ -22,6 +23,7 @@ import Detail from './scene/Detail';
 import Login from './scene/Login';
 import SignUp from './scene/SignUp';
 import MyInfo from './scene/MyInfo';
+import Add from './scene/Add';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import AccountManager from './scene/AccountManager';
@@ -109,8 +111,12 @@ class App extends React.Component {
           component={Main}
         />
         <Route
-          path="/detail"
+          path="/detail/:id"
           component={Detail}
+        />
+        <Route
+          path="/add"
+          component={Add}
         />
         <Footer/>
         <Login

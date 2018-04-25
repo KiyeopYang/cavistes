@@ -18,51 +18,50 @@ const styles = theme => ({
 });
 class Content extends React.Component {
   render() {
-    const { classes, selectedEvent } = this.props;
+    const { classes, event } = this.props;
+    let datetimeText = '';
+    event.datetimes.forEach((o) => {
+      const year = o.getUTCFullYear();
+      const month = o.getMonth() + 1;
+      const date = o.getDate();
+      const hour = o.getHours();
+      const min = o.getMinutes();
+      datetimeText = datetimeText.concat(
+        `${year}년 ${month}월 ${date}일 ${hour}시 ${min}분\n`
+      );
+    });
     return (
       <div className={classes.root}>
         <EventCalendar
-          events={selectedEvent}
+          events={event.datetimes}
           className={classes.calendar}
         />
         <Block
           title="일시"
-          text={`2018년 4월 1일 오후 7시 30분
-          2018년 4월 8일 오후 7시 30분
-          2018년 4월 15일 오후 7시 30분
-          2018년 4월 22일 오후 7시 30분`}
+          text={datetimeText}
         />
         <Block
           title="모임 소개"
-          text={`와인 문화 공간 카비시트에서 와인 중급 강좌 3기를 모집합니다.
-          강좌는 2회로 이루어지며 프랑스의 각 와인 산지, 세계의 유명한 와인 산지들에 대해 배우고 각 산지의 명품 와인에 대해 듣는 시간을 마련하였습니다.
-          해당 강의에 맞는 특별한 시음 와인이 제공됩니다. 많은 참여 부탁드립니다.`}
+          text={event.desc}
         />
         <Block
           title="강사"
-          text={`이민우 (라피트 로칠드 한국 대표)`}
-        />
-        <Block
-          title="와인 리스트"
-          text={`Chateau Haut Bailly 2008
-          Chateau Haut Bailly 2011
-          Chateau Haut Bailly 2013
-          Chateau Haut Bailly 2018`}
+          text={event.sponsor.name}
         />
         <Block
           title="가격"
-          text={`150,000원`}
+          text={`${event.price}원`}
         />
         <Block
-          title="참여 인원"
-          text={`10명`}
+          title="최대 참여 인원"
+          text={`${event.maxPeople}명`}
         />
         <Block
           title="장소"
-          text={`서울시 강남구 대치동 949번지 수암빌딩 1층`}
+          text={`${event.shop.location} ${event.shop.locationDetail}`}
         >
           <LocationMap
-            string="서울시 강남구 대치동 949번지"
+            string={event.shop.location}
             frameBorder="0"
             styles={{
               border: 0,
@@ -74,17 +73,17 @@ class Content extends React.Component {
           />
         </Block>
         <Block
-          title="특이사항"
+          title="환불 규정"
         >
-          <ul>
-            <li>주차 가능</li>
-          </ul>
+          <Typography><strong>행사 시작날로부터 48시간 전</strong> : 100% 환불</Typography>
+          <Typography><strong>행사 시작날로부터 24시간 전</strong> : 50% 환불</Typography>
+          <Typography><strong>행사 시작날로부터 24시간 이내, 행사 시작 이후</strong> : 환불 불가</Typography>
         </Block>
         <Block
-          title="문의"
+          title="주최자 연락처"
         >
-          <Typography><strong>전화번호</strong> : 02-622-2222</Typography>
-          <Typography><strong>이메일</strong> : kiyeopyang@gmail.com</Typography>
+          <Typography><strong>전화번호</strong>{` : ${event.sponsor.phone}`}</Typography>
+          <Typography><strong>이메일</strong>{` : ${event.sponsor.email}`}</Typography>
         </Block>
       </div>
     )

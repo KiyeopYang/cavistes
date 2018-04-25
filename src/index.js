@@ -95,6 +95,8 @@ app.use(bodyParser.json({ limit: '5mb' }));
 // API
 app.use('/api', api);
 
+app.use(express.static(path.join(__dirname, '../', 'public')));
+
 // Express only serves static assets in production
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../', 'client/build')));

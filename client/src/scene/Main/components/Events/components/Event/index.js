@@ -21,14 +21,21 @@ class Event extends React.Component {
       classes,
       handleCalendar,
       handleClick,
+      event,
     } = this.props;
+    event.datetimes = event.datetimes.map(o => new Date(o));
     return (
       <div className={classes.root}>
         <Pic
           handleCalendar={handleCalendar}
           handleClick={handleClick}
+          datetimes={event.datetimes}
+          images={event.images}
         />
-        <Content handleClick={handleClick}/>
+        <Content
+          handleClick={handleClick}
+          event={event}
+        />
       </div>
     )
   }

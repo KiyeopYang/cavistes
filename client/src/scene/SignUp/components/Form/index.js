@@ -87,13 +87,6 @@ class Form extends React.Component {
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
       ],
       birthDate: '',
-      shopName: '',
-      shopLocation: '',
-      shopLocationDetail: '',
-      shopPhone: '',
-      shopAccountBank: '',
-      shopAccountNumber: '',
-      shopAccountName: '',
       isLocationMapFinderOpen: false,
     };
   }
@@ -127,13 +120,6 @@ class Form extends React.Component {
       birthYear,
       birthMonth,
       birthDate,
-      shopName,
-      shopLocation,
-      shopLocationDetail,
-      shopPhone,
-      shopAccountBank,
-      shopAccountNumber,
-      shopAccountName,
     } = this.state;
     this.props.handleSubmit({
       email,
@@ -143,15 +129,6 @@ class Form extends React.Component {
       gender,
       birth: new Date(birthYear, birthMonth, birthDate),
       type,
-      shop: type === 'shop' ? {
-        name: shopName,
-        location: shopLocation,
-        locationDetail: shopLocationDetail,
-        phone: shopPhone,
-        accountBank: shopAccountBank,
-        accountNumber: shopAccountNumber,
-        accountName: shopAccountName,
-      } : null,
     });
   };
   render() {
@@ -169,14 +146,6 @@ class Form extends React.Component {
       birthMonth,
       birthMonthInputs,
       birthDate,
-      shopName,
-      shopPhone,
-      shopLocation,
-      shopLocationDetail,
-      shopAccountBank,
-      shopAccountNumber,
-      shopAccountName,
-      isLocationMapFinderOpen,
     } = this.state;
 
     const birthDateInputs = [];
@@ -226,13 +195,13 @@ class Form extends React.Component {
                 label="일반 고객"
               />
               <FormControlLabel
-                value="shop"
+                value="sponsor"
                 control={
                   <Radio
                     color="primary"
                   />
                 }
-                label="매장 점주"
+                label="주최자"
               />
             </RadioGroup>
           </FormControl>
@@ -401,112 +370,6 @@ class Form extends React.Component {
               </FormControl>
             </div>
           </FormControl>
-          {
-            type === 'shop' ?
-              <Fragment>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopName">매장 이름</InputLabel>
-                  <Input id="shopName" value={shopName} onChange={this.handleChange('shopName')} />
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopPhone">매장 전화번호</InputLabel>
-                  <Input id="shopPhone" value={shopPhone} onChange={this.handleChange('shopPhone')} />
-                </FormControl>
-                <Button
-                  className={classes.signIn}
-                  color="primary"
-                  variant="raised"
-                  onClick={() => this.setState({
-                    isLocationMapFinderOpen: true,
-                  })}
-                >
-                  주소 입력하기
-                </Button>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopLocation">매장 주소</InputLabel>
-                  <Input id="shopLocation" value={shopLocation} disabled/>
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopLocationDetail">매장 세부주소</InputLabel>
-                  <Input
-                    id="shopLocationDetail"
-                    value={shopLocationDetail}
-                    onChange={this.handleChange('shopLocationDetail')}
-                    disabled={shopLocation === ''}
-                  />
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopAccountBank">은행명</InputLabel>
-                  <Select
-                    onChange={this.handleChange('shopAccountBank')}
-                    native
-                    value={shopAccountBank}
-                    input={<Input id="shopAccountBank" />}
-                  >
-                    <option value="" />
-                    {
-                      BANKS.map(v => (
-                        <option key={v} value={v}>{v}</option>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopAccountNumber">입금 계좌번호</InputLabel>
-                  <Input
-                    id="shopAccountNumber"
-                    value={shopAccountNumber}
-                    onChange={this.handleChange('shopAccountNumber')}
-                  />
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                >
-                  <InputLabel htmlFor="shopAccountName">예금주</InputLabel>
-                  <Input
-                    id="shopAccountName"
-                    value={shopAccountName}
-                    onChange={this.handleChange('shopAccountName')}
-                  />
-                </FormControl>
-                <LocationMapFinder
-                  open={isLocationMapFinderOpen}
-                  onClose={() => this.setState({
-                    isLocationMapFinderOpen: false,
-                  })}
-                  onSubmit={({ location, locationDetail }) => this.setState({
-                    shopLocation: location,
-                    shopLocationDetail: locationDetail,
-                  })}
-                />
-              </Fragment> : null
-          }
           <Button
             className={classes.signIn}
             color="primary"

@@ -16,40 +16,75 @@ import Title from './components/Title';
 import Events from './components/Events';
 import Contact from './components/Contact';
 import More from './components/More';
+import * as serviceActions from './data/service/actions';
+import * as noticeDialogActions from '../../data/noticeDialog/actions';
+import * as eventActions from '../../data/event/actions';
 
 class Main extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       isModalOpen: false,
-      selectedEvent: [new Date(), new Date(2017,6,8), new Date(2017,6,15)],
-    }
+      selectedEvent: [],
+    };
+    this.props.getServiceRequest();
+    this.props.getEventRequest()
+      .then((res) => {
+        console.log(this.props.getEvent);
+      })
   }
-  handleCalendar = (id) => {
+  handleCalendar = (datetimes) => {
     this.setState({
       isModalOpen: true,
+      selectedEvent: datetimes,
     });
   };
-  handleEventClick = () => {
-    this.props.push('/detail');
+  handleEventClick = (id) => {
+    this.props.push(`/detail/${id}`);
+  };
+  handleTitleImageUpdate = (images) => {
+    this.props.updateServiceRequest({
+      titleImages: images,
+    })
+      .then(() => {
+        if (this.props.updateService.status === 'FAILURE') {
+          throw this.props.updateService.error;
+        } else {
+          this.props.noticeDialogOn('수정 완료');
+          this.props.getServiceRequest();
+        }
+      })
+      .catch((error) => {
+        this.props.noticeDialogOn(error);
+      })
   };
   render() {
     const {
       auth,
+      getService,
+      getEvent,
+      push,
     } = this.props;
     const {
       isModalOpen,
       selectedEvent,
     } = this.state;
-    const managerMode = auth.account && auth.account.type === 'manager';
+    const type = auth.account && auth.account.type;
     return (
       <div>
         <Layout>
           <Element name="about">
-            <Title managerMode={managerMode} />
+            <Title
+              managerMode={type === 'manager'}
+              titleImages={(getService.service && getService.service.titleImages) || []}
+              handleUpdate={this.handleTitleImageUpdate}
+            />
           </Element>
           <Element name="event">
             <Events
+              createMode={type === 'sponsor'}
+              eventList={getEvent.event}
+              onClickCreate={() => push('/add')}
               handleCalendar={this.handleCalendar}
               handleClick={this.handleEventClick}
             />
@@ -70,9 +105,22 @@ class Main extends React.Component {
 }
 const mapStateToProps = state => ({
   auth: state.data.auth,
+  getService: state.Main.data.service.getService,
+  updateService: state.Main.data.service.updateService,
+  getEvent: state.data.event.getEvent,
+  addEvent: state.data.event.addEvent,
+  updateEvent: state.data.event.updateEvent,
+  removeEvent: state.data.event.removeEvent,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,
+  noticeDialogOn: noticeDialogActions.on,
+  getServiceRequest: serviceActions.getServiceRequest,
+  updateServiceRequest: serviceActions.updateServiceRequest,
+  getEventRequest: eventActions.getEventRequest,
+  addEventRequest: eventActions.addEventRequest,
+  updateEventRequest: eventActions.updateEventRequest,
+  removeEventRequest: eventActions.removeEventRequest,
 }, dispatch);
 export default withRouter(connect(
   mapStateToProps,

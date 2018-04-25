@@ -50,29 +50,36 @@ const styles = theme => ({
     color: '#9C9C9C',
   },
 });
+function makeDateText(date) {
+  return `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
+}
 class Title extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, event } = this.props;
+    let dateText = makeDateText(event.datetimes[0]);
+    if (event.datetimes.length > 1) {
+      dateText = `${dateText}부터 ${event.datetimes.length}회`;
+    }
     return (
       <div className={classes.root}>
         <div className={classes.titleWrapper}>
           <Typography className={classes.title} gutterBottom>
-            <strong>남프랑스의 그랑크뤼, 도마스가삭 시음회</strong>
+            <strong>{event.title}</strong>
           </Typography>
         </div>
         <div>
           <Typography className={classes.subHeading} gutterBottom>
-            <IconEvent className={classes.icon}/><strong>2018/4/1부터 (4회)</strong>
+            <IconEvent className={classes.icon}/><strong>{dateText}</strong>
           </Typography>
           <Typography className={classes.subHeading} gutterBottom>
-            <IconPrice className={classes.icon}/><strong>참가비 200,000원</strong>
+            <IconPrice className={classes.icon}/><strong>참가비 {event.price}원</strong>
           </Typography>
           <Typography className={classes.subHeading} gutterBottom>
-            <IconMap className={classes.icon}/><strong>카비스트 삼성점</strong>
+            <IconMap className={classes.icon}/><strong>{event.shop.name}</strong>
           </Typography>
           <Typography className={classes.subHeading} gutterBottom>
             <IconGroup className={classes.icon}/>
-            <strong>2/10명</strong>
+            <strong>{event.attendees.length}/{event.maxPeople}명</strong>
           </Typography>
         </div>
       </div>
