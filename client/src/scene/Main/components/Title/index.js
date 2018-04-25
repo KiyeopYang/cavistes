@@ -67,7 +67,7 @@ class Title extends React.Component {
           titleImages.length ?
             <Slider {...settings}>
               {
-                titleImages.map((img) => (
+                titleImages.filter(o => o && o.path).map((img) => (
                   <img key={img.path} className={classes.img} src={img.path} />
                 ))
               }

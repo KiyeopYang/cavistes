@@ -44,7 +44,7 @@ class Main extends React.Component {
   };
   handleTitleImageUpdate = (images) => {
     this.props.updateServiceRequest({
-      titleImages: images,
+      titleImages: images.filter(o => o && !!o.path),
     })
       .then(() => {
         if (this.props.updateService.status === 'FAILURE') {
