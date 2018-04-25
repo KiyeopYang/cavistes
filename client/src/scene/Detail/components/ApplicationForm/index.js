@@ -1,3 +1,4 @@
+/* global IMP */
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -12,6 +13,7 @@ import * as authActions from '../../../../data/auth/actions';
 import Layout from './components/Layout';
 import Form from './components/Form';
 import Bank from './components/Bank';
+import PaymentTool from './components/PaymentTool';
 
 class ApplicationForm extends React.Component {
   constructor(props) {
@@ -39,11 +41,31 @@ class ApplicationForm extends React.Component {
         this.props.noticeDialogOn(error);
       })
   };
+  handleCardPaymentStart = () => {
+    const { event, auth } = this.props;
+    IMP.init('imp53268559');
+    IMP.request_pay({ // param
+      pg: "danal_tpay",
+      pay_method: "card",
+      merchant_uid: "ORD20180131-1645512",
+      name: event.title,
+      amount: event.price,
+      buyer_name: auth.account.name,
+      buyer_tel: auth.account.phone,
+    }, (rsp) => { // callback
+      if (rsp.success) {
+        console.log('success');
+      } else {
+        console.log('failure');
+      }
+    });
+  };
   render() {
     const {
       open,
       onClose,
       auth,
+      event,
     } = this.props;
     const {
       view,
@@ -57,10 +79,23 @@ class ApplicationForm extends React.Component {
         {
           view === 'form' ?
             <Form
+              event={event}
               user={auth.account}
               handleNext={() => this.setState({
-                view: 'bank',
+                view: 'paymentTool',
               })}
+            /> :
+          view === 'paymentTool' ?
+            <PaymentTool
+              handleNext={(tool) => {
+                if (tool === 'card') {
+                  this.handleCardPaymentStart();
+                } else {
+                  this.setState({
+                    view: 'bank',
+                  });
+                }
+              }}
             /> : <Bank onSubmit={onClose} />
         }
       </Layout>

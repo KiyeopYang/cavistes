@@ -71,6 +71,7 @@ class Detail extends React.Component {
         }
         <ApplicationForm
           open={isApplicationFormModalOpen}
+          event={event}
           onClose={() => this.setState({
             isApplicationFormModalOpen: false,
           })}

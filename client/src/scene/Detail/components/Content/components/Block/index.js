@@ -6,9 +6,6 @@ const styles = {
   root: {
     marginBottom: 20,
   },
-  title: {
-
-  },
   text: {
     whiteSpace: 'pre-line',
   },

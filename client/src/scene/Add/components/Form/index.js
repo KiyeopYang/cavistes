@@ -45,6 +45,9 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit,
   },
 });
+const REFUND_RULE = `행사 시작날로부터 48시간 전 : 100% 환불
+행사 시작날로부터 24시간 전 : 50% 환불
+행사 시작날로부터 24시간 이내 또는 행사 시작 이후 : 환불 불가`;
 class From extends React.Component {
   constructor(props) {
     super(props);
@@ -67,6 +70,7 @@ class From extends React.Component {
       sponsorEmail: (sponsor && sponsor.email) || '',
       level: '1',
       replyOn: '1',
+      refundRule: REFUND_RULE,
       isLocationMapFinderOpen: false,
       isImageUploaderModalOpen: false,
     };
@@ -95,6 +99,7 @@ class From extends React.Component {
       sponsorEmail,
       level,
       replyOn,
+      refundRule,
     } = this.state;
     this.props.handleSubmit({
       title,
@@ -116,6 +121,7 @@ class From extends React.Component {
       },
       level,
       replyOn: replyOn === '1',
+      refundRule,
     });
   };
   render() {
@@ -140,6 +146,7 @@ class From extends React.Component {
       sponsorEmail,
       level,
       replyOn,
+      refundRule,
       images,
       isLocationMapFinderOpen,
       isImageUploaderModalOpen,
@@ -373,6 +380,17 @@ class From extends React.Component {
               <option value='0'>비허용</option>
             </Select>
           </FormControl>
+          <TextField
+            id="refundRule"
+            label="환불 규정"
+            helperText="기본 환불 규정입니다. 특이사항 없을 시 수정 또는 삭제하지마십시요."
+            fullWidth
+            multiline
+            value={refundRule}
+            onChange={this.handleInputChange('refundRule')}
+            margin="dense"
+            disabled={disabled}
+          />
           <Button
             color="primary"
             fullWidth

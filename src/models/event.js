@@ -37,6 +37,7 @@ const Event = new Schema({
     type: Boolean,
     default: false,
   },
+  refundRule: String,
 });
 
 const model = mongoose.model('event', Event);

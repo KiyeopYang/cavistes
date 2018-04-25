@@ -8,6 +8,12 @@ const styles = {
   title: {
     fontSize: 20,
   },
+  button: {
+    marginTop: '15px',
+  },
+  text: {
+    whiteSpace: 'pre-line',
+  },
 };
 class Form extends React.Component {
   constructor(props) {
@@ -27,29 +33,69 @@ class Form extends React.Component {
     const {
       classes,
       handleNext,
+      event,
     }  = this.props;
     const {
       name,
       phone,
     } = this.state;
+    let datetimeText = '';
+    event.datetimes.forEach((o) => {
+      const year = o.getUTCFullYear();
+      const month = o.getMonth() + 1;
+      const date = o.getDate();
+      const hour = o.getHours();
+      const min = o.getMinutes();
+      datetimeText = datetimeText.concat(
+        `${year}년 ${month}월 ${date}일 ${hour}시 ${min}분\n`
+      );
+    });
     return (
       <Fragment>
         <Typography
           className={classes.title}
           align="center"
+          gutterBottom
         >
           다음 사항이 맞는 지 확인 해 주십시요.
         </Typography>
         <form>
+          <Typography>
+            <strong>강의명</strong>
+          </Typography>
+          <Typography gutterBottom>{event.title}</Typography>
+          <Typography>
+            <strong>시각</strong>
+          </Typography>
+          <Typography
+            className={classes.text}
+            gutterBottom
+          >
+            {datetimeText}
+          </Typography>
+          <Typography>
+            <strong>장소</strong>
+          </Typography>
+          <Typography gutterBottom>{`${event.shop.location} ${event.shop.locationDetail}`}</Typography>
+          <Typography>
+            <strong>가격</strong>
+          </Typography>
+          <Typography gutterBottom>{event.price}원</Typography>
+          <Typography>
+            <strong>환불 규정</strong>
+          </Typography>
+          <Typography className={classes.text} gutterBottom>
+            {event.refundRule}
+          </Typography>
           <TextField
-            label="이름"
+            label="신청자 이름"
             fullWidth
             margin="dense"
             onChange={this.handleChange('name')}
             value={name}
           />
           <TextField
-            label="전화번호"
+            label="신청자 전화번호"
             fullWidth
             margin="dense"
             onChange={this.handleChange('phone')}
@@ -57,7 +103,7 @@ class Form extends React.Component {
           />
           <Button
             type="submit"
-            className={classes.login}
+            className={classes.button}
             fullWidth
             color="primary"
             variant="raised"
@@ -67,7 +113,7 @@ class Form extends React.Component {
               handleNext();
             }}
           >
-            참석
+            확인
           </Button>
         </form>
       </Fragment>

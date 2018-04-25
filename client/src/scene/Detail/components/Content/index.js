@@ -41,7 +41,7 @@ class Content extends React.Component {
           text={datetimeText}
         />
         <Block
-          title="모임 소개"
+          title="강의 소개"
           text={event.desc}
         />
         <Block
@@ -74,11 +74,8 @@ class Content extends React.Component {
         </Block>
         <Block
           title="환불 규정"
-        >
-          <Typography><strong>행사 시작날로부터 48시간 전</strong> : 100% 환불</Typography>
-          <Typography><strong>행사 시작날로부터 24시간 전</strong> : 50% 환불</Typography>
-          <Typography><strong>행사 시작날로부터 24시간 이내, 행사 시작 이후</strong> : 환불 불가</Typography>
-        </Block>
+          text={event.refundRule}
+        />
         <Block
           title="주최자 연락처"
         >
