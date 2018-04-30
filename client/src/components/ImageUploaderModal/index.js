@@ -53,7 +53,7 @@ class ImageUploaderModal extends React.Component {
           transform: 'translate(-50%, -50%)',
           background: 'white',
           position: 'absolute',
-          minWidth: 300,
+          minWidth: 350,
         }}>
           <ImageUploader
             onComplete={this.onComplete}

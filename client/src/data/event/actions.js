@@ -9,10 +9,11 @@ const getEventWaiting = () => {
     type: GET_EVENT_WAITING,
   };
 };
-const getEventSuccess = (event) => {
+const getEventSuccess = (event, page) => {
   return {
     type: GET_EVENT_SUCCESS,
     event,
+    page,
   };
 };
 const getEventFailure = (error) => {
@@ -21,11 +22,11 @@ const getEventFailure = (error) => {
     error,
   };
 };
-export const getEventRequest = (i = 0) => {
+export const getEventRequest = (page = 0) => {
   return (dispatch) => {
     dispatch(loader(true));
     dispatch(getEventWaiting());
-    return fetch(`/api/event/${i}`, {
+    return fetch(`/api/event/${page}`, {
       method: 'GET',
       headers: {
         'cache-control': 'no-cache',
@@ -40,7 +41,7 @@ export const getEventRequest = (i = 0) => {
       })
       .then((res) => {
         if (res.data) {
-          return dispatch(getEventSuccess(res.data));
+          return dispatch(getEventSuccess(res.data, page));
         }
         return dispatch(getEventFailure({
           error: null,

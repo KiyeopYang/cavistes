@@ -28,6 +28,10 @@ const Account = new Schema({
   birth: {
     type: Date,
   },
+  level: {
+    type: Number,
+    default: 1,
+  },
   type: String,
   token: String,
   confirmed: {

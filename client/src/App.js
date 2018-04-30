@@ -27,6 +27,7 @@ import Add from './scene/Add';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import AccountManager from './scene/AccountManager';
+import AccountAttendanceManager from './scene/AccountAttendanceManager';
 import loaderDOM from './modules/loader';
 import AuthRoute from './modules/AuthRoute';
 
@@ -38,6 +39,7 @@ class App extends React.Component {
       isSignUpModalOpen: false,
       isMyInfoModalOpen: false,
       isAccountManagerModalOpen: false,
+      isAccountAttendanceManagerModalOpen: false,
     };
     loaderDOM(this.props.loaderState);
     this.props.authRequest();
@@ -66,6 +68,10 @@ class App extends React.Component {
       this.setState({
         isAccountManagerModalOpen: true,
       });
+    } else if (label === 'accountAttendance') {
+      this.setState({
+        isAccountAttendanceManagerModalOpen: true,
+      });
     }
   };
   handleMenuClick = (label) => {
@@ -84,6 +90,7 @@ class App extends React.Component {
       isSignUpModalOpen,
       isMyInfoModalOpen,
       isAccountManagerModalOpen,
+      isAccountAttendanceManagerModalOpen,
     } = this.state;
     const {
       noticeDialog,
@@ -142,6 +149,12 @@ class App extends React.Component {
           open={isAccountManagerModalOpen}
           onClose={() => this.setState({
             isAccountManagerModalOpen: false,
+          })}
+        />
+        <AccountAttendanceManager
+          open={isAccountAttendanceManagerModalOpen}
+          onClose={() => this.setState({
+            isAccountAttendanceManagerModalOpen: false,
           })}
         />
         <NoticeDialog

@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import IconEvent from '@material-ui/icons/Event';
+import IconChat from '@material-ui/icons/Chat';
 
 const styles = theme => ({
   root: {
@@ -13,11 +14,18 @@ const styles = theme => ({
   header: {
     background: theme.palette.primary.main,
     padding: 4,
+    display: 'flex',
   },
   title: {
     color: 'white',
-    display: 'flex',
     cursor: 'pointer',
+    flexGrow: 1,
+    display: 'flex',
+  },
+  reply: {
+    color: 'white',
+    cursor: 'pointer',
+    display: 'flex',
   },
   img: {
     width: 270,
@@ -36,6 +44,7 @@ class Pic extends React.Component {
       handleClick,
       datetimes,
       images,
+      replyNum,
     } = this.props;
     return (
       <div className={classes.root}>
@@ -56,6 +65,14 @@ class Pic extends React.Component {
                 }`
             }
           </Typography>
+          {
+            replyNum > 0 ?
+              <Typography className={classes.reply}
+                          variant="subheading">
+                <IconChat style={{ marginRight: 3 }}/>
+                {replyNum}
+              </Typography> : null
+          }
         </div>
         <img
           className={classes.img}

@@ -1,5 +1,6 @@
 import express from 'express';
 import passport from 'passport';
+import mongoose from 'mongoose';
 import { Event } from '../models';
 import { fromMongo } from '../lib/dbConnector';
 
@@ -85,6 +86,141 @@ router.delete(
       _id: id,
     }).exec();
     query
+      .then(() => res.json({
+        success: true,
+      }))
+      .catch((error) => {
+        res.status(400).json({ success: false });
+        throw error;
+      });
+  },
+);
+router.post(
+  '/reply',
+  (req, res) => {
+    const {
+      accountId,
+      eventId,
+      name,
+      email,
+      text,
+    } = req.body;
+    Event.updateOne({
+      _id: eventId,
+    }, {
+      $push: {
+        reply: {
+          id: mongoose.Types.ObjectId(),
+          accountId,
+          email,
+          name,
+          text,
+          datetime: new Date(),
+        },
+      },
+    }).exec()
+      .then(() => res.json({
+        success: true,
+      }))
+      .catch((error) => {
+        res.status(400).json({ success: false });
+        throw error;
+      });
+    },
+);
+router.delete(
+  '/reply',
+  (req, res) => {
+    const {
+      eventId,
+      replyId,
+    } = req.body;
+    Event.updateOne({
+      _id: eventId,
+    }, {
+      $pull: {
+        reply: {
+          id: mongoose.Types.ObjectId(replyId),
+        },
+      },
+    }).exec()
+      .then(() => res.json({
+        success: true,
+      }))
+      .catch((error) => {
+        res.status(400).json({ success: false });
+        throw error;
+      });
+  },
+);
+//
+router.post(
+  '/attend',
+  (req, res) => {
+    // const {
+    //   accountId,
+    //   eventId,
+    //   email,
+    //   phone,
+    //   name,
+    //   status,
+    // } = req.body;
+    // Event.updateOne({
+    //   _id: eventId,
+    // }, {
+    //   $push: {
+    //     attendees: {
+    //       id: mongoose.Types.ObjectId(),
+    //       status: status || '신청완료',
+    //       accountId,
+    //       email,
+    //       phone,
+    //       name,
+    //       datetime: new Date(),
+    //     },
+    //   },
+    // }).exec()
+    const {
+      eventId,
+      ...rest,
+    } = req.body;
+    Event.updateOne({
+      _id: eventId,
+    }, {
+      $push: {
+        attendees: {
+          id: mongoose.Types.ObjectId(),
+          status: rest.status || '신청 완료',
+          ...rest,
+          datetime: new Date(),
+        },
+      },
+    }).exec()
+      .then(() => res.json({
+        success: true,
+      }))
+      .catch((error) => {
+        res.status(400).json({ success: false });
+        throw error;
+      });
+  },
+);
+router.delete(
+  '/attend',
+  (req, res) => {
+    const {
+      eventId,
+      attendId,
+    } = req.body;
+    Event.updateOne({
+      _id: eventId,
+    }, {
+      $pull: {
+        attendees: {
+          id: mongoose.Types.ObjectId(attendId),
+        },
+      },
+    }).exec()
       .then(() => res.json({
         success: true,
       }))

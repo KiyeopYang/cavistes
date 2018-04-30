@@ -3,7 +3,7 @@ import { withStyles } from 'material-ui/styles';
 
 const styles = {
   children: {
-    maxWidth: 1000,
+    maxWidth: 750,
     margin: 'auto',
   },
 };

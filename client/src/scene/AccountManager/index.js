@@ -27,20 +27,6 @@ class Login extends React.Component {
         })
     }
   }
-  handleLogin = (data) => {
-    this.props.loginRequest(data)
-      .then(() => {
-        if (this.props.login.status === 'FAILURE') {
-          throw this.props.login.error;
-        } else {
-          this.props.onClose();
-          this.props.authRequest();
-        }
-      })
-      .catch((error) => {
-        this.props.noticeDialogOn(error);
-      })
-  };
   render() {
     const {
       open,

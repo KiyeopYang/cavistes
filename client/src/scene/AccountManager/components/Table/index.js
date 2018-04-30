@@ -18,12 +18,12 @@ import Tooltip from 'material-ui/Tooltip';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from 'material-ui/styles/colorManipulator';
+import Button from 'material-ui/Button';
 
 const columnData = [
   { id: 'type', numeric: false, disablePadding: true, label: '타입' },
   { id: 'name', numeric: false, disablePadding: false, label: '이름' },
   { id: 'phone', numeric: false, disablePadding: false, label: '전화번호' },
-  { id: 'shopName', numeric: false, disablePadding: false, label: '매장 이름' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -178,11 +178,11 @@ class EnhancedTable extends React.Component {
                     key={n.id}
                   >
                     <TableCell padding="none">
-                      { n.type === 'shop' ? '매장' : n.type === 'manager' ? '관리자' : '일반'}
+                      { n.type === 'sponsor' ? '주최자' : n.type === 'manager' ? '관리자' : '일반'}
                     </TableCell>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.phone}</TableCell>
-                    <TableCell>{n.shop ? n.shop.name : ''}</TableCell>
+                    <TableCell><Button>ABC</Button></TableCell>
                   </TableRow>
                 );
               })}

@@ -18,12 +18,10 @@ const styles = theme => ({
     fontSize: 24,
     [theme.breakpoints.down('sm')]: {
       fontSize: 16,
-      [theme.breakpoints.down('sm')]: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        paddingLeft: 20,
-        paddingRight: 20,
-      },
+      paddingTop: 10,
+      paddingBottom: 10,
+      paddingLeft: 20,
+      paddingRight: 20,
     },
   },
   paragraph: {

@@ -31,6 +31,7 @@ class Event extends React.Component {
           handleClick={handleClick}
           datetimes={event.datetimes}
           images={event.images}
+          replyNum={event.reply.length}
         />
         <Content
           handleClick={handleClick}

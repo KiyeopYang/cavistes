@@ -11,10 +11,10 @@ const styles = {
 };
 class Title extends React.Component {
   render() {
-    const { classes } = this.props;
+    const { classes, handleClick } = this.props;
     return (
       <div className={classes.root}>
-        <IconButton>
+        <IconButton onClick={handleClick}>
           <MoreIcon style={{ fontSize: 36 }}/>
         </IconButton>
       </div>

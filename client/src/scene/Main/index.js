@@ -9,7 +9,7 @@ import {
 import { push } from 'react-router-redux';
 import Button from 'material-ui/Button';
 import Typography from 'material-ui/Typography';
-import { Element } from 'react-scroll';
+import { Element, animateScroll } from 'react-scroll';
 import EventCalendarModal from '../../components/EventCalendarModal';
 import Layout from '../../components/Layout';
 import Title from './components/Title';
@@ -29,9 +29,6 @@ class Main extends React.Component {
     };
     this.props.getServiceRequest();
     this.props.getEventRequest()
-      .then((res) => {
-        console.log(this.props.getEvent);
-      })
   }
   handleCalendar = (datetimes) => {
     this.setState({
@@ -40,7 +37,15 @@ class Main extends React.Component {
     });
   };
   handleEventClick = (id) => {
+    animateScroll.scrollToTop({
+      smooth: false,
+      duration: 0,
+    });
     this.props.push(`/detail/${id}`);
+  };
+  handleClickMore = () => {
+    const { getEvent } = this.props;
+    this.props.getEventRequest(getEvent.page + 1);
   };
   handleTitleImageUpdate = (images) => {
     this.props.updateServiceRequest({
@@ -89,7 +94,7 @@ class Main extends React.Component {
               handleClick={this.handleEventClick}
             />
           </Element>
-          <More />
+          <More handleClick={this.handleClickMore}/>
         </Layout>
         <Element name="contact">
           <Contact/>

@@ -21,6 +21,7 @@ const initialState = {
   getEvent: {
     status: 'INIT',
     event: [],
+    page: 0,
   },
   getEventById: {
     status: 'INIT',
@@ -47,12 +48,20 @@ export default (state = initialState, action) => {
         },
       });
     case GET_EVENT_SUCCESS:
-      return update(state, {
-        getEvent: {
-          status: { $set: 'SUCCESS' },
-          event: { $set: action.event },
-        },
-      });
+      return update(state, action.page === 0 ?
+        {
+          getEvent: {
+            status: { $set: 'SUCCESS' },
+            event: { $set: action.event },
+            page: { $set: 0 },
+          },
+        }:{
+          getEvent: {
+            status: { $set: 'SUCCESS' },
+            event: { $push: action.event },
+            page: { $set: action.page },
+          },
+        });
     case GET_EVENT_FAILURE:
       return update(state, {
         getEvent: {

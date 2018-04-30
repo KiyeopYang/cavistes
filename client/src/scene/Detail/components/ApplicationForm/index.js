@@ -66,6 +66,7 @@ class ApplicationForm extends React.Component {
       onClose,
       auth,
       event,
+      onSubmit,
     } = this.props;
     const {
       view,
@@ -93,6 +94,9 @@ class ApplicationForm extends React.Component {
                 } else {
                   this.setState({
                     view: 'bank',
+                  });
+                  this.props.onSubmit({
+                    orderMethod: '무통장입금',
                   });
                 }
               }}

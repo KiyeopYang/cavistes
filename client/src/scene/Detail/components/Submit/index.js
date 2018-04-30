@@ -14,8 +14,8 @@ class Submit extends React.Component {
   render() {
     const {
       classes,
-      children,
       onSubmit,
+      alreadySubmitted,
     } = this.props;
     return (
       <Button
@@ -27,7 +27,10 @@ class Submit extends React.Component {
         fullWidth
         onClick={onSubmit}
       >
-        신청하기
+        {
+          alreadySubmitted ?
+            '신청됨' : '신청하기'
+        }
       </Button>
     );
   }

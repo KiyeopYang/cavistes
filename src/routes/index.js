@@ -4,6 +4,7 @@ import post from './post';
 import uploads from './uploads';
 import service from './service';
 import event from './event';
+import attendance from './attendace';
 
 const router = express.Router();
 
@@ -12,5 +13,6 @@ router.use('/post', post);
 router.use('/uploads', uploads);
 router.use('/service', service);
 router.use('/event', event);
+router.use('/attendance', attendance);
 
 export default router;

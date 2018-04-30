@@ -2,6 +2,7 @@ import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Block from './components/Block';
+import Reply from './components/Reply';
 import EventCalendar from '../../../../components/EventCalendar';
 import LocationMap from '../../../../components/LocationMap';
 
@@ -10,6 +11,7 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       padding: 20,
     },
+    paddingBottom: 20,
   },
   calendar: {
     margin: 'auto',
@@ -18,7 +20,13 @@ const styles = theme => ({
 });
 class Content extends React.Component {
   render() {
-    const { classes, event } = this.props;
+    const {
+      classes,
+      event,
+      handleReplySubmit,
+      handleReplyRemove,
+      account,
+    } = this.props;
     let datetimeText = '';
     event.datetimes.forEach((o) => {
       const year = o.getUTCFullYear();
@@ -82,6 +90,16 @@ class Content extends React.Component {
           <Typography><strong>전화번호</strong>{` : ${event.sponsor.phone}`}</Typography>
           <Typography><strong>이메일</strong>{` : ${event.sponsor.email}`}</Typography>
         </Block>
+        {
+          event.replyOn ?
+            <Reply
+              reply={event.reply}
+              handleSubmit={handleReplySubmit}
+              handleRemove={handleReplyRemove}
+              account={account}
+            /> :
+            null
+        }
       </div>
     )
   }

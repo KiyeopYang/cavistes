@@ -5,14 +5,7 @@ import Gallery from 'react-fine-uploader'
 
 // ...or load this specific CSS file using a <link> tag in your document
 import 'react-fine-uploader/gallery/gallery.css'
-
-
-const isFileGone = status => {
-  return [
-    'canceled',
-    'deleted',
-  ].indexOf(status) >= 0
-};
+import './styles.css';
 
 class UploadComponent extends Component {
   constructor(props) {
@@ -41,9 +34,19 @@ class UploadComponent extends Component {
   render() {
     return (
       <Gallery
-        fileInput-children={<span>업로드</span>}
+        fileInput-accept="image/*"
+        fileInput-children={<span>이미지 업로드</span>}
+        dropzone-disabled
+        status-text={{
+          uploading: '업로드 중',
+          upload_failed: '실패',
+          upload_successful: '업로드 완료',
+          retrying_upload: '재시도 중',
+        }}
         uploader={ this.uploader }
-      />
+      >
+        <span/>
+      </Gallery>
     )
   }
 }

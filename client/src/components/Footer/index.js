@@ -4,6 +4,8 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import IconButton from 'material-ui/IconButton';
 import MapIcon from '@material-ui/icons/Map';
+import Button from 'material-ui/Button';
+import TermModal from './components/TermModal';
 
 const styles = theme => ({
   root: {
@@ -55,9 +57,17 @@ const styles = theme => ({
   icon: {
     color: 'white',
   },
+  footerBtn: {
+    color: 'white',
+    cursor: 'pointer',
+  },
 });
 class Footer extends React.Component {
+  state = {
+    isTermModalOpen: false,
+  };
   render() {
+    const { isTermModalOpen } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
@@ -70,15 +80,23 @@ class Footer extends React.Component {
             </Typography>
             <div>
               <Typography
+                className={classes.footerBtn}
+                onClick={() => this.setState({
+                  isTermModalOpen: true,
+                })}
+              >
+                개인정보취급방침 및 이용약관
+              </Typography>
+              <Typography
                 className={classes.info}
               >
-                서울시 강남구 대치동 949번지 수암빌딩 1층, 디비알디코리아(대표: 이민우), 02-565-2223
+                서울시 강남구 대치동 949번지 수암빌딩 1층, 디비알디코리아
               </Typography>
               <Typography className={classes.info}>
-                9, Yeongdong-daero 75-gil, Gangnam-gu, Seoul, Republic of Korea
+                9, Yeongdong-daero 75-gil, Gangnam-gu,  Seoul, Republic of Korea
               </Typography>
               <Typography className={classes.info}>
-                사업자등록번호: 120-12-14999
+                대표 : 이민우 / 전화 : 02-565-2223 / 사업자번호 : 120-12-14999
               </Typography>
             </div>
           </div>
@@ -91,6 +109,12 @@ class Footer extends React.Component {
             </IconButton>
           </a>
         </div>
+        <TermModal
+          open={isTermModalOpen}
+          onClose={() => this.setState({
+            isTermModalOpen: false,
+          })}
+        />
       </div>
     )
   }

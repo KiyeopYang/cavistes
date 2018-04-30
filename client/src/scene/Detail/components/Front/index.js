@@ -5,12 +5,14 @@ import Slider from 'react-slick';
 const styles = {
   root: {
     textAlign: 'center',
-    paddingBottom: 40,
     overflow: 'hidden',
   },
   img: {
     width: '100%',
     height: 'auto',
+  },
+  slider: {
+    marginBottom: 35,
   },
 };
 class Front extends React.Component {
@@ -26,7 +28,10 @@ class Front extends React.Component {
     };
     return (
       <div className={classes.root}>
-        <Slider {...settings}>
+        <Slider
+          className={classes.slider}
+          {...settings}
+        >
           {
             images.map(o => (
               <img key={o.path} className={classes.img} src={o.path} />

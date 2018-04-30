@@ -45,9 +45,9 @@ const styles = theme => ({
     padding: 0,
   },
   dummyDiv: {
-    height: 112,
-    [theme.breakpoints.down('md')]: {
-      height: 92,
+    height: 94,
+    [theme.breakpoints.down('sm')]: {
+      height: 80,
     },
   },
   user: {
@@ -150,7 +150,10 @@ class Header extends React.Component {
                     {
                       user.type === 'default' ?
                         <MenuItem
-                          onClick={this.handleMenuClose('userAnchorEl')}
+                          onClick={() => {
+                            this.handleMenuClose('userAnchorEl')();
+                            onClickUserMenu('accountAttendance');
+                          }}
                         >
                           참여내역
                         </MenuItem> :
