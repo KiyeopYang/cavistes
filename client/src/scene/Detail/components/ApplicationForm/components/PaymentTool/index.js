@@ -34,18 +34,6 @@ class PaymentTool extends React.Component {
           variant="raised"
           onClick={(e) => {
             e.preventDefault();
-            handleNext('card');
-          }}
-        >
-          카드 결제
-        </Button>
-        <Button
-          className={classes.button}
-          fullWidth
-          color="primary"
-          variant="raised"
-          onClick={(e) => {
-            e.preventDefault();
             handleNext('bank');
           }}
         >
@@ -53,6 +41,40 @@ class PaymentTool extends React.Component {
         </Button>
       </Fragment>
     );
+    // return (
+    //   <Fragment>
+    //     <Typography
+    //       className={classes.title}
+    //       align="center"
+    //     >
+    //       결제 수단을 선택하십시요.
+    //     </Typography>
+    //     <Button
+    //       className={classes.button}
+    //       fullWidth
+    //       color="primary"
+    //       variant="raised"
+    //       onClick={(e) => {
+    //         e.preventDefault();
+    //         handleNext('card');
+    //       }}
+    //     >
+    //       카드 결제
+    //     </Button>
+    //     <Button
+    //       className={classes.button}
+    //       fullWidth
+    //       color="primary"
+    //       variant="raised"
+    //       onClick={(e) => {
+    //         e.preventDefault();
+    //         handleNext('bank');
+    //       }}
+    //     >
+    //       무통장입금
+    //     </Button>
+    //   </Fragment>
+    // );
   }
 }
 export default withStyles(styles)(PaymentTool);

@@ -4,6 +4,7 @@ import noticeDialog from './noticeDialog/reducer';
 import auth from './auth/reducer';
 import requestPassword from './requestPassword/reducer';
 import event from './event/reducer';
+import service from './service/reducer';
 
 export default combineReducers({
   loader,
@@ -11,4 +12,5 @@ export default combineReducers({
   auth,
   requestPassword,
   event,
+  service,
 });

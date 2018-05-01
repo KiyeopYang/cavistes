@@ -1,9 +1,9 @@
 /* global fetch */
-import loader from '../../../../data/loader/actions';
+import loader from '../loader/actions';
 
-export const GET_SERVICE_WAITING = 'Main/data/service/GET_SERVICE_WAITING';
-export const GET_SERVICE_SUCCESS = 'Main/data/service/GET_SERVICE_SUCCESS';
-export const GET_SERVICE_FAILURE = 'Main/data/service/GET_SERVICE_FAILURE';
+export const GET_SERVICE_WAITING = 'data/service/GET_SERVICE_WAITING';
+export const GET_SERVICE_SUCCESS = 'data/service/GET_SERVICE_SUCCESS';
+export const GET_SERVICE_FAILURE = 'data/service/GET_SERVICE_FAILURE';
 const getServiceWaiting = () => {
   return {
     type: GET_SERVICE_WAITING,
@@ -51,9 +51,9 @@ export const getServiceRequest = () => {
   };
 };
 
-export const UPDATE_SERVICE_WAITING = 'Main/data/service/UPDATE_SERVICE_WAITING';
-export const UPDATE_SERVICE_SUCCESS = 'Main/data/service/UPDATE_SERVICE_SUCCESS';
-export const UPDATE_SERVICE_FAILURE = 'Main/data/service/UPDATE_SERVICE_FAILURE';
+export const UPDATE_SERVICE_WAITING = 'data/service/UPDATE_SERVICE_WAITING';
+export const UPDATE_SERVICE_SUCCESS = 'data/service/UPDATE_SERVICE_SUCCESS';
+export const UPDATE_SERVICE_FAILURE = 'data/service/UPDATE_SERVICE_FAILURE';
 const updateServiceWaiting = () => {
   return {
     type: UPDATE_SERVICE_WAITING,

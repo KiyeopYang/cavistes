@@ -29,7 +29,7 @@ class Submit extends React.Component {
       >
         {
           alreadySubmitted ?
-            '신청됨' : '신청하기'
+            '신청 정보 보기' : '신청하기'
         }
       </Button>
     );

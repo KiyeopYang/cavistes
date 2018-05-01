@@ -1,18 +1,7 @@
 /* global IMP */
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import {
-  Route,
-  withRouter,
-  Redirect,
-} from 'react-router-dom';
-import { push } from 'react-router-redux';
-import * as noticeDialogActions from '../../../../data/noticeDialog/actions';
-import * as authActions from '../../../../data/auth/actions';
 import Layout from './components/Layout';
 import Form from './components/Form';
-import Bank from './components/Bank';
 import PaymentTool from './components/PaymentTool';
 
 class ApplicationForm extends React.Component {
@@ -23,24 +12,11 @@ class ApplicationForm extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    const view = nextProps.view || 'form';
     if (!this.props.open && nextProps.open) {
-      this.setState({ view: 'form' })
+      this.setState({ view });
     }
   }
-  handleLogin = (data) => {
-    this.props.loginRequest(data)
-      .then(() => {
-        if (this.props.login.status === 'FAILURE') {
-          throw this.props.login.error;
-        } else {
-          this.props.onClose();
-          this.props.authRequest();
-        }
-      })
-      .catch((error) => {
-        this.props.noticeDialogOn(error);
-      })
-  };
   handleCardPaymentStart = () => {
     const { event, auth } = this.props;
     IMP.init('imp53268559');
@@ -64,7 +40,7 @@ class ApplicationForm extends React.Component {
     const {
       open,
       onClose,
-      auth,
+      account,
       event,
       onSubmit,
     } = this.props;
@@ -81,7 +57,7 @@ class ApplicationForm extends React.Component {
           view === 'form' ?
             <Form
               event={event}
-              user={auth.account}
+              user={account}
               handleNext={() => this.setState({
                 view: 'paymentTool',
               })}
@@ -92,28 +68,15 @@ class ApplicationForm extends React.Component {
                 if (tool === 'card') {
                   this.handleCardPaymentStart();
                 } else {
-                  this.setState({
-                    view: 'bank',
-                  });
                   this.props.onSubmit({
                     orderMethod: '무통장입금',
                   });
                 }
               }}
-            /> : <Bank onSubmit={onClose} />
+            /> : null
         }
       </Layout>
     );
   }
 }
-const mapStateToProps = state => ({
-  auth: state.data.auth,
-});
-const mapDispatchToProps = dispatch => bindActionCreators({
-  noticeDialogOn: noticeDialogActions.on,
-  authRequest: authActions.request,
-}, dispatch);
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(ApplicationForm));
+export default ApplicationForm;

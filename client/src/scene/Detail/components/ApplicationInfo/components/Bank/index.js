@@ -16,6 +16,7 @@ class Bank extends React.Component {
   render() {
     const {
       classes,
+      bankAccount,
       onSubmit,
     } = this.props;
     return (
@@ -31,26 +32,19 @@ class Bank extends React.Component {
           align="center"
           gutterBottom
         >
-          <strong>은행 : </strong>외환은행
+          <strong>은행 : </strong>{bankAccount.bank}
         </Typography>
         <Typography
           align="center"
           gutterBottom
         >
-          <strong>계좌번호 : </strong>1002-844-033300
+          <strong>계좌번호 : </strong>{bankAccount.number}
         </Typography>
         <Typography
           align="center"
           gutterBottom
         >
-          <strong>예금주 : </strong>양기엽
-        </Typography>
-        <Typography
-          variant="title"
-          align="center"
-          gutterBottom
-        >
-          <strong>현재 상태 : </strong>입금 대기
+          <strong>예금주 : </strong>{bankAccount.name}
         </Typography>
       </Fragment>
     );

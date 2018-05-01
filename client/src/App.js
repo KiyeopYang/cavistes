@@ -30,6 +30,7 @@ import AccountManager from './scene/AccountManager';
 import AccountAttendanceManager from './scene/AccountAttendanceManager';
 import loaderDOM from './modules/loader';
 import AuthRoute from './modules/AuthRoute';
+import * as serviceActions from './data/service/actions';
 
 class App extends React.Component {
   constructor(props) {
@@ -43,6 +44,7 @@ class App extends React.Component {
     };
     loaderDOM(this.props.loaderState);
     this.props.authRequest();
+    this.props.getServiceRequest();
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.loaderState !== nextProps.loaderState) {
@@ -183,6 +185,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   noticeDialogOn: noticeDialogActions.on,
   noticeDialogOff: noticeDialogActions.off,
   loader,
+  getServiceRequest: serviceActions.getServiceRequest,
   authRequest: authActions.request,
   logout: authActions.logout,
 }, dispatch);

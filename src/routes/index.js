@@ -4,7 +4,7 @@ import post from './post';
 import uploads from './uploads';
 import service from './service';
 import event from './event';
-import attendance from './attendace';
+import attendance from './attendance';
 
 const router = express.Router();
 

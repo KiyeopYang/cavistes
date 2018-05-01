@@ -6,9 +6,11 @@ const Service = new Schema({
     type: Array,
     default: [],
   },
-  accountBank: String,
-  accountNumber: String,
-  accountName: String,
+  bankAccount: {
+    number: String,
+    bank: String,
+    name: String,
+  },
 });
 
 const model = mongoose.model('service', Service);

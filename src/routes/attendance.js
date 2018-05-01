@@ -143,4 +143,13 @@ router.delete(
       });
   },
 );
+router.get(
+  '/attendance/payment/bank',
+  (req, res) => {
+    const { params, query } = req;
+    console.log(params);
+    console.log(query);
+    res.send('OK').end();
+  },
+);
 export default router;

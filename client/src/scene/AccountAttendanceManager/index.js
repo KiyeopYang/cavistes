@@ -38,8 +38,6 @@ class AccountAttendanceManager extends React.Component {
       duration: 0,
     });
     this.props.onClose();
-    console.log(attendance);
-    console.log(this.props);
     this.props.push(`/detail/${attendance.eventId._id}`);
   };
   render() {
@@ -60,13 +58,13 @@ class AccountAttendanceManager extends React.Component {
             const date = new Date(o.eventId.datetimes[0]);
             const len = o.eventId.datetimes.length;
             return {
+              ...o,//
               title: o.eventId.title,
               datetime: `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분 (${len}회)`,
               price: o.eventId.price,
               orderMethod: o.orderMethod,
               status: o.status,
-              ...o,
-            }
+            };
           })}
         />
       </Layout>

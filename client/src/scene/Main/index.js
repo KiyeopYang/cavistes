@@ -16,9 +16,9 @@ import Title from './components/Title';
 import Events from './components/Events';
 import Contact from './components/Contact';
 import More from './components/More';
-import * as serviceActions from './data/service/actions';
 import * as noticeDialogActions from '../../data/noticeDialog/actions';
 import * as eventActions from '../../data/event/actions';
+import * as serviceActions from '../../data/service/actions';
 
 class Main extends React.Component {
   constructor(props) {
@@ -27,7 +27,6 @@ class Main extends React.Component {
       isModalOpen: false,
       selectedEvent: [],
     };
-    this.props.getServiceRequest();
     this.props.getEventRequest()
   }
   handleCalendar = (datetimes) => {
@@ -110,8 +109,8 @@ class Main extends React.Component {
 }
 const mapStateToProps = state => ({
   auth: state.data.auth,
-  getService: state.Main.data.service.getService,
-  updateService: state.Main.data.service.updateService,
+  getService: state.data.service.getService,
+  updateService: state.data.service.updateService,
   getEvent: state.data.event.getEvent,
   addEvent: state.data.event.addEvent,
   updateEvent: state.data.event.updateEvent,

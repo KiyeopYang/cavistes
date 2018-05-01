@@ -18,7 +18,7 @@ const initialState = {
   },
 };
 
-export const reducer = (state = initialState, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case GET_SERVICE_WAITING:
       return update(state, {
@@ -37,7 +37,6 @@ export const reducer = (state = initialState, action) => {
       return update(state, {
         getService: {
           status: { $set: 'FAILURE' },
-          service: { $set: undefined },
         },
       });
     case UPDATE_SERVICE_WAITING:

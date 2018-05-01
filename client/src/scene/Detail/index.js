@@ -19,6 +19,7 @@ import Layout from './components/Layout';
 import Title from './components/Title';
 import Submit from './components/Submit';
 import ApplicationForm from './components/ApplicationForm';
+import ApplicationInfo from './components/ApplicationInfo';
 import {
   addReplyRequest,
   removeReplyRequest,
@@ -33,6 +34,7 @@ class Detail extends React.Component {
     super(props);
     this.state = {
       isApplicationFormModalOpen: false,
+      isApplicationInfoModalOpen: false,
     };
     const { match } = this.props;
     if (match.params.id) {
@@ -76,10 +78,15 @@ class Detail extends React.Component {
       eventId: event.id,
       price: event.price,
       orderMethod,
+      status: orderMethod === '무통장입금' ? '입금대기' : '결제완료',
     })
       .then(() => {
         this.props.getEventByIdRequest(getEventById.event.id);
         this.props.noticeDialogOn('신청되었습니다.');
+        this.setState({
+          isApplicationFormModalOpen: false,
+          isApplicationInfoModalOpen: true,
+        });
       })
       .catch(console.error);
   };
@@ -88,7 +95,9 @@ class Detail extends React.Component {
     if (!auth.account || auth.account.type !== 'default') {
       noticeDialogOn('일반 회원으로 로그인을 해 주십시요.');
     } else if(this.isAlreadySubmitted()) {
-      noticeDialogOn('이미 신청되었습니다. 상단의 이메일을 클릭하여 세부 사항을 확인 해 주십시요.');
+      this.setState({
+        isApplicationInfoModalOpen: true,
+      });
     } else {
       this.setState({
         isApplicationFormModalOpen: true,
@@ -104,9 +113,11 @@ class Detail extends React.Component {
     const {
       auth,
       getEventById,
+      getService,
     } = this.props;
     const {
       isApplicationFormModalOpen,
+      isApplicationInfoModalOpen,
     } = this.state;
     const { event } = getEventById;
     if (!event) return null;
@@ -137,11 +148,21 @@ class Detail extends React.Component {
           />
         }
         <ApplicationForm
+          account={auth.account}
           open={isApplicationFormModalOpen}
           event={event}
           onSubmit={this.handleAttendanceSubmit}
           onClose={() => this.setState({
             isApplicationFormModalOpen: false,
+          })}
+        />
+        <ApplicationInfo
+          open={isApplicationInfoModalOpen}
+          event={event}
+          info={event.attendees.find(o => o.accountId === auth.account.id)}
+          bankAccount={getService.service && getService.service.bankAccount}
+          onClose={() => this.setState({
+            isApplicationInfoModalOpen: false,
           })}
         />
       </Fragment>
@@ -150,6 +171,7 @@ class Detail extends React.Component {
 }
 const mapStateToProps = state => ({
   auth: state.data.auth,
+  getService: state.data.service.getService,
   getEventById: state.data.event.getEventById,
   addReply: state.Detail.data.reply.addReply,
   removeReply: state.Detail.data.reply.removeReply,
