@@ -2,6 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import IconEvent from '@material-ui/icons/Event';
+import IconPrice from '@material-ui/icons/AttachMoney';
+import IconMap from '@material-ui/icons/Map';
+import IconGroup from '@material-ui/icons/Group';
 
 const styles = theme => ({
   root: {
@@ -27,6 +31,7 @@ const styles = theme => ({
   },
   subHeading: {
     fontSize: 18,
+    display: 'flex',
     [theme.breakpoints.down('sm')]: {
       fontSize: 16,
     },
@@ -43,6 +48,18 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       height: 'auto',
     },
+  },
+  smallIcon: {
+    marginRight: theme.spacing.unit,
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
+    fontSize: 30,
+  },
+  iconTextWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 50,
   },
 });
 class Content extends React.Component {
@@ -62,10 +79,10 @@ class Content extends React.Component {
             <strong>{event.title}</strong>
           </Typography>
           <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
-            <strong>{`참가비 ${event.price}원`}</strong>
+            <IconPrice className={classes.smallIcon}/><strong>{`참가비 ${event.price}원`}</strong>
           </Typography>
           <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
-            <strong>{event.shop.name}</strong>
+            <IconMap className={classes.smallIcon}/><strong>{event.shop.name}</strong>
           </Typography>
         </div>
         <div style={{ height: 130, overflowY: 'scroll' }}>
@@ -77,17 +94,19 @@ class Content extends React.Component {
             {event.subTitle}
           </Typography>
         </div>
-        <div style={{ height: 50 }}>
+        <div className={classes.iconTextWrapper}>
           <Typography
             variant="headline"
             align="right"
             className={classes.redText}
-            gutterBottom
+            style={{flexGrow: 1}}
           >
             {
-              `${event.attendees.length}/${event.maxPeople}명 신청`
+              `${event.attendees.length}/${event.maxPeople}명`
             }
           </Typography>
+          <IconGroup color="primary" className={classes.icon}/>
+
         </div>
       </div>
     )
