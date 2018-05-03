@@ -198,7 +198,7 @@ class EnhancedTable extends React.Component {
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
+          labelRowsPerPage="행 개수"           backIconButtonProps={{
             'aria-label': 'Previous Page',
           }}
           nextIconButtonProps={{
