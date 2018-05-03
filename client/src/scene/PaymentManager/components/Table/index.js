@@ -153,7 +153,7 @@ class EnhancedTable extends React.Component {
                     key={n.id}
                   >
                     <TableCell padding="dense">{n.datetime}</TableCell>
-                    <TableCell padding="dense">{n.name}</TableCell>
+                    <TableCell padding="dense">{n.nameForPayment}</TableCell>
                     <TableCell padding="dense">{n.price}</TableCell>
                   </TableRow>
                 );

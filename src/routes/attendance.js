@@ -228,13 +228,16 @@ router.get(
             datetime: new Date(paydt),
           })
             .save()
-            .then(() => {
+            .then((result) => {
               return Attendance.updateOne({
-                nameForPament: name,
+                nameForPayment: name,
                 price,
                 status: '입금대기',
               }, {
-                $set: { status: '입금완료' },
+                $set: {
+                  status: '입금완료',
+                  paymentId: result._id,
+                },
               })
                 .exec()
                 .then(() => {

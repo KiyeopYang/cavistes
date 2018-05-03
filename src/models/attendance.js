@@ -10,6 +10,10 @@ const Attendance = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'event',
   },
+  paymentId: {
+    type: Schema.Types.ObjectId,
+    ref: 'payment',
+  },
   name: String,
   nameForPayment: String,
   phone: String,
