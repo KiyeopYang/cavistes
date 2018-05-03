@@ -7,6 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { push } from 'react-router-redux';
+import MetaTags from 'react-meta-tags';
 import {
   getEventByIdRequest,
 } from '../../data/event/actions';
@@ -144,7 +145,7 @@ class Detail extends React.Component {
   handleUpdate = (input) => {
     const { getEventById, noticeDialogOn, auth } = this.props;
     const { event } = getEventById;
-    input.sponsor.id = auth.account && auth.account.id;
+    input.sponsor = event.sponsor;
     this.props.updateEventRequest(event.id, input)
       .then(() => {
         noticeDialogOn('수정되었습니다.');
@@ -187,6 +188,14 @@ class Detail extends React.Component {
     }
     return (
       <Fragment>
+        <MetaTags>
+          <title>Cavistes</title>
+          <meta name="description" content={event.subTitle} />
+          <meta property="og:title" content={event.title} />
+          { event.images.length ?
+            <meta property="og:image" content={event.images[0].path} /> : null
+          }
+        </MetaTags>
         <Layout>
           <Front
             images={event.images}

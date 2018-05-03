@@ -19,13 +19,19 @@ class Form extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.user.name,
+      name: this.props.user.name.replace(/\s/g,''),
       phone: this.props.user.phone,
     };
   }
-  handleChange = name => e => this.setState({
-    [name]: e.target.value,
-  });
+  handleChange = name => e => {
+    let value = e.target.value;
+    if (name === 'name') {
+      value = value.replace(/\s/g,'');
+    }
+    this.setState({
+      [name]: value,
+    });
+  }
   handleSubmit = () => {
     this.props.handleSubmit(this.state);
   };
@@ -89,6 +95,7 @@ class Form extends React.Component {
           </Typography>
           <TextField
             label="신청자 이름 (입금자명)"
+            helperText="공백이 있으면 안됩니다."
             fullWidth
             margin="dense"
             onChange={this.handleChange('name')}
