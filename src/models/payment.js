@@ -5,7 +5,7 @@ const Payment = new Schema({
   bankCode: Number,
   bankName: String,
   bankAccount: String,
-  name: String,
+  nameForPayment: String,
   price: String,
   datetime: Date,
 });

@@ -7,7 +7,7 @@ import {
   remove,
 } from '../lib/fileManager';
 
-const MAX_FILE_SIZE = 1024 * 1024 * 5; // 10MB
+const MAX_FILE_SIZE = 1024 * 1024 * 10; // 10MB
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, `${IMAGE_PATH}`);

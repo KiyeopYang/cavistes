@@ -45,7 +45,7 @@ class PaymentManager extends React.Component {
             const date = new Date(o.datetime);
             return {
               ...o,
-              datetime: `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분)`,
+              datetime: `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`,
             };
           })}
         />

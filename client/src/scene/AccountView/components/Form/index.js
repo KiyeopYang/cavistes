@@ -317,7 +317,7 @@ class Form extends React.Component {
             fullWidth
             disabled={!managerMode || attendanceMode}
           >
-            <FormLabel component="legend">생년월일</FormLabel>
+            <FormLabel component="legend">생년월일 (미입력시 가입일)</FormLabel>
             <div>
               <FormControl
                 className={classes.birthForm}

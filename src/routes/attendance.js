@@ -210,28 +210,44 @@ router.get(
   (req, res) => {
     const { query } = req;
     const { bankcode, account, price, name, paydt } = query;
-    new Payment({
-      bankCode: bankcode,
-      bankName: BANKS.find(o => parseInt(bankcode) === o.code).name,
+    const datetime = new Date(paydt);
+    Payment.findOne({
       bankAccount: account,
       price,
       nameForPayment: name,
-      datetime: new Date(paydt),
+      datetime,
     })
-      .save()
-      .exec()
-      .then(() => {
-        return Attendance.updateOne({
-          name,
-          price,
-          status: '입금대기',
-        }, {
-          $set: { status: '입금완료' },
-        })
-          .exec()
-          .then(() => {
-            res.send('OK').end();
-          });
+      .then((result) => {
+        if (!result) {
+          new Payment({
+            bankCode: bankcode,
+            bankName: BANKS.find(o => parseInt(bankcode) === o.code).name,
+            bankAccount: account,
+            price,
+            nameForPayment: name,
+            datetime: new Date(paydt),
+          })
+            .save()
+            .then(() => {
+              return Attendance.updateOne({
+                nameForPament: name,
+                price,
+                status: '입금대기',
+              }, {
+                $set: { status: '입금완료' },
+              })
+                .exec()
+                .then(() => {
+                  res.send('OK').end();
+                });
+            })
+            .catch((error) => {
+              console.error(error);
+              res.send('OK').end();
+            });
+        } else {
+          res.send('OK').end();
+        }
       })
       .catch((error) => {
         console.error(error);
