@@ -5,7 +5,7 @@ import Button from 'material-ui/Button';
 const styles = {
   root: {
     height: 50,
-    zIndex: 1000,
+    zIndex: 2000,
     position: 'fixed',
     bottom: 0,
   },

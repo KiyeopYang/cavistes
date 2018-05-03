@@ -27,7 +27,7 @@ const styles = theme => ({
     paddingBottom: 8,
     cursor: 'pointer',
     [theme.breakpoints.up('sm')]: {
-      fontSize: 32,
+      fontSize: 26,
     },
     [theme.breakpoints.down('sm')]: {
       fontSize: 20,
@@ -194,14 +194,15 @@ class Header extends React.Component {
               }
             </Toolbar>
           </AppBar>
-          <AppBar position="static" color="default">
+          <AppBar position="static" color="white">
             <Toolbar classes={{ root: classes.toolbar}}>
+              <img width={50} src="caviste.PNG"/>
               <Typography
                 color="inherit"
                 className={classNames(classes.flex, classes.title)}
                 onClick={() => onClick('about')}
               >
-                CAVISTES
+                카비스트 와인&치즈 아카데미
               </Typography>
               <Hidden smDown>
                 <Button
@@ -233,12 +234,6 @@ class Header extends React.Component {
                   onClick={() => onClick('event')}
                 >
                   이벤트
-                </Button>
-                <Button
-                  size="large"
-                  onClick={() => onClick('contact')}
-                >
-                  문의
                 </Button>
               </Hidden>
               <Hidden mdUp>
@@ -303,14 +298,6 @@ class Header extends React.Component {
                     }}
                   >
                     이벤트
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleMenuClose('menuAnchorEl');
-                      onClick('contact');
-                    }}
-                  >
-                    문의
                   </MenuItem>
                 </Menu>
               </Hidden>

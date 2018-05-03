@@ -21,7 +21,7 @@ import { lighten } from 'material-ui/styles/colorManipulator';
 import Button from 'material-ui/Button';
 
 const columnData = [
-  { id: 'title', numeric: false, disablePadding: true, label: '제목' },
+  { id: 'title', numeric: false, disablePadding: true, label: '' },
 ];
 
 class EnhancedTableHead extends React.Component {

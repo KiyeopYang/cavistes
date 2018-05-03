@@ -73,12 +73,7 @@ class Footer extends React.Component {
       <div className={classes.root}>
         <div className={classes.footer}>
           <div className={classes.flex}>
-            <Typography
-              className={classNames(classes.title)}
-            >
-              CAVISTES
-            </Typography>
-            <div>
+            <div style={{ paddingTop: 16 }}>
               <Typography
                 className={classes.footerBtn}
                 onClick={() => this.setState({
@@ -97,6 +92,9 @@ class Footer extends React.Component {
               </Typography>
               <Typography className={classes.info}>
                 대표 : 이민우 / 전화 : 02-565-2223 / 사업자번호 : 120-12-14999
+              </Typography>
+              <Typography className={classes.info}>
+                cavistes@cavistes.co.kr
               </Typography>
             </div>
           </div>

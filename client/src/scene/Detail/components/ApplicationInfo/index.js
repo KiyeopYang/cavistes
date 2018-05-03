@@ -38,7 +38,7 @@ class ApplicationInfo extends React.Component {
         >
           {
             info.status === '입금대기' ?
-              '취소 요청' : info.status === '결제완료' ? '취소는 전화로 문의부탁드립니다.' : '취소 완료'
+              '취소 요청' : info.status === '입금완료' ? '취소는 전화로 문의부탁드립니다.' : '취소 완료'
           }
         </Button>
       </Layout>

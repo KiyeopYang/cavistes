@@ -5,11 +5,16 @@ import Button from 'material-ui/Button';
 import SettingIcon from '@material-ui/icons/Settings';
 import ImageUploaderModal from '../../../../components/ImageUploaderModal';
 
-const styles = {
+const styles = theme => ({
   root: {
     textAlign: 'center',
     paddingBottom: 40,
     overflow: 'hidden',
+    width: 550,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+    },
+    margin: 'auto',
   },
   img: {
     width: '100%',
@@ -20,7 +25,7 @@ const styles = {
     textAlign: 'left',
     padding: 4,
   },
-};
+});
 class Title extends React.Component {
   constructor(props) {
     super(props);

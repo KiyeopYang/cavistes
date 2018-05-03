@@ -97,9 +97,6 @@ class Main extends React.Component {
           </Element>
           <More handleClick={this.handleClickMore}/>
         </Layout>
-        <Element name="contact">
-          <Contact/>
-        </Element>
         <EventCalendarModal
           selectedEvent={selectedEvent}
           open={isModalOpen}
