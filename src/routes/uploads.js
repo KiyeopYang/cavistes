@@ -7,7 +7,7 @@ import {
   remove,
 } from '../lib/fileManager';
 
-const MAX_FILE_SIZE = 1024 * 1024 * 10; // 10MB
+const MAX_FILE_SIZE = 1024 * 1024 * 100; // 100MB
 const storage = multer.diskStorage({
   destination(req, file, cb) {
     cb(null, `${IMAGE_PATH}`);
@@ -19,7 +19,6 @@ const storage = multer.diskStorage({
 // const storage = multer.memoryStorage();
 const upload = multer({
   storage,
-  limits: { fileSize: MAX_FILE_SIZE },
   fileFilter: function (req, file, callback) {
     const ext = path.extname(file.originalname).toLowerCase();
     if(ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
@@ -37,6 +36,7 @@ router.post('/img', (req, res) => {
   };
   upload(req, res, (err) => {
     if (err) {
+      console.error(err);
       failWithTooBigFile(responseData, res);
     } else {
       const { qqfilename, qquuid } = req.body;

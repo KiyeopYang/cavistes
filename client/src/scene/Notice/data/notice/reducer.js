@@ -43,7 +43,7 @@ export default (state = initialState, action) => {
       return update(state,{
           getNotice: {
             status: { $set: 'SUCCESS' },
-            notice: { $push: action.notice },
+            notice: { $set: action.notice },
           },
         });
     case GET_NOTICE_FAILURE:
