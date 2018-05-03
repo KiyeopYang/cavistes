@@ -196,7 +196,7 @@ class Header extends React.Component {
           </AppBar>
           <AppBar position="static" color="white">
             <Toolbar classes={{ root: classes.toolbar}}>
-              <img width={50} src="caviste.PNG"/>
+              <img width={50} src="/caviste.PNG"/>
               <Typography
                 color="inherit"
                 className={classNames(classes.flex, classes.title)}
