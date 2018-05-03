@@ -67,14 +67,13 @@ const removeAttendanceFailure = (error) => {
     error,
   };
 };
-export const removeAttendanceRequest = (input) => {
+export const removeAttendanceRequest = (id) => {
   return (dispatch) => {
     dispatch(loader(true));
     dispatch(removeAttendanceWaiting());
-    return fetch(`/api/event/attendance`, {
+    return fetch(`/api/attendance/${id}`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input),
     })
       .then((res) => {
         console.log(res);

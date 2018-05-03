@@ -64,16 +64,13 @@ const styles = theme => ({
     marginTop: 16,
   },
 });
-const BANKS = [
-  '국민은행', '신한은행', '기업은행', '우리은행', '농협', '스탠다드차타드', '하나은행',
-];
+
 class Form extends React.Component {
   constructor(props) {
     super(props);
     const now = new Date();
     const { user } = this.props;
     const userBirth = new Date(user.birth);
-    const shop = user.shop;
     this.state = {
       type: user.type,
       email: user.email,
@@ -81,21 +78,17 @@ class Form extends React.Component {
       name: user.name,
       phone: user.phone,
       gender: user.gender,
+      work: user.work,
+      house: user.house,
       birthYear: userBirth.getUTCFullYear(),
       birthYearInputs:
         Array.apply(null, { length: 100 }).map(Number.call, i => now.getUTCFullYear() - Number(i)),
-      birthMonth: userBirth.getMonth(),
+      birthMonth: userBirth.getUTCMonth(),
       birthMonthInputs: [
         1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
       ],
       birthDate: userBirth.getDate(),
-      shopName: shop ? shop.name : '',
-      shopLocation: shop ? shop.location : '',
-      shopLocationDetail: shop ? shop.locationDetail : '',
-      shopPhone: shop ? shop.phone : '',
-      shopAccountBank: shop ? shop.accountBank : '',
-      shopAccountNumber: shop ? shop.accountNumber : '',
-      shopAccountName: shop ? shop.accountName : '',
+      level: user.level,
       isLocationMapFinderOpen: false,
       isPasswordConfirmed: false,
     };
@@ -121,13 +114,8 @@ class Form extends React.Component {
       birthYear,
       birthMonth,
       birthDate,
-      shopName,
-      shopLocation,
-      shopLocationDetail,
-      shopPhone,
-      shopAccountBank,
-      shopAccountNumber,
-      shopAccountName,
+      work,
+      house,
     } = this.state;
     this.props.handleModify({
       name,
@@ -135,15 +123,8 @@ class Form extends React.Component {
       gender,
       birth: new Date(birthYear, birthMonth, birthDate),
       type,
-      shop: type === 'shop' ? {
-        name: shopName,
-        location: shopLocation,
-        locationDetail: shopLocationDetail,
-        phone: shopPhone,
-        accountBank: shopAccountBank,
-        accountNumber: shopAccountNumber,
-        accountName: shopAccountName,
-      } : null,
+      work,
+      house,
     });
   };
   render() {
@@ -164,13 +145,9 @@ class Form extends React.Component {
       birthMonth,
       birthMonthInputs,
       birthDate,
-      shopName,
-      shopPhone,
-      shopLocation,
-      shopLocationDetail,
-      shopAccountBank,
-      shopAccountNumber,
-      shopAccountName,
+      work,
+      house,
+      level,
       isLocationMapFinderOpen,
       isPasswordConfirmed,
     } = this.state;
@@ -218,7 +195,7 @@ class Form extends React.Component {
                 label="일반 고객"
               />
               <FormControlLabel
-                value="shop"
+                value="sponsor"
                 control={
                   <Radio
                     color="primary"
@@ -296,6 +273,30 @@ class Form extends React.Component {
             </RadioGroup>
           </FormControl>
           <FormControl
+            fullWidth
+            margin="dense"
+          >
+            <InputLabel htmlFor="work">직장</InputLabel>
+            <Input
+              id="work"
+              value={work}
+              onChange={this.handleChange('work')}
+              disabled={!isPasswordConfirmed}
+            />
+          </FormControl>
+          <FormControl
+            fullWidth
+            margin="dense"
+          >
+            <InputLabel htmlFor="house">주소</InputLabel>
+            <Input
+              id="house"
+              value={house}
+              onChange={this.handleChange('house')}
+              disabled={!isPasswordConfirmed}
+            />
+          </FormControl>
+          <FormControl
             margin="dense"
             fullWidth
             disabled={!isPasswordConfirmed}
@@ -364,129 +365,22 @@ class Form extends React.Component {
               </FormControl>
             </div>
           </FormControl>
-          {
-            type === 'shop' ?
-              <Fragment>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled={!isPasswordConfirmed}
-                >
-                  <InputLabel htmlFor="shopName">매장 이름</InputLabel>
-                  <Input id="shopName" value={shopName} onChange={this.handleChange('shopName')} />
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled={!isPasswordConfirmed}
-                >
-                  <InputLabel htmlFor="shopPhone">매장 전화번호</InputLabel>
-                  <Input id="shopPhone" value={shopPhone} onChange={this.handleChange('shopPhone')} />
-                </FormControl>
-                <Button
-                  className={classes.signIn}
-                  color="primary"
-                  variant="raised"
-                  onClick={() => this.setState({
-                    isLocationMapFinderOpen: true,
-                  })}
-                  disabled={!isPasswordConfirmed}
-                >
-                  주소 입력하기
-                </Button>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled
-                >
-                  <InputLabel htmlFor="shopLocation">매장 주소</InputLabel>
-                  <Input id="shopLocation" value={shopLocation}/>
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled={!isPasswordConfirmed}
-                >
-                  <InputLabel htmlFor="shopLocationDetail">매장 세부주소</InputLabel>
-                  <Input
-                    id="shopLocationDetail"
-                    value={shopLocationDetail}
-                    onChange={this.handleChange('shopLocationDetail')}
-                  />
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled={!isPasswordConfirmed}
-                >
-                  <InputLabel htmlFor="shopAccountBank">은행명</InputLabel>
-                  <Select
-                    onChange={this.handleChange('shopAccountBank')}
-                    native
-                    value={shopAccountBank}
-                    input={<Input id="shopAccountBank" />}
-                  >
-                    <option value="" />
-                    {
-                      BANKS.map(v => (
-                        <option key={v} value={v}>{v}</option>
-                      ))
-                    }
-                  </Select>
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled={!isPasswordConfirmed}
-                >
-                  <InputLabel htmlFor="shopAccountNumber">입금 계좌번호</InputLabel>
-                  <Input
-                    id="shopAccountNumber"
-                    value={shopAccountNumber}
-                    onChange={this.handleChange('shopAccountNumber')}
-                  />
-                </FormControl>
-                <FormControl
-                  required
-                  fullWidth
-                  margin="dense"
-                  disabled={!isPasswordConfirmed}
-                >
-                  <InputLabel htmlFor="shopAccountName">예금주</InputLabel>
-                  <Input
-                    id="shopAccountName"
-                    value={shopAccountName}
-                    onChange={this.handleChange('shopAccountName')}
-                  />
-                </FormControl>
-                <LocationMapFinder
-                  open={isLocationMapFinderOpen}
-                  onClose={() => this.setState({
-                    isLocationMapFinderOpen: false,
-                  })}
-                  onSubmit={({ location, locationDetail }) => this.setState({
-                    shopLocation: location,
-                    shopLocationDetail: locationDetail,
-                  })}
-                />
-                <LocationMapFinder
-                  open={isLocationMapFinderOpen}
-                  onClose={() => this.setState({
-                    isLocationMapFinderOpen: false,
-                  })}
-                  onSubmit={({ location, locationDetail }) => this.setState({
-                    shopLocation: location,
-                    shopLocationDetail: locationDetail,
-                  })}
-                />
-              </Fragment> : null
-          }
+          <FormControl
+            margin="dense"
+            disabled
+          >
+            <InputLabel htmlFor="level">레벨</InputLabel>
+            <Select
+              onChange={this.handleChange('level')}
+              native
+              value={level}
+              input={<Input id="level" />}
+            >
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
+            </Select>
+          </FormControl>
           {
             !isPasswordConfirmed ?
               <Fragment>

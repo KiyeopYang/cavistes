@@ -99,3 +99,50 @@ export const updateServiceRequest = (input) => {
   };
 };
 
+export const UPDATE_SERVICE_IMG_WAITING = 'data/service/UPDATE_SERVICE_IMG_WAITING';
+export const UPDATE_SERVICE_IMG_SUCCESS = 'data/service/UPDATE_SERVICE_IMG_SUCCESS';
+export const UPDATE_SERVICE_IMG_FAILURE = 'data/service/UPDATE_SERVICE_IMG_FAILURE';
+const updateServiceImgWaiting = () => {
+  return {
+    type: UPDATE_SERVICE_IMG_WAITING,
+  };
+};
+const updateServiceImgSuccess = () => {
+  return {
+    type: UPDATE_SERVICE_IMG_SUCCESS,
+  };
+};
+const updateServiceImgFailure = (error) => {
+  return {
+    type: UPDATE_SERVICE_IMG_FAILURE,
+    error,
+  };
+};
+export const updateServiceImgRequest = (input) => {
+  return (dispatch) => {
+    dispatch(loader(true));
+    dispatch(updateServiceImgWaiting());
+    return fetch(`/api/service/img`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
+    })
+      .then((res) => {
+        dispatch(loader(false));
+        if (res.ok) { return res.json(); }
+        return res.json().then((error) => {
+          throw error;
+        });
+      })
+      .then((res) => {
+        if (res.data) {
+          return dispatch(updateServiceImgSuccess(res.data));
+        }
+        return dispatch(updateServiceImgFailure({
+          error: null,
+          message: 'response에 data 프로퍼티가 없습니다.'
+        }));
+      })
+      .catch(e => dispatch(updateServiceImgFailure(e)));
+  };
+};

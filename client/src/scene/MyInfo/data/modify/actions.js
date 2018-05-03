@@ -23,15 +23,14 @@ const failure = (error) => {
     error,
   };
 };
-export const request = (input) => {
+export const request = (input, id) => {
   return (dispatch) => {
     dispatch(waiting());
     dispatch(loader(true));
-    return fetch(`${config.HOST}/api/account`, {
+    return fetch(`${config.HOST}/api/account/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${cookie.get('token')}`,
       },
       body: JSON.stringify(input),
     })

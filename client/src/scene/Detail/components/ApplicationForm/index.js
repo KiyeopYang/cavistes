@@ -9,6 +9,8 @@ class ApplicationForm extends React.Component {
     super(props);
     this.state = {
       view: 'form',
+      name: '',
+      phone: '',
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -17,25 +19,25 @@ class ApplicationForm extends React.Component {
       this.setState({ view });
     }
   }
-  handleCardPaymentStart = () => {
-    const { event, auth } = this.props;
-    IMP.init('imp53268559');
-    IMP.request_pay({ // param
-      pg: "danal_tpay",
-      pay_method: "card",
-      merchant_uid: "ORD20180131-1645512",
-      name: event.title,
-      amount: event.price,
-      buyer_name: auth.account.name,
-      buyer_tel: auth.account.phone,
-    }, (rsp) => { // callback
-      if (rsp.success) {
-        console.log('success');
-      } else {
-        console.log('failure');
-      }
-    });
-  };
+  // handleCardPaymentStart = () => {
+  //   const { event, auth } = this.props;
+  //   IMP.init('imp53268559');
+  //   IMP.request_pay({ // param
+  //     pg: "danal_tpay",
+  //     pay_method: "card",
+  //     merchant_uid: "ORD20180131-1645512",
+  //     name: event.title,
+  //     amount: event.price,
+  //     buyer_name: auth.account.name,
+  //     buyer_tel: auth.account.phone,
+  //   }, (rsp) => { // callback
+  //     if (rsp.success) {
+  //       console.log('success');
+  //     } else {
+  //       console.log('failure');
+  //     }
+  //   });
+  // };
   render() {
     const {
       open,
@@ -46,6 +48,8 @@ class ApplicationForm extends React.Component {
     } = this.props;
     const {
       view,
+      name,
+      phone,
     } = this.state;
     return (
       <Layout
@@ -58,8 +62,10 @@ class ApplicationForm extends React.Component {
             <Form
               event={event}
               user={account}
-              handleNext={() => this.setState({
+              handleNext={({ name, phone }) => this.setState({
                 view: 'paymentTool',
+                name,
+                phone,
               })}
             /> :
           view === 'paymentTool' ?
@@ -70,6 +76,8 @@ class ApplicationForm extends React.Component {
                 } else {
                   this.props.onSubmit({
                     orderMethod: '무통장입금',
+                    name,
+                    phone,
                   });
                 }
               }}

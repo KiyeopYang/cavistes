@@ -6,6 +6,9 @@ import {
   UPDATE_SERVICE_WAITING,
   UPDATE_SERVICE_SUCCESS,
   UPDATE_SERVICE_FAILURE,
+  UPDATE_SERVICE_IMG_WAITING,
+  UPDATE_SERVICE_IMG_SUCCESS,
+  UPDATE_SERVICE_IMG_FAILURE,
 } from './actions';
 
 const initialState = {
@@ -14,6 +17,9 @@ const initialState = {
     service: undefined,
   },
   updateService: {
+    status: 'INIT',
+  },
+  updateServiceImg: {
     status: 'INIT',
   },
 };
@@ -54,6 +60,24 @@ export default (state = initialState, action) => {
     case UPDATE_SERVICE_FAILURE:
       return update(state, {
         updateService: {
+          status: { $set: 'FAILURE' },
+        },
+      });
+    case UPDATE_SERVICE_IMG_WAITING:
+      return update(state, {
+        updateServiceImg: {
+          status: { $set: 'WAITING' },
+        },
+      });
+    case UPDATE_SERVICE_IMG_SUCCESS:
+      return update(state, {
+        updateServiceImg: {
+          status: { $set: 'SUCCESS' },
+        },
+      });
+    case UPDATE_SERVICE_IMG_FAILURE:
+      return update(state, {
+        updateServiceImg: {
           status: { $set: 'FAILURE' },
         },
       });

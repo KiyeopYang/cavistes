@@ -15,6 +15,7 @@ class Submit extends React.Component {
     const {
       classes,
       onSubmit,
+      attendanceManagerMode,
       alreadySubmitted,
     } = this.props;
     return (
@@ -28,7 +29,7 @@ class Submit extends React.Component {
         onClick={onSubmit}
       >
         {
-          alreadySubmitted ?
+          attendanceManagerMode ? '신청 인원 보기' : alreadySubmitted ?
             '신청 정보 보기' : '신청하기'
         }
       </Button>

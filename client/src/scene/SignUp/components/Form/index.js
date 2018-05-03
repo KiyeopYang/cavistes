@@ -84,9 +84,11 @@ class Form extends React.Component {
         Array.apply(null, { length: 100 }).map(Number.call, i => now.getUTCFullYear() - Number(i)),
       birthMonth: '',
       birthMonthInputs: [
-        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+        '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12',
       ],
       birthDate: '',
+      work: '',
+      house: '',
       isLocationMapFinderOpen: false,
     };
   }
@@ -120,6 +122,8 @@ class Form extends React.Component {
       birthYear,
       birthMonth,
       birthDate,
+      work,
+      house,
     } = this.state;
     this.props.handleSubmit({
       email,
@@ -127,8 +131,10 @@ class Form extends React.Component {
       name,
       phone,
       gender,
-      birth: new Date(birthYear, birthMonth, birthDate),
+      birth: birthYear !== '' ? new Date(birthYear, birthMonth, birthDate) : new Date(),
       type,
+      work,
+      house,
     });
   };
   render() {
@@ -146,6 +152,8 @@ class Form extends React.Component {
       birthMonth,
       birthMonthInputs,
       birthDate,
+      work,
+      house,
     } = this.state;
 
     const birthDateInputs = [];
@@ -304,6 +312,28 @@ class Form extends React.Component {
                 label="여성"
               />
             </RadioGroup>
+          </FormControl>
+          <FormControl
+            fullWidth
+            margin="dense"
+          >
+            <InputLabel htmlFor="work">직장</InputLabel>
+            <Input
+              id="work"
+              value={work}
+              onChange={this.handleChange('work')}
+            />
+          </FormControl>
+          <FormControl
+            fullWidth
+            margin="dense"
+          >
+            <InputLabel htmlFor="house">주소</InputLabel>
+            <Input
+              id="house"
+              value={house}
+              onChange={this.handleChange('house')}
+            />
           </FormControl>
           <FormControl
             margin="dense"

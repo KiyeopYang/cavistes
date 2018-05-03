@@ -10,12 +10,19 @@ const Attendance = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'event',
   },
+  name: String,
+  nameForPayment: String,
+  phone: String,
+  numOfPeople: {
+    type: Number,
+    default: 1,
+  },
   datetime: Date,
   price: Number,
-  status: String,
+  status: String, //'입금대기', '결제완료', '취소'
   orderMethod: String,
 });
 
-const model = mongoose.model('Attendance', Attendance);
+const model = mongoose.model('attendance', Attendance);
 
 export default model;

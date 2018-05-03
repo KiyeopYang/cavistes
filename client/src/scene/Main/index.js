@@ -27,6 +27,7 @@ class Main extends React.Component {
       isModalOpen: false,
       selectedEvent: [],
     };
+    const account = this.props.auth.account;
     this.props.getEventRequest()
   }
   handleCalendar = (datetimes) => {
@@ -43,16 +44,16 @@ class Main extends React.Component {
     this.props.push(`/detail/${id}`);
   };
   handleClickMore = () => {
-    const { getEvent } = this.props;
+    const { getEvent, auth } = this.props;
     this.props.getEventRequest(getEvent.page + 1);
   };
   handleTitleImageUpdate = (images) => {
-    this.props.updateServiceRequest({
+    this.props.updateServiceImgRequest({
       titleImages: images.filter(o => o && !!o.path),
     })
       .then(() => {
-        if (this.props.updateService.status === 'FAILURE') {
-          throw this.props.updateService.error;
+        if (this.props.updateServiceImg.status === 'FAILURE') {
+          throw this.props.updateServiceImg.error;
         } else {
           this.props.noticeDialogOn('수정 완료');
           this.props.getServiceRequest();
@@ -74,6 +75,7 @@ class Main extends React.Component {
       selectedEvent,
     } = this.state;
     const type = auth.account && auth.account.type;
+    const level = auth.account && auth.account.level || 1;
     return (
       <div>
         <Layout>
@@ -86,8 +88,8 @@ class Main extends React.Component {
           </Element>
           <Element name="event">
             <Events
-              createMode={type === 'sponsor'}
-              eventList={getEvent.event}
+              createMode={type === 'sponsor' && auth.account.confirmed}
+              eventList={getEvent.event.filter(o => o.level <= level)}
               onClickCreate={() => push('/add')}
               handleCalendar={this.handleCalendar}
               handleClick={this.handleEventClick}
@@ -110,7 +112,7 @@ class Main extends React.Component {
 const mapStateToProps = state => ({
   auth: state.data.auth,
   getService: state.data.service.getService,
-  updateService: state.data.service.updateService,
+  updateServiceImg: state.data.service.updateServiceImg,
   getEvent: state.data.event.getEvent,
   addEvent: state.data.event.addEvent,
   updateEvent: state.data.event.updateEvent,
@@ -120,7 +122,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
   push,
   noticeDialogOn: noticeDialogActions.on,
   getServiceRequest: serviceActions.getServiceRequest,
-  updateServiceRequest: serviceActions.updateServiceRequest,
+  updateServiceImgRequest: serviceActions.updateServiceImgRequest,
   getEventRequest: eventActions.getEventRequest,
   addEventRequest: eventActions.addEventRequest,
   updateEventRequest: eventActions.updateEventRequest,

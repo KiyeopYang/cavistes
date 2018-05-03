@@ -68,7 +68,7 @@ class From extends React.Component {
       sponsorName: (sponsor && sponsor.name) || '',
       sponsorPhone: (sponsor && sponsor.phone) || '',
       sponsorEmail: (sponsor && sponsor.email) || '',
-      level: '1',
+      level: 1,
       replyOn: '1',
       refundRule: REFUND_RULE,
       isLocationMapFinderOpen: false,
@@ -151,6 +151,7 @@ class From extends React.Component {
       isLocationMapFinderOpen,
       isImageUploaderModalOpen,
     } = this.state;
+    console.log(level);
     return (
       <React.Fragment>
         <Typography
@@ -347,7 +348,7 @@ class From extends React.Component {
             disabled={disabled}
           />
           <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="level">고객 등급</InputLabel>
+            <InputLabel htmlFor="level">고객 레벨</InputLabel>
             <Select
               native
               value={level}
@@ -358,11 +359,11 @@ class From extends React.Component {
 
               disabled={disabled}
             >
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
+              <option value={1}>1</option>
+              <option value={2}>2</option>
+              <option value={3}>3</option>
             </Select>
-            <FormHelperText>고객등급1은 모든 고객에게 보여집니다.</FormHelperText>
+            <FormHelperText>고객레벨 1은 1레벨 고객(기본 가입 고객)에게만 보여집니다. 2는 1,2레벨 고객에게, 3은 1,2,3레벨 고객에게 보여집니다.</FormHelperText>
           </FormControl>
           <FormControl className={classes.formControl}>
             <InputLabel htmlFor="replyOn">댓글 허용 여부</InputLabel>

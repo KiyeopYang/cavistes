@@ -17,9 +17,17 @@ class Status extends React.Component {
     const {
       classes,
       status,
+      nameForPayment,
+      price,
     } = this.props;
     return (
       <Fragment>
+        <Typography>
+          입금자명 : {nameForPayment}
+        </Typography>
+        <Typography>
+          금액 : {price}
+        </Typography>
         <Typography
           variant="title"
           align="center"

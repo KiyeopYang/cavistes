@@ -1,5 +1,6 @@
 /* global IMP */
 import React from 'react';
+import Button from 'material-ui/Button';
 import Layout from './components/Layout';
 import Bank from './components/Bank';
 import Status from './components/Status';
@@ -15,8 +16,9 @@ class ApplicationInfo extends React.Component {
       account,
       event,
       onSubmit,
+      handleRemove,
     } = this.props;
-    console.log(info);
+    if (!info) return null;
     return (
       <Layout
         open={open}
@@ -28,7 +30,17 @@ class ApplicationInfo extends React.Component {
           info.status === '입금대기' ?
             <Bank bankAccount={bankAccount}/> : null
         }
-        <Status status={info.status}/>
+        <Status {...info} />
+        <Button
+          color="primary"
+          onClick={handleRemove}
+          disabled={info.status !== '입금대기'}
+        >
+          {
+            info.status === '입금대기' ?
+              '취소 요청' : info.status === '결제완료' ? '취소는 전화로 문의부탁드립니다.' : '취소 완료'
+          }
+        </Button>
       </Layout>
     );
   }

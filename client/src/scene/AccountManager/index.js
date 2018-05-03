@@ -11,13 +11,16 @@ import * as noticeDialogActions from '../../data/noticeDialog/actions';
 import * as accountActions from './data/account/actions';
 import * as authActions from '../../data/auth/actions';
 import Layout from './components/Layout';
-import Form from './components/Form';
 import Table from './components/Table';
+import AccountView from '../AccountView';
 
-class Login extends React.Component {
+class AccountManager extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      isAccountViewModalOpen: false,
+      clickedAccountId: null,
+    };
   }
   componentWillReceiveProps(nextProps) {
     if (!this.props.open && nextProps.open) {
@@ -27,6 +30,12 @@ class Login extends React.Component {
         })
     }
   }
+  handleRowClick = (accountId) => {
+    this.setState({
+      isAccountViewModalOpen: true,
+      clickedAccountId: accountId,
+    });
+  };
   render() {
     const {
       open,
@@ -34,7 +43,8 @@ class Login extends React.Component {
       account,
     } = this.props;
     const {
-      view,
+      isAccountViewModalOpen,
+      clickedAccountId,
     } = this.state;
     return (
       <Layout
@@ -42,7 +52,21 @@ class Login extends React.Component {
         onClose={onClose}
         title="계정 관리"
       >
-        <Table rows={account.accounts}/>
+        <Table
+          rows={account.accounts}
+          handleRowClick={this.handleRowClick}
+        />
+        <AccountView
+          open={isAccountViewModalOpen}
+          onClose={() => {
+            this.setState({
+              isAccountViewModalOpen: false,
+              clickedAccountId: null,
+            });
+            this.props.accountRequest();
+          }}
+          accountId={clickedAccountId}
+        />
       </Layout>
     );
   }
@@ -58,4 +82,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Login));
+)(AccountManager));

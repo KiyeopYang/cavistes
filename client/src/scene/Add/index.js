@@ -26,7 +26,7 @@ class Add extends React.Component {
     };
   }
   handleConfirm = () => {
-    const { addEvent } = this.props;
+    const { addEvent, auth } = this.props;
     this.props.updateEventRequest(addEvent.result._id, { isConfirmed: true })
       .then(() => {
         this.props.getEventByIdRequest(addEvent.result._id)
@@ -43,9 +43,6 @@ class Add extends React.Component {
     })
       .then(() => {
         this.props.getEventByIdRequest(addEvent.result._id)
-          .then(() => {
-            console.log(this.props.getEventById);
-          });
       });
   };
   handleAddEvent = (input) => {

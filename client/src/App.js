@@ -16,6 +16,7 @@ import * as cookie from './modules/cookie';
 import * as noticeDialogActions from './data/noticeDialog/actions';
 import * as authActions from './data/auth/actions';
 import loader from './data/loader/actions';
+import * as serviceActions from './data/service/actions';
 import NoticeDialog from './components/NoticeDialog';
 import Header from './components/Header';
 import Main from './scene/Main';
@@ -24,13 +25,18 @@ import Login from './scene/Login';
 import SignUp from './scene/SignUp';
 import MyInfo from './scene/MyInfo';
 import Add from './scene/Add';
+import Notice from './scene/Notice';
+import Location from './scene/Location';
+import Sponsor from './scene/Sponsor';
 import Footer from './components/Footer';
 import Loader from './components/Loader';
 import AccountManager from './scene/AccountManager';
 import AccountAttendanceManager from './scene/AccountAttendanceManager';
+import ServiceManager from './scene/ServiceManager';
+import AccountView from './scene/AccountView';
+import PaymentManager from './scene/PaymentManager';
 import loaderDOM from './modules/loader';
 import AuthRoute from './modules/AuthRoute';
-import * as serviceActions from './data/service/actions';
 
 class App extends React.Component {
   constructor(props) {
@@ -41,6 +47,9 @@ class App extends React.Component {
       isMyInfoModalOpen: false,
       isAccountManagerModalOpen: false,
       isAccountAttendanceManagerModalOpen: false,
+      isServiceManagerModalOpen: false,
+      isAccountViewModalOpen: false,
+      isPaymentManagerModalOpen: false,
     };
     loaderDOM(this.props.loaderState);
     this.props.authRequest();
@@ -74,17 +83,33 @@ class App extends React.Component {
       this.setState({
         isAccountAttendanceManagerModalOpen: true,
       });
+    } else if (label === 'serviceManager') {
+      this.setState({
+        isServiceManagerModalOpen: true,
+      });
+    } else if (label === 'paymentManager') {
+      this.setState({
+        isPaymentManagerModalOpen: true,
+      });
     }
   };
   handleMenuClick = (label) => {
-    this.props.push('/');
-    setTimeout(() => {
-      scroller.scrollTo(label, {
-        smooth: true,
-        offset: -100,
-        duration: 500,
-      });
-    }, 300);
+    if (label === 'notice') {
+      this.props.push('/notice');
+    } else if (label === 'location') {
+      this.props.push('/location');
+    } else if (label === 'sponsor') {
+      this.props.push('/sponsor');
+    } else {
+      this.props.push('/');
+      setTimeout(() => {
+        scroller.scrollTo(label, {
+          smooth: true,
+          offset: -100,
+          duration: 500,
+        });
+      }, 300);
+    }
   };
   render() {
     const {
@@ -93,6 +118,9 @@ class App extends React.Component {
       isMyInfoModalOpen,
       isAccountManagerModalOpen,
       isAccountAttendanceManagerModalOpen,
+      isServiceManagerModalOpen,
+      isAccountViewModalOpen,
+      isPaymentManagerModalOpen,
     } = this.state;
     const {
       noticeDialog,
@@ -127,6 +155,18 @@ class App extends React.Component {
           path="/add"
           component={Add}
         />
+        <Route
+          path="/notice"
+          component={Notice}
+        />
+        <Route
+          path="/location"
+          component={Location}
+        />
+        <Route
+          path="/sponsor"
+          component={Sponsor}
+        />
         <Footer/>
         <Login
           open={isLoginModalOpen}
@@ -157,6 +197,18 @@ class App extends React.Component {
           open={isAccountAttendanceManagerModalOpen}
           onClose={() => this.setState({
             isAccountAttendanceManagerModalOpen: false,
+          })}
+        />
+        <ServiceManager
+          open={isServiceManagerModalOpen}
+          onClose={() => this.setState({
+            isServiceManagerModalOpen: false,
+          })}
+        />
+        <PaymentManager
+          open={isPaymentManagerModalOpen}
+          onClose={() => this.setState({
+            isPaymentManagerModalOpen: false,
           })}
         />
         <NoticeDialog

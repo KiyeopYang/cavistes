@@ -111,6 +111,11 @@ class Header extends React.Component {
                     aria-haspopup="true"
                     onClick={this.handleMenuOpen('userAnchorEl')}
                   >
+                    {user.type === 'sponsor' && !user.confirmed ?
+                      <Typography color="inherit" style={{ paddingRight: 8 }}>
+                        모임 생성 미승인 - 관리자에게 문의하십시요.
+                      </Typography> : null
+                    }
                     <Typography color="inherit">
                       {user.email}
                     </Typography>
@@ -167,6 +172,22 @@ class Header extends React.Component {
                             >
                               계정 관리
                             </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                this.handleMenuClose('userAnchorEl')();
+                                onClickUserMenu('serviceManager');
+                              }}
+                            >
+                              서비스 관리
+                            </MenuItem>
+                            <MenuItem
+                              onClick={() => {
+                                this.handleMenuClose('userAnchorEl')();
+                                onClickUserMenu('paymentManager');
+                              }}
+                            >
+                              결제 내역
+                            </MenuItem>
                           </Fragment> : null
                     }
                   </Menu> : null
@@ -185,21 +206,39 @@ class Header extends React.Component {
               <Hidden smDown>
                 <Button
                   size="large"
+                  onClick={() => onClick('notice')}
+                >
+                  공지사항
+                </Button>
+                <Button
+                  size="large"
+                  onClick={() => onClick('location')}
+                >
+                  강의실
+                </Button>
+                <Button
+                  size="large"
+                  onClick={() => onClick('sponsor')}
+                >
+                  주최자
+                </Button>
+                <Button
+                  size="large"
                   onClick={() => onClick('about')}
                 >
-                  ABOUT
+                  소개
                 </Button>
                 <Button
                   size="large"
                   onClick={() => onClick('event')}
                 >
-                  EVENT
+                  이벤트
                 </Button>
                 <Button
                   size="large"
                   onClick={() => onClick('contact')}
                 >
-                  CONTACT
+                  문의
                 </Button>
               </Hidden>
               <Hidden mdUp>
@@ -228,10 +267,34 @@ class Header extends React.Component {
                   <MenuItem
                     onClick={() => {
                       this.handleMenuClose('menuAnchorEl');
+                      onClick('notice');
+                    }}
+                  >
+                    공지사항
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleMenuClose('menuAnchorEl');
+                      onClick('location');
+                    }}
+                  >
+                    강의실
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleMenuClose('menuAnchorEl');
+                      onClick('sponsor');
+                    }}
+                  >
+                    주최자
+                  </MenuItem>
+                  <MenuItem
+                    onClick={() => {
+                      this.handleMenuClose('menuAnchorEl');
                       onClick('about');
                     }}
                   >
-                    ABOUT
+                    소개
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -239,7 +302,7 @@ class Header extends React.Component {
                       onClick('event');
                     }}
                   >
-                    EVENT
+                    이벤트
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
@@ -247,7 +310,7 @@ class Header extends React.Component {
                       onClick('contact');
                     }}
                   >
-                    CONTACT
+                    문의
                   </MenuItem>
                 </Menu>
               </Hidden>

@@ -8,6 +8,12 @@ import AccountManager from './scene/AccountManager/reducer';
 import Main from './scene/Main/reducer';
 import Detail from './scene/Detail/reducer';
 import AccountAttendanceManager from './scene/AccountAttendanceManager/reducer';
+import AccountView from './scene/AccountView/reducer';
+import AttendanceManager from './scene/AttendanceManager/reducer';
+import PaymentManager from './scene/PaymentManager/reducer';
+import Notice from './scene/Notice/reducer';
+import Location from './scene/Location/reducer';
+import Sponsor from './scene/Sponsor/reducer';
 
 export default combineReducers({
   routing: routerReducer,
@@ -19,4 +25,10 @@ export default combineReducers({
   Main,
   Detail,
   AccountAttendanceManager,
+  AccountView,
+  AttendanceManager,
+  PaymentManager,
+  Notice,
+  Location,
+  Sponsor,
 });

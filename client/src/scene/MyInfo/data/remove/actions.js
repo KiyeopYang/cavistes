@@ -23,15 +23,12 @@ const failure = (error) => {
     error,
   };
 };
-export const request = (i) => {
+export const request = (id) => {
   return (dispatch) => {
     dispatch(waiting());
     dispatch(loader(true));
-    return fetch(`${config.HOST}/api/account`, {
+    return fetch(`${config.HOST}/api/account/${id}`, {
       method: 'DELETE',
-      headers: {
-        Authorization: `Bearer ${cookie.get('token')}`,
-      },
     })
       .then((res) => {
         dispatch(loader(false));

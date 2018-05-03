@@ -12,10 +12,10 @@ const Event = new Schema({
   },
   subTitle: String,
   maxPeople: Number,
-  attendees: {
-    type: Array,
-    default: [],
-  },
+  attendees: [{
+    type: Schema.Types.ObjectId,
+    ref: 'attendance',
+  }],
   datetimes: [Date],
   images: {
     type: Array,
@@ -30,7 +30,10 @@ const Event = new Schema({
     phone: String,
     email: String,
   },
-  level: Number,
+  level: {
+    type: Number,
+    default: 1,
+  },
   replyOn: Boolean,
   reply: Array,
   isConfirmed: {
@@ -38,6 +41,10 @@ const Event = new Schema({
     default: false,
   },
   refundRule: String,
+  removed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const model = mongoose.model('event', Event);

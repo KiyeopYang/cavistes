@@ -9,6 +9,7 @@ const Service = new Schema({
   bankAccount: {
     number: String,
     bank: String,
+    bankCode: Number,
     name: String,
   },
 });

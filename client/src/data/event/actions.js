@@ -28,9 +28,6 @@ export const getEventRequest = (page = 0) => {
     dispatch(getEventWaiting());
     return fetch(`/api/event/${page}`, {
       method: 'GET',
-      headers: {
-        'cache-control': 'no-cache',
-      },
     })
       .then((res) => {
         dispatch(loader(false));
@@ -229,7 +226,6 @@ export const updateEventRequest = (id, input) => {
       body: JSON.stringify(input),
     })
       .then((res) => {
-        console.log(res);
         dispatch(loader(false));
         if (res.ok) { return res.json(); }
         return res.json().then((error) => {

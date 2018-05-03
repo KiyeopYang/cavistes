@@ -88,7 +88,7 @@ class Form extends React.Component {
             {event.refundRule}
           </Typography>
           <TextField
-            label="신청자 이름"
+            label="신청자 이름 (입금자명)"
             fullWidth
             margin="dense"
             onChange={this.handleChange('name')}
@@ -110,7 +110,7 @@ class Form extends React.Component {
             size="large"
             onClick={(e) => {
               e.preventDefault();
-              handleNext();
+              handleNext({ name, phone });
             }}
           >
             확인

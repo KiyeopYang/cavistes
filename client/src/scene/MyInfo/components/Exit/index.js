@@ -1,19 +1,7 @@
 import React, { Fragment } from 'react';
-import classNames from 'classnames';
-import Iframe from 'react-iframe';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import {
-  FormControl,
-  FormHelperText,
-  FormControlLabel,
-  FormLabel,
-} from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Select from 'material-ui/Select';
-import LocationMapFinder from '../../../../components/LocationMapFinder';
 
 const styles = theme => ({
   title: {

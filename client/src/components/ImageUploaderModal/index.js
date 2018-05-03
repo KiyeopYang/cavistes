@@ -63,7 +63,9 @@ class ImageUploaderModal extends React.Component {
             variant="raised"
             fullWidth
             onClick={() => {
-              onSubmit(this.state.images);
+              if (this.state.images.length) {
+                onSubmit(this.state.images);
+              }
               onClose();
             }}
           >

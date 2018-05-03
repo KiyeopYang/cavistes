@@ -51,7 +51,10 @@ router.post(
   (req, res) => {
     const { body } = req;
     body.token = new mongoose.Types.ObjectId();
-    const query = new Account(body).save();
+    const query = new Account({
+      ...body,
+      level: body.type !== 'default' ? 3 : 1,
+    }).save();
     query
       .then(() => res.json({
         token: body.token,
@@ -66,12 +69,11 @@ router.post(
   },
 );
 router.put(
-  '/',
-  passport.authenticate('bearer', { session: false }),
+  '/:id',
   (req, res) => {
     const { body, user } = req;
     Account.updateOne({
-      token: user.token,
+      _id: req.params.id,
     }, {
       $set: body,
     }).exec()
@@ -87,12 +89,11 @@ router.put(
   },
 );
 router.delete(
-  '/',
-  passport.authenticate('bearer', { session: false }),
+  '/:id',
   (req, res) => {
     const { user } = req;
     Account.deleteOne({
-      token: user.token,
+      _id: req.params.id,
     }).exec()
       .then(() => res.json({
         success: true,
@@ -124,5 +125,25 @@ router.get(
       });
     },
 );
+router.get(
+  '/:id',
+  (req, res) => {
+    Account
+      .findById(req.params.id)
+      .select({ password: 0 })
+      .lean()
+      .exec()
+      .then((account) => res.json({
+        account: fromMongo(account),
+      }))
+      .catch((error) => {
+        res.status(400).json({
+          message: '에러가 있습니다.',
+        });
+        throw error;
+      });
+  },
+);
+
 
 export default router;

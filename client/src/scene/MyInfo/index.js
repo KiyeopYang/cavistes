@@ -30,9 +30,8 @@ class MyInfo extends React.Component {
     }
   }
   handleModify = (data) => {
-    this.props.modifyRequest(data)
+    this.props.modifyRequest(data, this.props.auth.account.id)
       .then(() => {
-        console.log(this.props.modify);
         if (this.props.modify.status === 'FAILURE') {
           throw this.props.modify.error;
         } else {
@@ -45,10 +44,9 @@ class MyInfo extends React.Component {
         this.props.noticeDialogOn(error);
       });
   };
-  handleRemove = (data) => {
-    this.props.removeRequest(data)
+  handleRemove = () => {
+    this.props.removeRequest(this.props.auth.account.id)
       .then(() => {
-        console.log(this.props.remove);
         if (this.props.remove.status === 'FAILURE') {
           throw this.props.remove.error;
         } else {
@@ -99,6 +97,7 @@ class MyInfo extends React.Component {
   }
 }
 const mapStateToProps = state => ({
+  auth: state.data.auth,
   modify: state.MyInfo.data.modify,
   remove: state.MyInfo.data.remove,
 });

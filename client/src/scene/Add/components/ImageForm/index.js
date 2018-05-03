@@ -48,78 +48,6 @@ const styles = theme => ({
   },
 });
 class From extends React.Component {
-  constructor(props) {
-    super(props);
-    const { sponsor } = this.props;
-    this.state = {
-      title: '',
-      subTitle: '',
-      price: 0,
-      shopName: '',
-      shopLocation: '',
-      shopLocationDetail: '',
-      shopPhone: '',
-      maxPeople: 10,
-      datetimes: [],
-      datetimeInput: '',
-      images: [],
-      desc: '',
-      sponsorName: (sponsor && sponsor.name) || '',
-      sponsorPhone: (sponsor && sponsor.phone) || '',
-      sponsorEmail: (sponsor && sponsor.email) || '',
-      level: '1',
-      replyOn: '1',
-      isLocationMapFinderOpen: false,
-      isImageUploaderModalOpen: false,
-    };
-  }
-  handleInputChange = (prop) => {
-    return (e) => {
-      this.setState({
-        [prop]: e.target.value,
-      })
-    }
-  };
-  handleSubmit = () => {
-    const {
-      title,
-      subTitle,
-      price,
-      shopName,
-      shopLocation,
-      shopLocationDetail,
-      shopPhone,
-      maxPeople,
-      datetimes,
-      desc,
-      sponsorName,
-      sponsorPhone,
-      sponsorEmail,
-      level,
-      replyOn,
-    } = this.state;
-    this.props.handleSubmit({
-      title,
-      subTitle,
-      price,
-      shop: {
-        name: shopName,
-        location: shopLocation,
-        locationDetail: shopLocationDetail,
-        phone: shopPhone,
-      },
-      maxPeople,
-      datetimes,
-      desc,
-      sponsor: {
-        name: sponsorName,
-        phone: sponsorPhone,
-        email: sponsorEmail,
-      },
-      level,
-      replyOn: replyOn === '1',
-    });
-  };
   render() {
     const {
       classes,
@@ -127,8 +55,6 @@ class From extends React.Component {
       openImageUploader,
       onSubmit,
     } = this.props;
-    const {
-    } = this.state;
     const settings = {
       dots: true,
       infinite: true,

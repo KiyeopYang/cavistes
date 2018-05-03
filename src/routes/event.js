@@ -11,12 +11,16 @@ router.get(
   (req, res) => {
     const { id } = req.params;
     Event.findById(id)
-      .lean()
+      .populate('attendees')
       .exec()
       .then((result) => {
-        res.json({
-          data: fromMongo(result),
-        });
+        if (result.removed) {
+          res.json({ data: null });
+        } else {
+          res.json({
+            data: fromMongo(result.toObject()),
+          });
+        }
       })
       .catch((error) => {
         res.status(500).json({ message: 'ERROR' });
@@ -27,15 +31,17 @@ router.get(
 router.get(
   '/:page',
   (req, res) => {
-    Event.find({})
+    Event.find({
+      removed: false,
+    })
       .limit(10)
       .skip(10 * req.params.page)
       .sort({ _id: -1 })
-      .lean()
+      .populate('attendees')
       .exec()
       .then((results) => {
         res.json({
-          data: fromMongo(results.filter(r => r.isConfirmed)),
+          data: fromMongo(results.filter(r => r.isConfirmed).map(o => o.toObject())),
         });
       })
       .catch((error) => {

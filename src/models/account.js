@@ -34,10 +34,13 @@ const Account = new Schema({
   },
   type: String,
   token: String,
+  memo: String,
   confirmed: {
     type: Boolean,
     default: false,
   },
+  work: String,
+  house: String,
 });
 
 Account.pre('save', async function hashing(next) {

@@ -30,7 +30,7 @@ router.get(
   },
 );
 router.put(
-  '/',
+  '/img',
   (req, res) => {
     Service.findOneAndUpdate(
       {},
@@ -47,6 +47,21 @@ router.put(
               console.error(error);
               res.status(500).json({ message: '에러가 있습니다.' });
             });
+        }
+      });
+  }
+);
+router.put(
+  '/',
+  (req, res) => {
+    Service.findOneAndUpdate(
+      {},
+      { $set: req.body },
+      (err, r) => {
+        if (err) {
+          res.status(500).json({ message: '에러가 있습니다.' });
+        } else {
+          res.json({ data: r });
         }
     });
   }

@@ -124,24 +124,7 @@ class EnhancedTable extends React.Component {
   };
 
   handleClick = (event, id) => {
-    const { selected } = this.state;
-    const selectedIndex = selected.indexOf(id);
-    let newSelected = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, id);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1),
-      );
-    }
-
-    this.setState({ selected: newSelected });
+    this.props.handleRowClick(id);
   };
 
   handleChangePage = (event, page) => {
@@ -153,7 +136,7 @@ class EnhancedTable extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleRowClick } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
@@ -178,11 +161,10 @@ class EnhancedTable extends React.Component {
                     key={n.id}
                   >
                     <TableCell padding="none">
-                      { n.type === 'sponsor' ? '주최자' : n.type === 'manager' ? '관리자' : '일반'}
+                      { n.type === 'sponsor' ? n.confirmed ? '주최자' : '주최자 (승인필요)' : n.type === 'manager' ? '관리자' : '일반'}
                     </TableCell>
                     <TableCell>{n.name}</TableCell>
                     <TableCell>{n.phone}</TableCell>
-                    <TableCell><Button>ABC</Button></TableCell>
                   </TableRow>
                 );
               })}
