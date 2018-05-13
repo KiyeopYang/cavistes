@@ -23,6 +23,7 @@ import ApplicationInfo from './components/ApplicationInfo';
 import OwnerButtons from './components/OwnerButtons';
 import RemoveModal from './components/RemoveModal';
 import UpdateModal from './components/UpdateModal';
+import Test from './components/Test';
 import AttendanceManager from '../AttendanceManager';
 import {
   addReplyRequest,
@@ -185,32 +186,37 @@ class Detail extends React.Component {
     else {
       event.datetimes = event.datetimes.map(o => new Date(o));
     }
+    // {/*<Front*/}
+    //   {/*images={event.images}*/}
+    // {/*/>*/}
+    //
+    // {/*<Title*/}
+    // {/*event={event}*/}
+    // {/*/>*/}
+    // {
+    //   this.isOwner() ?
+    //     <OwnerButtons
+    //       onClick={v => v === 'remove' ? this.setState({
+    //         isRemoveModalOpen: true,
+    //       }) : this.setState({
+    //         isUpdateModalOpen: true,
+    //       })}
+    //     /> : null
+    // }
     return (
       <Fragment>
         <Layout>
-          <Front
+          <Test
             images={event.images}
-          />
-          {
-            this.isOwner() ?
-              <OwnerButtons
-                onClick={v => v === 'remove' ? this.setState({
-                  isRemoveModalOpen: true,
-                }) : this.setState({
-                  isUpdateModalOpen: true,
-                })}
-              /> : null
-          }
-          <Title
             event={event}
-          />
-          <hr />
-          <Content
-            event={event}
-            handleReplySubmit={this.handleReplySubmit}
-            handleReplyRemove={this.handleReplyRemove}
-            account={auth.account}
-          />
+          >
+            <Content
+              event={event}
+              handleReplySubmit={this.handleReplySubmit}
+              handleReplyRemove={this.handleReplyRemove}
+              account={auth.account}
+            />
+          </Test>
         </Layout>
         {
           this.isOwner() ?

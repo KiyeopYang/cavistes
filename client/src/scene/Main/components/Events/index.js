@@ -2,14 +2,16 @@ import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
+import CreateIcon from '@material-ui/icons/Create';
+import IconEvent from '@material-ui/icons/Event';
 import Event from './components/Event';
 
 const styles = theme => ({
   title: {
     padding: 10,
-  },
-  buttonWrapper: {
-    textAlign: 'center',
+    flexGrow: 1,
+    display: 'flex',
+    alignItems: 'center',
   },
   events: {
     [theme.breakpoints.down('sm')]: {
@@ -19,6 +21,13 @@ const styles = theme => ({
   selectedDate: {
     background: '#006edc',
     color: 'white',
+  },
+  titleWrapper: {
+    display: 'flex',
+  },
+  titleIcon: {
+    fontSize: 28,
+    marginRight: theme.spacing.unit,
   },
 });
 class Events extends React.Component {
@@ -33,19 +42,22 @@ class Events extends React.Component {
     } = this.props;
     return (
       <div>
-        <Typography className={classes.title} variant="headline">Event</Typography>
-        {
-          createMode ?
-            <div className={classes.buttonWrapper}>
-              <Button
-                color="primary"
-                variant="raised"
-                onClick={onClickCreate}
-              >
-                생성하기
-              </Button>
-            </div> : null
-        }
+        <div className={classes.titleWrapper}>
+          <Typography className={classes.title} variant="headline">
+            <IconEvent className={classes.titleIcon}/>Event
+          </Typography>
+          {
+            createMode ?
+                <Button
+                  color="primary"
+                  onClick={onClickCreate}
+                >
+                  <CreateIcon/>
+                  이벤트 생성
+                </Button>
+              : null
+          }
+        </div>
         <div className={classes.events}>
           {
             eventList.map((o, i) => (

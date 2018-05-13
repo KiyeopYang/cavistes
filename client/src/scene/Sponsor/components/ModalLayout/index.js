@@ -6,6 +6,9 @@ import Button from 'material-ui/Button';
 const styles = theme => ({
   root: {
     // padding: theme.spacing.unit * 4,
+    [theme.breakpoints.up('sm')]: {
+      width: 600,
+    },
   },
   paper: {
     overflow: 'auto',

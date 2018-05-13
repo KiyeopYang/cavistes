@@ -5,6 +5,7 @@ import IconPerson from '@material-ui/icons/Person';
 import IconDelete from '@material-ui/icons/Delete';
 import IconButton from 'material-ui/IconButton';
 import Paper from 'material-ui/Paper';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 const styles = theme => ({
   reply: {
@@ -46,7 +47,7 @@ class Text extends React.Component {
       handleRemove,
     } = this.props;
     return (
-      <Paper className={classes.reply}>
+      <ListItem className={classes.reply}>
         <div className={classes.left}>
           <Typography className={classes.replyUser}>
             <IconPerson/>
@@ -70,7 +71,7 @@ class Text extends React.Component {
               </IconButton>
             </div> : null
         }
-      </Paper>
+      </ListItem>
     );
   }
 }

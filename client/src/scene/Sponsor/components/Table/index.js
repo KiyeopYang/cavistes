@@ -19,6 +19,8 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from 'material-ui/styles/colorManipulator';
 import Button from 'material-ui/Button';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import Card, { CardContent, CardMedia } from 'material-ui/Card';
 
 const columnData = [
   { id: 'title', numeric: false, disablePadding: true, label: '' },
@@ -34,7 +36,7 @@ class EnhancedTableHead extends React.Component {
 
     return (
       <TableHead>
-        <TableRow>
+        <TableRow style={{ height: 10 }}>
           {columnData.map(column => {
             return (
               <TableCell
@@ -44,14 +46,14 @@ class EnhancedTableHead extends React.Component {
                 sortDirection={orderBy === column.id ? order : false}
               >
                 <Tooltip
-                  title="Sort"
+                  title=""
                   placement={column.numeric ? 'bottom-end' : 'bottom-start'}
                   enterDelay={300}
                 >
                   <TableSortLabel
                     active={orderBy === column.id}
                     direction={order}
-                    onClick={this.createSortHandler(column.id)}
+                    // onClick={this.createSortHandler(column.id)}
                   >
                     {column.label}
                   </TableSortLabel>
@@ -72,6 +74,19 @@ const styles = theme => ({
   },
   tableWrapper: {
     overflowX: 'auto',
+  },
+  row: {
+    cursor: 'pointer',
+  },
+  cell: {
+    padding: theme.spacing.unit * 2,
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing.unit,
+    },
+  },
+  imgWrapper: {
+    height: 0,
+    paddingTop: '56.25%',
   },
 });
 
@@ -153,16 +168,22 @@ class EnhancedTable extends React.Component {
                     onClick={() => this.props.handleClick(n.id)}
                     tabIndex={-1}
                     key={n.id}
+                    className={classes.row}
                   >
-                    <TableCell>
-                      <img src={n.images[0].path} style={{ width: '100%', height: 'auto'}}/>
-                      <Typography variant="headline" component="h2" gutterBottom>
-                        {n.title}
-                      </Typography>
-                      <Typography align="right">
-                        {n.datetime}
-                      </Typography>
-                    </TableCell>
+                    <div className={classes.cell}>
+                      <Card>
+                        <CardMedia
+                          className={classes.imgWrapper}
+                          image={n.images[0].path}
+                        />
+                        <ListItem button>
+                          <ListItemText
+                            primary={n.title}
+                            secondary={n.datetime}
+                          />
+                        </ListItem>
+                      </Card>
+                    </div>
                   </TableRow>
                 );
               })}

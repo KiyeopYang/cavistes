@@ -19,9 +19,10 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from 'material-ui/styles/colorManipulator';
 import Button from 'material-ui/Button';
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
 
 const columnData = [
-  { id: 'title', numeric: false, disablePadding: true, label: '제목' },
+  { id: 'title', numeric: false, disablePadding: true, label: '' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -34,7 +35,7 @@ class EnhancedTableHead extends React.Component {
 
     return (
       <TableHead>
-        <TableRow>
+        <TableRow style={{ height: 10 }}>
           {columnData.map(column => {
             return (
               <TableCell
@@ -44,14 +45,14 @@ class EnhancedTableHead extends React.Component {
                 sortDirection={orderBy === column.id ? order : false}
               >
                 <Tooltip
-                  title="Sort"
+                  title=""
                   placement={column.numeric ? 'bottom-end' : 'bottom-start'}
                   enterDelay={300}
                 >
                   <TableSortLabel
                     active={orderBy === column.id}
                     direction={order}
-                    onClick={this.createSortHandler(column.id)}
+                    // onClick={this.createSortHandler(column.id)}
                   >
                     {column.label}
                   </TableSortLabel>
@@ -75,6 +76,9 @@ const styles = theme => ({
   },
   tableWrapper: {
     overflowX: 'auto',
+  },
+  row: {
+    cursor: 'pointer',
   },
 });
 
@@ -153,19 +157,18 @@ class EnhancedTable extends React.Component {
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
                 return (
                   <TableRow
+                    className={classes.row}
                     hover
                     onClick={() => this.props.handleClick(n.id)}
                     tabIndex={-1}
                     key={n.id}
                   >
-                    <TableCell>
-                      <Typography gutterBottom>
-                        {n.title}
-                      </Typography>
-                      <Typography align="right">
-                        {n.datetime}
-                      </Typography>
-                    </TableCell>
+                    <ListItem>
+                      <ListItemText
+                        primary={n.title}
+                        secondary={n.datetime}
+                      />
+                    </ListItem>
                   </TableRow>
                 );
               })}

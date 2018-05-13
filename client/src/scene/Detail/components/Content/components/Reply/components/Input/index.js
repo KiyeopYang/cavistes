@@ -15,10 +15,8 @@ const styles = theme => ({
       width: '100%',
     },
   },
-  button: {
-    [theme.breakpoints.down('sm')]: {
-      width: '100%',
-    },
+  buttonWrapper: {
+    textAlign: 'right',
   },
 });
 class Input extends React.Component {
@@ -44,20 +42,20 @@ class Input extends React.Component {
     return (
       <div className={classes.root}>
         <TextField
-          label="후기를 작성해주세요."
+          label="댓글 작성"
           className={classes.textField}
           fullWidth
           multiline
           value={this.state.value}
           onChange={this.onChange}
         />
-        <Button
-          className={classes.button}
-          fullWidth
-          onClick={this.handleSubmit}
-        >
-          <IconCreate/>글쓰기
-        </Button>
+        <div className={classes.buttonWrapper}>
+          <Button
+            onClick={this.handleSubmit}
+          >
+            <IconCreate/>글쓰기
+          </Button>
+        </div>
       </div>
     );
   }

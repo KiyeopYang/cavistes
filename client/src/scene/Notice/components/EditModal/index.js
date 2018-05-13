@@ -25,6 +25,12 @@ class EditModal extends React.Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    if (!this.props.open && nextProps.open && nextProps.mode === 'create') {
+      this.setState({
+        title: '',
+        text: '',
+      });
+    }
     if (JSON.stringify(this.props.selected) !== JSON.stringify(nextProps.selected)) {
       const { title, text } = nextProps.selected;
       this.setState({

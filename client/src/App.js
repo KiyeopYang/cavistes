@@ -11,7 +11,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'fine-uploader';
 import CssBaseline from 'material-ui/CssBaseline';
-import { scroller } from 'react-scroll';
+import { scroller, animateScroll } from 'react-scroll';
 import * as cookie from './modules/cookie';
 import * as noticeDialogActions from './data/noticeDialog/actions';
 import * as authActions from './data/auth/actions';
@@ -94,6 +94,10 @@ class App extends React.Component {
     }
   };
   handleMenuClick = (label) => {
+    animateScroll.scrollToTop({
+      smooth: false,
+      duration: 0,
+    });
     if (label === 'notice') {
       this.props.push('/notice');
     } else if (label === 'location') {
@@ -102,13 +106,13 @@ class App extends React.Component {
       this.props.push('/sponsor');
     } else {
       this.props.push('/');
-      setTimeout(() => {
-        scroller.scrollTo(label, {
-          smooth: true,
-          offset: -100,
-          duration: 500,
-        });
-      }, 300);
+      // setTimeout(() => {
+      //   scroller.scrollTo(label, {
+      //     smooth: true,
+      //     offset: -100,
+      //     duration: 500,
+      //   });
+      // }, 300);
     }
   };
   render() {

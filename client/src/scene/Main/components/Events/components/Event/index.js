@@ -1,6 +1,8 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
+import IconEvent from '@material-ui/icons/Event';
+import Card, { CardContent, CardMedia } from 'material-ui/Card';
 import Pic from './components/Pic';
 import Content from './components/Content';
 
@@ -10,9 +12,21 @@ const styles = theme => ({
     height: 300,
     marginBottom: 30,
     [theme.breakpoints.down('sm')]: {
-      display: 'initial',
       height: 'auto',
+      flexDirection: 'column',
     },
+    background: 'white',
+  },
+  header: {
+    background: theme.palette.primary.main,
+    padding: 4,
+    display: 'flex',
+  },
+  title2: {
+    color: 'white',
+    cursor: 'pointer',
+    flexGrow: 1,
+    display: 'flex',
   },
 });
 class Event extends React.Component {
@@ -24,20 +38,20 @@ class Event extends React.Component {
       event,
     } = this.props;
     event.datetimes = event.datetimes.map(o => new Date(o));
+    const datetimes = event.datetimes;
     return (
-      <div className={classes.root}>
+      <Card raised className={classes.root}>
         <Pic
-          handleCalendar={handleCalendar}
           handleClick={handleClick}
-          datetimes={event.datetimes}
           images={event.images}
-          replyNum={event.reply.length}
         />
         <Content
+          handleCalendar={handleCalendar}
+          datetimes={event.datetimes}
           handleClick={handleClick}
           event={event}
         />
-      </div>
+      </Card>
     )
   }
 }

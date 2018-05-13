@@ -54,6 +54,14 @@ const styles = theme => ({
     display: 'flex',
     cursor: 'pointer',
   },
+  imgWrapper: {
+    display: 'inline-block',
+    width: 50,
+    padding: 4,
+  },
+  img: {
+    width: '100%',
+  },
 });
 class Header extends React.Component {
   constructor(props) {
@@ -196,13 +204,16 @@ class Header extends React.Component {
           </AppBar>
           <AppBar position="static" color="white">
             <Toolbar classes={{ root: classes.toolbar}}>
-              <img width={50} src="/caviste.PNG"/>
+              <div className={classes.imgWrapper}>
+                <img className={classes.img} src="/caviste.PNG"/>
+              </div>
               <Typography
                 color="inherit"
                 className={classNames(classes.flex, classes.title)}
                 onClick={() => onClick('about')}
               >
-                카비스트 와인&치즈 아카데미
+                카비스트
+                { window.innerWidth < 400 ? '' : ` 와인&치즈 아카데미` }
               </Typography>
               <Hidden smDown>
                 <Button
@@ -222,12 +233,6 @@ class Header extends React.Component {
                   onClick={() => onClick('sponsor')}
                 >
                   주최자
-                </Button>
-                <Button
-                  size="large"
-                  onClick={() => onClick('about')}
-                >
-                  소개
                 </Button>
                 <Button
                   size="large"
@@ -282,14 +287,6 @@ class Header extends React.Component {
                     }}
                   >
                     주최자
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleMenuClose('menuAnchorEl');
-                      onClick('about');
-                    }}
-                  >
-                    소개
                   </MenuItem>
                   <MenuItem
                     onClick={() => {

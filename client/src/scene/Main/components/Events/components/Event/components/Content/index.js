@@ -10,16 +10,16 @@ import IconGroup from '@material-ui/icons/Group';
 const styles = theme => ({
   root: {
     width: 700,
-    padding: 20,
+    padding: theme.spacing.unit * 2,
     [theme.breakpoints.down('sm')]: {
       width: '100%',
-      padding: 0,
+      padding: theme.spacing.unit ,
     },
   },
   title: {
     fontSize: 24,
     [theme.breakpoints.down('sm')]: {
-      fontSize: 16,
+      fontSize: 20,
     },
   },
   paragraph: {
@@ -29,10 +29,15 @@ const styles = theme => ({
       fontSize: 16,
     },
   },
+  subHeadings: {
+    display: 'flex',
+  },
   subHeading: {
     fontSize: 18,
     display: 'flex',
+    width: 200,
     [theme.breakpoints.down('sm')]: {
+      width: '50%',
       fontSize: 16,
     },
   },
@@ -44,6 +49,7 @@ const styles = theme => ({
   },
   upperBlock: {
     height: 100,
+    marginBottom: theme.spacing.unit * 2,
     cursor: 'pointer',
     [theme.breakpoints.down('sm')]: {
       height: 'auto',
@@ -61,12 +67,25 @@ const styles = theme => ({
     alignItems: 'center',
     height: 50,
   },
+  header: {
+    background: theme.palette.primary.main,
+    padding: 4,
+    display: 'flex',
+  },
+  title2: {
+    color: 'white',
+    cursor: 'pointer',
+    flexGrow: 1,
+    display: 'flex',
+  },
 });
 class Content extends React.Component {
   render() {
     const {
       classes,
       handleClick,
+      handleCalendar,
+      datetimes,
       event,
     } = this.props;
     return (
@@ -78,14 +97,45 @@ class Content extends React.Component {
           <Typography className={classes.title} gutterBottom>
             <strong>{event.title}</strong>
           </Typography>
-          <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
-            <IconPrice className={classes.smallIcon}/><strong>{`참가비 ${event.price}원`}</strong>
-          </Typography>
-          <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
-            <IconMap className={classes.smallIcon}/><strong>{event.shop.name}</strong>
-          </Typography>
+          <div className={classes.subHeadings}>
+            <Typography
+              className={classNames(classes.redText, classes.subHeading)}
+              variant="subheading"
+              gutterBottom
+              onClick={() => handleCalendar(datetimes)}
+            >
+              <IconEvent className={classes.smallIcon}/>
+              <strong>
+              {
+                `${
+                  datetimes[0].getUTCFullYear()
+                  }/${
+                datetimes[0].getMonth()+1
+                  }/${
+                  datetimes[0].getDate()
+                  }`
+              }
+              </strong>
+            </Typography>
+            <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
+              <IconMap className={classes.smallIcon}/><strong>{event.shop.name}</strong>
+            </Typography>
+          </div>
+          <div className={classes.subHeadings}>
+            <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
+              <IconPrice className={classes.smallIcon}/><strong>{`${event.price}원`}</strong>
+            </Typography>
+            <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
+              <IconGroup className={classes.smallIcon}/>
+              <strong>
+              {
+                `${event.attendees.length}/${event.maxPeople}명`
+              }
+              </strong>
+            </Typography>
+          </div>
         </div>
-        <div style={{ height: 130, overflowY: 'scroll' }}>
+        <div style={{ height: 150, overflowY: 'scroll' }}>
           <Typography
             className={classNames(classes.paragraph, classes.greyText)}
             noWrap
@@ -94,22 +144,35 @@ class Content extends React.Component {
             {event.subTitle}
           </Typography>
         </div>
-        <div className={classes.iconTextWrapper}>
-          <Typography
-            variant="headline"
-            align="right"
-            className={classes.redText}
-            style={{flexGrow: 1}}
-          >
-            {
-              `${event.attendees.length}/${event.maxPeople}명`
-            }
-          </Typography>
-          <IconGroup color="primary" className={classes.icon}/>
 
-        </div>
       </div>
     )
   }
 }
 export default withStyles(styles)(Content);
+// {/*<div className={classes.header}>*/}
+//   {/*<Typography*/}
+//     {/*className={classes.title2}*/}
+//     {/*variant="subheading"*/}
+//     {/*onClick={() => handleCalendar(datetimes)}*/}
+//   {/*>*/}
+//     {/*<IconEvent style={{ marginRight: 3 }}/>*/}
+//     {/*{*/}
+//       {/*`${*/}
+//         {/*datetimes[0].getUTCFullYear()*/}
+//         {/*}/${*/}
+//       {/*datetimes[0].getMonth()+1*/}
+//         {/*}/${*/}
+//         {/*datetimes[0].getDate()*/}
+//         {/*}`*/}
+//     {/*}*/}
+//   {/*</Typography>*/}
+//   {/*{*/}
+//     {/*// replyNum > 0 ?*/}
+//     {/*//   <Typography className={classes.reply}*/}
+//     {/*//               variant="subheading">*/}
+//     {/*//     <IconChat style={{ marginRight: 3 }}/>*/}
+//     {/*//     {replyNum}*/}
+//     {/*//   </Typography> : null*/}
+//   {/*}*/}
+// {/*</div>*/}

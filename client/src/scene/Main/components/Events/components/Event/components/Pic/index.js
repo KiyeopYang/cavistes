@@ -10,6 +10,11 @@ const styles = theme => ({
     [theme.breakpoints.down('sm')]: {
       width: '100%',
     },
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'column',
+    overflow: 'hidden',
   },
   header: {
     background: theme.palette.primary.main,
@@ -28,11 +33,12 @@ const styles = theme => ({
     display: 'flex',
   },
   img: {
-    width: 270,
-    height: 'auto',
+    width: 'auto',
+    height: 300,
     cursor: 'pointer',
     [theme.breakpoints.down('sm')]: {
       width: '100%',
+      height: 'auto',
     },
   },
 });
@@ -48,32 +54,6 @@ class Pic extends React.Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <div className={classes.header}>
-          <Typography
-            className={classes.title}
-            variant="subheading"
-            onClick={() => handleCalendar(datetimes)}
-          >
-            <IconEvent style={{ marginRight: 3 }}/>
-            {
-              `${
-                datetimes[0].getUTCFullYear()
-                }/${
-                datetimes[0].getMonth()+1
-                }/${
-                datetimes[0].getDate()
-                }`
-            }
-          </Typography>
-          {
-            replyNum > 0 ?
-              <Typography className={classes.reply}
-                          variant="subheading">
-                <IconChat style={{ marginRight: 3 }}/>
-                {replyNum}
-              </Typography> : null
-          }
-        </div>
         <img
           className={classes.img}
           src={images[0].path}
