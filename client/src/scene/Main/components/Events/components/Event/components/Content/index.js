@@ -10,10 +10,12 @@ import IconGroup from '@material-ui/icons/Group';
 const styles = theme => ({
   root: {
     width: 700,
+    overflowY: 'auto',
     padding: theme.spacing.unit * 2,
     [theme.breakpoints.down('sm')]: {
       width: '100%',
       padding: theme.spacing.unit ,
+      maxHeight: 400,
     },
   },
   title: {
@@ -31,14 +33,18 @@ const styles = theme => ({
   },
   subHeadings: {
     display: 'flex',
+    [theme.breakpoints.down('sm')]: {
+      flexDirection: 'column',
+    },
   },
   subHeading: {
     fontSize: 18,
     display: 'flex',
-    width: 200,
+    minWidth: 200,
     [theme.breakpoints.down('sm')]: {
       width: '50%',
       fontSize: 16,
+      minWidth: 0,
     },
   },
   redText: {
@@ -48,8 +54,6 @@ const styles = theme => ({
     color: '#9C9C9C',
   },
   upperBlock: {
-    height: 100,
-    marginBottom: theme.spacing.unit * 2,
     cursor: 'pointer',
     [theme.breakpoints.down('sm')]: {
       height: 'auto',
@@ -135,7 +139,7 @@ class Content extends React.Component {
             </Typography>
           </div>
         </div>
-        <div style={{ height: 150, overflowY: 'scroll' }}>
+        <div>
           <Typography
             className={classNames(classes.paragraph, classes.greyText)}
             noWrap
@@ -144,7 +148,6 @@ class Content extends React.Component {
             {event.subTitle}
           </Typography>
         </div>
-
       </div>
     )
   }
