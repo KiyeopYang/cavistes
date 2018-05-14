@@ -248,7 +248,7 @@ class From extends React.Component {
                       }}
                       disabled={disabled}
                     >
-                      <DeleteIcon className={classes.icon}/>삭제
+                      <DeleteIcon className={classes.icon}/>
                       삭제
                     </Button>
                   </li>
