@@ -88,7 +88,7 @@ class Main extends React.Component {
           </Element>
           <Element name="event">
             <Events
-              createMode={type === 'sponsor' && auth.account.confirmed}
+              createMode={type === 'manager' || (type === 'sponsor' && auth.account.confirmed)}
               eventList={getEvent.event.filter(o => o.level <= level)}
               onClickCreate={() => push('/add')}
               handleCalendar={this.handleCalendar}

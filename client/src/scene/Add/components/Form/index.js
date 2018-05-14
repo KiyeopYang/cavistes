@@ -151,7 +151,6 @@ class From extends React.Component {
       isLocationMapFinderOpen,
       isImageUploaderModalOpen,
     } = this.state;
-    console.log(level);
     return (
       <React.Fragment>
         <Typography

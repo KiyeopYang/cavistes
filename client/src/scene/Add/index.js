@@ -72,7 +72,8 @@ class Add extends React.Component {
     return (
       <Layout>
         {
-          auth.account && auth.account.type === 'sponsor' ?
+          auth.account &&
+          (auth.account.type === 'sponsor' || auth.account.type === 'manager') ?
             <Form
               sponsor={auth.account}
               handleSubmit={this.handleAddEvent}

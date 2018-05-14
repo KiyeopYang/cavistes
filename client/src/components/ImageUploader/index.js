@@ -35,7 +35,7 @@ class UploadComponent extends Component {
     return (
       <Gallery
         fileInput-accept="image/*"
-        fileInput-children={<span>이미지 업로드</span>}
+        fileInput-children={<span>이미지 업로드 (1MB 이하)</span>}
         dropzone-disabled
         status-text={{
           uploading: '업로드 중',
