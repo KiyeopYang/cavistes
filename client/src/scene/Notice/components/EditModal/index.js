@@ -3,7 +3,11 @@ import { withStyles } from 'material-ui/styles';
 import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
+import CreateIcon from '@material-ui/icons/Create';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SettingIcon from '@material-ui/icons/Settings';
 import Layout from '../ModalLayout';
+import RemoveModal from '../../../../components/RemoveModal';
 
 const styles = theme => ({
   title: {
@@ -15,6 +19,13 @@ const styles = theme => ({
   text: {
     whiteSpace: 'pre-line',
   },
+  iconWrapper: {
+    width: '100%',
+    textAlign: 'right',
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
 });
 class EditModal extends React.Component {
   constructor(props) {
@@ -22,6 +33,7 @@ class EditModal extends React.Component {
     this.state = {
       title: '',
       text: '',
+      isRemoveModalOpen: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -49,6 +61,7 @@ class EditModal extends React.Component {
     const {
       title,
       text,
+      isRemoveModalOpen,
     } = this.state;
     const {
       open,
@@ -80,28 +93,30 @@ class EditModal extends React.Component {
               value={text}
               onChange={this.handleChange('text')}
             />
-            <Button
-              className={classes.submit}
-              color="primary"
-              variant="raised"
-              size="large"
-              fullWidth
-              onClick={this.handleSubmit}
-            >
-              {mode === 'create' ? '생성' : '수정'}
-            </Button>
-            {
-              mode === 'update' ?
-                <Button
-                  className={classes.submit}
-                  color="primary"
-                  size="large"
-                  fullWidth
-                  onClick={handleRemove}
-                >
-                  삭제
-                </Button> : null
-            }
+            <div className={classes.iconWrapper}>
+              <Button
+                className={classes.submit}
+                color="primary"
+                onClick={this.handleSubmit}
+              >
+                {mode === 'create' ?
+                  <CreateIcon className={classes.icon}/>
+                : <SettingIcon className={classes.icon}/>}
+                {mode === 'create' ? '생성' : '수정'}
+              </Button>
+              {
+                mode === 'update' ?
+                  <Button
+                    className={classes.submit}
+                    color="primary"
+                    onClick={() => this.setState({
+                      isRemoveModalOpen: true,
+                    })}
+                  >
+                    <DeleteIcon className={classes.icon}/>삭제
+                  </Button> : null
+              }
+            </div>
           </div> :
           <div>
             <Typography variant="subheading" gutterBottom>
@@ -112,6 +127,13 @@ class EditModal extends React.Component {
             </Typography>
           </div>
         }
+        <RemoveModal
+          open={isRemoveModalOpen}
+          onClose={() => this.setState({
+            isRemoveModalOpen: false,
+          })}
+          handleRemove={handleRemove}
+        />
       </Layout>
     );
   }

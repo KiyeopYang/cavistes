@@ -21,7 +21,7 @@ import Submit from './components/Submit';
 import ApplicationForm from './components/ApplicationForm';
 import ApplicationInfo from './components/ApplicationInfo';
 import OwnerButtons from './components/OwnerButtons';
-import RemoveModal from './components/RemoveModal';
+import RemoveModal from '../../components/RemoveModal';
 import UpdateModal from './components/UpdateModal';
 import Test from './components/Test';
 import AttendanceManager from '../AttendanceManager';
@@ -181,7 +181,6 @@ class Detail extends React.Component {
       isUpdateModalOpen,
     } = this.state;
     const { event } = getEventById;
-    console.log(event);
     if (!event) return null;
     else {
       event.datetimes = event.datetimes.map(o => new Date(o));
@@ -203,12 +202,22 @@ class Detail extends React.Component {
     //       })}
     //     /> : null
     // }
+    const isOwner = this.isOwner();
     return (
       <Fragment>
         <Layout>
           <Test
             images={event.images}
             event={event}
+            handler={
+              isOwner ? (name) => {
+                name === 'remove' ? this.setState({
+                  isRemoveModalOpen: true,
+                }) : this.setState({
+                  isUpdateModalOpen: true,
+                });
+              } : null
+            }
           >
             <Content
               event={event}
@@ -219,7 +228,7 @@ class Detail extends React.Component {
           </Test>
         </Layout>
         {
-          this.isOwner() ?
+          isOwner ?
             <Submit
               attendanceManagerMode
               onSubmit={this.openAttendanceManager}

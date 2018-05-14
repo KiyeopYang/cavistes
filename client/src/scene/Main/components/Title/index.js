@@ -23,8 +23,9 @@ const styles = theme => ({
   },
   settingWrapper: {
     width: '100%',
-    textAlign: 'center',
+    textAlign: 'right',
     padding: 4,
+    marginTop: theme.spacing.unit * 2,
   },
   wrapper: {
     padding: theme.spacing.unit * 2,

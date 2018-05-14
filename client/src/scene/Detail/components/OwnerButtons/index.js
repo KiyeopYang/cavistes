@@ -1,16 +1,18 @@
 import React from 'react';
 import { withStyles } from 'material-ui/styles';
 import Button from 'material-ui/Button';
-import IconButton from 'material-ui/IconButton';
-import IconBuild from '@material-ui/icons/Build';
+import IconSetting from '@material-ui/icons/Settings';
 import IconDelete from '@material-ui/icons/Delete';
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
-    textAlign: 'center',
+    textAlign: 'right',
   },
-};
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
+});
 class OwnerButtons extends React.Component {
   render() {
     const {
@@ -19,12 +21,14 @@ class OwnerButtons extends React.Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <IconButton onClick={() => onClick('update')}>
-          <IconBuild/>
-        </IconButton>
-        <IconButton onClick={() => onClick('remove')}>
-          <IconDelete/>
-        </IconButton>
+        <Button color="primary" onClick={() => onClick('update')}>
+          <IconSetting className={classes.icon}/>
+          수정
+        </Button>
+        <Button color="primary" onClick={() => onClick('remove')}>
+          <IconDelete className={classes.icon}/>
+          삭제
+        </Button>
       </div>
     );
   }

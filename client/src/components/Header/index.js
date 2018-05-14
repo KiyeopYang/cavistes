@@ -91,6 +91,8 @@ class Header extends React.Component {
       user: Boolean(userAnchorEl),
       menu: Boolean(menuAnchorEl),
     };
+    console.log(open);
+    console.log(menuAnchorEl);
     return (
       <React.Fragment>
         <div className={classes.root}>
@@ -218,25 +220,33 @@ class Header extends React.Component {
               <Hidden smDown>
                 <Button
                   size="large"
-                  onClick={() => onClick('notice')}
+                  onClick={() => {
+                    onClick('notice');
+                  }}
                 >
                   공지사항
                 </Button>
                 <Button
                   size="large"
-                  onClick={() => onClick('location')}
+                  onClick={() => {
+                    onClick('location');
+                  }}
                 >
                   강의실
                 </Button>
                 <Button
                   size="large"
-                  onClick={() => onClick('sponsor')}
+                  onClick={() => {
+                    onClick('sponsor');
+                  }}
                 >
                   주최자
                 </Button>
                 <Button
                   size="large"
-                  onClick={() => onClick('event')}
+                  onClick={() => {
+                    onClick('event');
+                  }}
                 >
                   이벤트
                 </Button>
@@ -266,7 +276,7 @@ class Header extends React.Component {
                 >
                   <MenuItem
                     onClick={() => {
-                      this.handleMenuClose('menuAnchorEl');
+                      this.handleMenuClose('menuAnchorEl')();
                       onClick('notice');
                     }}
                   >
@@ -274,7 +284,7 @@ class Header extends React.Component {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      this.handleMenuClose('menuAnchorEl');
+                      this.handleMenuClose('menuAnchorEl')();
                       onClick('location');
                     }}
                   >
@@ -282,7 +292,7 @@ class Header extends React.Component {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      this.handleMenuClose('menuAnchorEl');
+                      this.handleMenuClose('menuAnchorEl')();
                       onClick('sponsor');
                     }}
                   >
@@ -290,7 +300,7 @@ class Header extends React.Component {
                   </MenuItem>
                   <MenuItem
                     onClick={() => {
-                      this.handleMenuClose('menuAnchorEl');
+                      this.handleMenuClose('menuAnchorEl')();
                       onClick('event');
                     }}
                   >

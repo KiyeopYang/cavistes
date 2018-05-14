@@ -6,7 +6,7 @@ import Button from 'material-ui/Button';
 const styles = theme => ({
   root: {
     // padding: theme.spacing.unit * 4,
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
       width: 600,
     },
   },

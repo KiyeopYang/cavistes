@@ -4,9 +4,13 @@ import Typography from 'material-ui/Typography';
 import Button from 'material-ui/Button';
 import TextField from 'material-ui/TextField';
 import Slider from 'react-slick';
+import CreateIcon from '@material-ui/icons/Create';
+import DeleteIcon from '@material-ui/icons/Delete';
+import SettingIcon from '@material-ui/icons/Settings';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
 import Layout from '../ModalLayout';
 import ImageUploaderModal from '../../../../components/ImageUploaderModal';
+import RemoveModal from '../../../../components/RemoveModal';
 
 const styles = theme => ({
   title: {
@@ -34,6 +38,19 @@ const styles = theme => ({
   paper: {
     boxShadow: 'none',
   },
+  settingWrapper: {
+    width: '100%',
+    textAlign: 'right',
+    padding: 4,
+    marginTop: theme.spacing.unit * 2,
+  },
+  iconWrapper: {
+    width: '100%',
+    textAlign: 'right',
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
 });
 class EditModal extends React.Component {
   constructor(props) {
@@ -45,6 +62,7 @@ class EditModal extends React.Component {
         path: '/caviste.PNG'
       }],
       isImageUploaderModalOpen: false,
+      isRemoveModalOpen: false,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -78,6 +96,7 @@ class EditModal extends React.Component {
       text,
       images,
       isImageUploaderModalOpen,
+      isRemoveModalOpen,
     } = this.state;
     const {
       open,
@@ -101,30 +120,31 @@ class EditModal extends React.Component {
         onClose={onClose}
       >
         <Card className={classes.paper}>
-        <div className={classes.slider}>
-          <Slider {...settings}>
-            {
-              images.map((img) => (
-                <img
-                  src={img.path}
-                  key={img.path}
-                />
-              ))
-            }
-          </Slider>
-        </div>
+          <div className={classes.slider}>
+            <Slider {...settings}>
+              {
+                images.map((img) => (
+                  <img
+                    src={img.path}
+                    key={img.path}
+                  />
+                ))
+              }
+            </Slider>
+          </div>
         {managerMode ?
           <CardContent className={classes.content}>
-            <Button
-              style={{ marginTop: '20px', marginBottom: '15px' }}
-              color="primary"
-              fullWidth
-              onClick={() => this.setState({
-                isImageUploaderModalOpen: true,
-              })}
-            >
-              이미지 입력
-            </Button>
+            <div className={classes.settingWrapper}>
+              <Button
+                color="primary"
+                onClick={() => this.setState({
+                  isImageUploaderModalOpen: true,
+                })}
+              >
+                <SettingIcon/>
+                이미지 수정
+              </Button>
+            </div>
             <TextField
               required
               fullWidth
@@ -140,28 +160,30 @@ class EditModal extends React.Component {
               value={text}
               onChange={this.handleChange('text')}
             />
-            <Button
-              className={classes.submit}
-              color="primary"
-              variant="raised"
-              size="large"
-              fullWidth
-              onClick={this.handleSubmit}
-            >
-              {mode === 'create' ? '생성' : '수정'}
-            </Button>
-            {
-              mode === 'update' ?
-                <Button
-                  className={classes.submit}
-                  color="primary"
-                  size="large"
-                  fullWidth
-                  onClick={handleRemove}
-                >
-                  삭제
-                </Button> : null
-            }
+            <div className={classes.iconWrapper}>
+              <Button
+                className={classes.submit}
+                color="primary"
+                onClick={this.handleSubmit}
+              >
+                {mode === 'create' ?
+                  <CreateIcon className={classes.icon}/>
+                  : <SettingIcon className={classes.icon}/>}
+                {mode === 'create' ? '생성' : '수정'}
+              </Button>
+              {
+                mode === 'update' ?
+                  <Button
+                    className={classes.submit}
+                    color="primary"
+                    onClick={() => this.setState({
+                      isRemoveModalOpen: true,
+                    })}
+                  >
+                    <DeleteIcon className={classes.icon}/>삭제
+                  </Button> : null
+              }
+            </div>
           </CardContent> :
           <CardContent className={classes.content}>
             <Typography variant="headline" component="h2" gutterBottom>
@@ -181,6 +203,13 @@ class EditModal extends React.Component {
           onSubmit={images => this.setState({
             images: images.filter(i => i.path),
           })}
+        />
+        <RemoveModal
+          open={isRemoveModalOpen}
+          onClose={() => this.setState({
+            isRemoveModalOpen: false,
+          })}
+          handleRemove={handleRemove}
         />
       </Layout>
     );

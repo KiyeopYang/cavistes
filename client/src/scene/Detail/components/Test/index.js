@@ -7,6 +7,7 @@ import IconPrice from '@material-ui/icons/AttachMoney';
 import IconMap from '@material-ui/icons/Map';
 import IconGroup from '@material-ui/icons/Group';
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card';
+import OwnerButtons from '../../components/OwnerButtons';
 
 const styles = theme => ({
   root: {
@@ -73,7 +74,7 @@ function makeDateText(date) {
 }
 class Front extends React.Component {
   render() {
-    const { classes, images, event  } = this.props;
+    const { classes, images, event, handler } = this.props;
     let dateText = makeDateText(event.datetimes[0]);
     if (event.datetimes.length > 1) {
       dateText = `${dateText}부터 ${event.datetimes.length}회`;
@@ -101,6 +102,10 @@ class Front extends React.Component {
               }
             </Slider>
           </div>
+          {
+            handler ?
+              <OwnerButtons onClick={handler}/> : null
+          }
           <CardContent className={classes.cardContent}>
             <div className={classes.root2}>
               <Typography className={classes.title} gutterBottom>

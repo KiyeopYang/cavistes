@@ -8,6 +8,9 @@ import red from 'material-ui/colors/red';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
+import SettingIcon from '@material-ui/icons/Settings';
+import MapIcon from '@material-ui/icons/Map';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Slider from 'react-slick';
 import LocationMapFinder from '../../../../../../components/LocationMapFinder';
 import ImageUploaderModal from '../../../../../../components/ImageUploaderModal';
@@ -23,6 +26,13 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+  },
+  iconWrapper: {
+    width: '100%',
+    textAlign: 'right',
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
   },
 });
 class From extends React.Component {
@@ -225,7 +235,7 @@ class From extends React.Component {
                     }}
                     disabled={disabled}
                   >
-                    삭제
+                    <DeleteIcon className={classes.icon}/>삭제
                   </Button>
                 </li>
               ))
@@ -240,7 +250,6 @@ class From extends React.Component {
           type="number"
           onChange={this.handleInputChange('maxPeople')}
           margin="dense"
-
           disabled={disabled}
         />
         <TextField
@@ -261,7 +270,6 @@ class From extends React.Component {
           value={shopName}
           onChange={this.handleInputChange('shopName')}
           margin="dense"
-
           disabled={disabled}
         />
         <Button
@@ -269,9 +277,9 @@ class From extends React.Component {
           onClick={() => this.setState({
             isLocationMapFinderOpen: true,
           })}
-
           disabled={disabled}
         >
+          <MapIcon className={classes.icon}/>
           장소 선택
         </Button>
         <TextField
@@ -390,24 +398,25 @@ class From extends React.Component {
             ))
           }
         </Slider>
-        <Button
-          style={{ marginTop: '20px', marginBottom: '15px' }}
-          color="primary"
-          fullWidth
-          onClick={() => this.setState({
-            isImageUploaderModalOpen: true,
-          })}
-        >
-          이미지 수정
-        </Button>
-        <Button
-          color="primary"
-          fullWidth
-          variant="raised"
-          onClick={this.handleSubmit}
-        >
-          이벤트 수정
-        </Button>
+        <div className={classes.iconWrapper}>
+          <Button
+            style={{ marginTop: '20px', marginBottom: '15px' }}
+            color="primary"
+            onClick={() => this.setState({
+              isImageUploaderModalOpen: true,
+            })}
+          >
+            <SettingIcon className={classes.icon}/>이미지 수정
+          </Button>
+        </div>
+        <div className={classes.iconWrapper}>
+          <Button
+            color="primary"
+            onClick={this.handleSubmit}
+          >
+            <SettingIcon className={classes.icon}/>이벤트 수정
+          </Button>
+        </div>
         <LocationMapFinder
           open={isLocationMapFinderOpen}
           onClose={() => this.setState({
