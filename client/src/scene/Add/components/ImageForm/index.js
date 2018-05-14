@@ -11,6 +11,8 @@ import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
 import Slider from 'react-slick';
+import SettingIcon from '@material-ui/icons/Settings';
+import CreateIcon from '@material-ui/icons/Create';
 import LocationMapFinder from '../../../../components/LocationMapFinder';
 import ImageUploaderModal from '../../../../components/ImageUploaderModal';
 
@@ -46,6 +48,13 @@ const styles = theme => ({
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
   },
+  iconWrapper: {
+    width: '100%',
+    textAlign: 'right',
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
+  },
 });
 class From extends React.Component {
   render() {
@@ -77,22 +86,25 @@ class From extends React.Component {
             ))
           }
         </Slider>
-        <Button
-          style={{ marginTop: '20px', marginBottom: '15px' }}
-          color="primary"
-          fullWidth
-          onClick={openImageUploader}
-        >
-          이미지 수정
-        </Button>
-        <Button
-          color="primary"
-          fullWidth
-          variant="raised"
-          onClick={onSubmit}
-        >
-          이벤트 생성
-        </Button>
+        <div className={classes.iconWrapper}>
+          <Button
+            style={{ marginTop: '20px', marginBottom: '15px' }}
+            color="primary"
+            onClick={openImageUploader}
+          >
+            <SettingIcon className={classes.icon}/>
+            이미지 수정
+          </Button>
+        </div>
+        <div className={classes.iconWrapper}>
+          <Button
+            color="primary"
+            onClick={onSubmit}
+          >
+            <CreateIcon className={classes.icon}/>
+            이벤트 생성
+          </Button>
+        </div>
       </React.Fragment>
     )
   }

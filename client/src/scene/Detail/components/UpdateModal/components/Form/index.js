@@ -117,7 +117,6 @@ class From extends React.Component {
     const {
       classes,
       disabled,
-
     } = this.props;
     const {
       title,

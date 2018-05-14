@@ -10,6 +10,9 @@ import red from 'material-ui/colors/red';
 import Input, { InputLabel } from 'material-ui/Input';
 import { FormControl, FormHelperText } from 'material-ui/Form';
 import Select from 'material-ui/Select';
+import SettingIcon from '@material-ui/icons/Settings';
+import MapIcon from '@material-ui/icons/Map';
+import DeleteIcon from '@material-ui/icons/Delete';
 import LocationMapFinder from '../../../../components/LocationMapFinder';
 
 const styles = theme => ({
@@ -43,6 +46,13 @@ const styles = theme => ({
     width: '100%',
     marginTop: theme.spacing.unit,
     marginBottom: theme.spacing.unit,
+  },
+  iconWrapper: {
+    width: '100%',
+    textAlign: 'right',
+  },
+  icon: {
+    marginRight: theme.spacing.unit,
   },
 });
 const REFUND_RULE = `행사 시작날로부터 48시간 전 : 100% 환불
@@ -238,6 +248,7 @@ class From extends React.Component {
                       }}
                       disabled={disabled}
                     >
+                      <DeleteIcon className={classes.icon}/>삭제
                       삭제
                     </Button>
                   </li>
@@ -285,6 +296,7 @@ class From extends React.Component {
 
             disabled={disabled}
           >
+            <MapIcon className={classes.icon}/>
             장소 선택
           </Button>
           <TextField
