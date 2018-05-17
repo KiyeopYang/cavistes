@@ -48,7 +48,7 @@ class From extends React.Component {
       shopLocationDetail: event.shop.locationDetail,
       shopPhone: event.shop.phone,
       maxPeople: event.maxPeople,
-      datetimes: event.datetimes,
+      datetimes: JSON.parse(JSON.stringify(event.datetimes)), // 딥카피 제거
       datetimeInput: '',
       images: event.images,
       desc: event.desc,

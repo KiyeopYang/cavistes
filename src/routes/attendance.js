@@ -105,7 +105,7 @@ router.delete(
         return Event.updateOne({
           _id: result.eventId,
         }, {
-          $pop: { attendees: id },
+          $pull: { attendees: mongoose.Types.ObjectId(id) },
         })
           .exec()
           .then(() => {

@@ -117,7 +117,7 @@ class Content extends React.Component {
                 datetimes[0].getMonth()+1
                   }/${
                   datetimes[0].getDate()
-                  }`
+                  }``${datetimes.length > 1 ? `부터 ${datetimes.length}회`: ''}`
               }
               </strong>
             </Typography>
