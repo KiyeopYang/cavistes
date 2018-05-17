@@ -110,15 +110,18 @@ class Content extends React.Component {
             >
               <IconEvent className={classes.smallIcon}/>
               <strong>
-              {
-                `${
-                  datetimes[0].getUTCFullYear()
-                  }/${
-                datetimes[0].getMonth()+1
-                  }/${
-                  datetimes[0].getDate()
-                  }``${datetimes.length > 1 ? `부터 ${datetimes.length}회`: ''}`
-              }
+                {
+                  `${
+                    datetimes[0].getUTCFullYear()
+                    }/${
+                  datetimes[0].getMonth()+1
+                    }/${
+                    datetimes[0].getDate()
+                    }`
+                }
+                {
+                  `${datetimes.length > 1 ? `부터 ${datetimes.length}회`: ''}`
+                }
               </strong>
             </Typography>
             <Typography className={classNames(classes.redText, classes.subHeading)} variant="subheading" gutterBottom>
