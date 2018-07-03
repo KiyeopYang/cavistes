@@ -1,6 +1,6 @@
 /* global IMP */
 import React from 'react';
-import Button from 'material-ui/Button';
+import Button from '@material-ui/core/Button';
 import Layout from './components/Layout';
 import Bank from './components/Bank';
 import Status from './components/Status';

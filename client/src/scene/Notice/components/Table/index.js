@@ -1,28 +1,21 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import Table, {
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-} from 'material-ui/Table';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
-import Button from 'material-ui/Button';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Tooltip from '@material-ui/core/Tooltip';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
 
 const columnData = [
   { id: 'title', numeric: false, disablePadding: true, label: '' },
+  { id: 'index', numeric: false, responsive: true, disablePadding: true, label: '' },
+  { id: 'datetime', numeric: false, responsive: true, disablePadding: true, label: '' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -31,7 +24,7 @@ class EnhancedTableHead extends React.Component {
   };
 
   render() {
-    const { order, orderBy, numSelected, rowCount } = this.props;
+    const { classes, order, orderBy, numSelected, rowCount } = this.props;
 
     return (
       <TableHead>
@@ -39,6 +32,9 @@ class EnhancedTableHead extends React.Component {
           {columnData.map(column => {
             return (
               <TableCell
+                className={classNames({
+                  [classes.responsiveCell]: column.responsive,
+                })}
                 key={column.id}
                 numeric={column.numeric}
                 padding={column.disablePadding ? 'none' : 'default'}
@@ -72,13 +68,21 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 3,
   },
   table: {
-    minWidth: 400,
+    minWidth: 300,
   },
   tableWrapper: {
     overflowX: 'auto',
   },
   row: {
     cursor: 'pointer',
+  },
+  cell: {
+    fontSize: 16,
+  },
+  responsiveCell: {
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 });
 
@@ -152,6 +156,7 @@ class EnhancedTable extends React.Component {
               onSelectAllClick={this.handleSelectAllClick}
               onRequestSort={this.handleRequestSort}
               rowCount={data.length}
+              classes={classes}
             />
             <TableBody>
               {data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => {
@@ -163,12 +168,15 @@ class EnhancedTable extends React.Component {
                     tabIndex={-1}
                     key={n.id}
                   >
-                    <ListItem>
-                      <ListItemText
-                        primary={n.title}
-                        secondary={n.datetime}
-                      />
-                    </ListItem>
+                    <TableCell className={classNames(classes.cell, classes.responsiveCell)}>
+                      {n.index}
+                    </TableCell>
+                    <TableCell className={classes.cell}>
+                      {n.title}
+                    </TableCell>
+                    <TableCell className={classNames(classes.cell, classes.responsiveCell)}>
+                      {n.datetime}
+                    </TableCell>
                   </TableRow>
                 );
               })}
@@ -185,7 +193,11 @@ class EnhancedTable extends React.Component {
           count={data.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          labelRowsPerPage="행 개수"           backIconButtonProps={{
+          labelRowsPerPage="행 개수"
+          labelDisplayedRows={({ from, to, count }) => (
+            `${count}개 중 ${from}부터 ${to}`
+          )}
+          backIconButtonProps={{
             'aria-label': 'Previous Page',
           }}
           nextIconButtonProps={{

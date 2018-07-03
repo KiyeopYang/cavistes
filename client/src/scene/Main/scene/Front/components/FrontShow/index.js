@@ -1,8 +1,8 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import { Motion, spring } from 'react-motion';
 import classNames from 'classnames';
-import Typography from 'material-ui/Typography';
+import Typography from '@material-ui/core/Typography';
 import prefixer from '../../../../../../modules/prefixer';
 
 const styles = prefixer({

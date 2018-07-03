@@ -1,27 +1,18 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
-import Iframe from 'react-iframe';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import {
-  FormControl,
-  FormHelperText,
-  FormControlLabel,
-  FormLabel,
-} from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Select from 'material-ui/Select';
-import LocationMapFinder from '../../../../components/LocationMapFinder';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Select from '@material-ui/core/Select';
 
 const styles = theme => ({
-  title: {
-    fontSize: 32,
-  },
-  next: {
-    marginTop: 16,
-  },
   typeForm: {
     flexDirection: 'row',
   },
@@ -62,6 +53,33 @@ const styles = theme => ({
   },
   signIn: {
     marginTop: 16,
+  },
+  titleImg: {
+    width: 200,
+  },
+  titleImgWrapper: {
+    background: 'white',
+    height: 60,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  typeButtonWrapper: {
+    width: '100%',
+    marginTop: 8,
+  },
+  typeButton: {
+    width: '50%',
+    border: '1px solid lightGray',
+    color: 'lightGray',
+    borderRadius: 0,
+  },
+  typeButtonSelected: {
+    border: '1px solid #052b76',
+    color: '#052b76',
+  },
+  password: {
+    fontFamily: 'sans-serif',
   },
 });
 const BANKS = [
@@ -167,65 +185,52 @@ class Form extends React.Component {
     }
     return (
       <Fragment>
-        <Typography
-          className={classes.title}
-          align="center"
-          gutterBottom
-        >
-          CAVISTES
-        </Typography>
+        <div className={classes.titleImgWrapper}>
+          <img className={classes.titleImg} src="/title.PNG"/>
+        </div>
         <Typography
           align="center"
           gutterBottom
         >
           아래 사항을 기입 해 주십시요.
         </Typography>
-        <div>
-          <FormControl
-            component="fieldset"
-            required
+        <div className={classes.typeButtonWrapper}>
+          <Button
+            onClick={() => this.setState({ type: 'default'})}
+            className={classNames({[classes.typeButtonSelected]: type === 'default'}, classes.typeButton)}
           >
-            <FormLabel component="legend">가입 유형</FormLabel>
-            <RadioGroup
-              aria-label="type"
-              name="type1"
-              value={type}
-              onChange={this.handleChange('type')}
-              className={classes.typeForm}
+            일반 고객
+          </Button>
+          <Button
+            onClick={() => this.setState({ type: 'sponsor'})}
+            className={classNames({[classes.typeButtonSelected]: type === 'sponsor'}, classes.typeButton)}
+          >
+            주최자
+          </Button>
+        </div>
+        <div className={classes.wrapperOfTwoForm}>
+          <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
+            <FormControl
+              required
+              margin="dense"
+              fullWidth
             >
-              <FormControlLabel
-                value="default"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="일반 고객"
-              />
-              <FormControlLabel
-                value="sponsor"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="주최자"
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl
-            required
-            fullWidth
-            margin="dense"
-          >
-            <InputLabel htmlFor="email">이메일</InputLabel>
-            <Input
-              id="email"
-              value={email}
-              onChange={this.handleChange('email')}
-              type="email"
-            />
-          </FormControl>
+              <InputLabel htmlFor="name">이름</InputLabel>
+              <Input id="name" value={name} onChange={this.handleChange('name')} />
+            </FormControl>
+          </div>
+          <div className={classNames(classes.rightOfTwoForm, classes.oneOfTwoForm)}>
+            <FormControl
+              required
+              margin="dense"
+              fullWidth
+            >
+              <InputLabel htmlFor="phone">전화번호</InputLabel>
+              <Input id="phone" value={phone} onChange={this.handleChange('phone')} />
+            </FormControl>
+          </div>
+        </div>
+        <div>
           <div className={classes.wrapperOfTwoForm}>
             <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
               <FormControl
@@ -239,6 +244,7 @@ class Form extends React.Component {
                   value={password}
                   onChange={this.handleChange('password')}
                   type="password"
+                  className={classes.password}
                 />
               </FormControl>
             </div>
@@ -254,32 +260,24 @@ class Form extends React.Component {
                   value={passwordCheck}
                   onChange={this.handleChange('passwordCheck')}
                   type="password"
+                  className={classes.password}
                 />
               </FormControl>
             </div>
           </div>
-          <div className={classes.wrapperOfTwoForm}>
-            <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
-              <FormControl
-                required
-                margin="dense"
-                fullWidth
-              >
-                <InputLabel htmlFor="name">이름</InputLabel>
-                <Input id="name" value={name} onChange={this.handleChange('name')} />
-              </FormControl>
-            </div>
-            <div className={classNames(classes.rightOfTwoForm, classes.oneOfTwoForm)}>
-              <FormControl
-                required
-                margin="dense"
-                fullWidth
-              >
-                <InputLabel htmlFor="phone">전화번호</InputLabel>
-                <Input id="phone" value={phone} onChange={this.handleChange('phone')} />
-              </FormControl>
-            </div>
-          </div>
+          <FormControl
+            required
+            fullWidth
+            margin="dense"
+          >
+            <InputLabel htmlFor="email">이메일</InputLabel>
+            <Input
+              id="email"
+              value={email}
+              onChange={this.handleChange('email')}
+              type="email"
+            />
+          </FormControl>
           <FormControl
             component="fieldset"
             required

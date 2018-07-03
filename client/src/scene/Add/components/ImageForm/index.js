@@ -1,20 +1,12 @@
 import React from 'react';
-import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-import TextField from 'material-ui/TextField';
-import { CircularProgress } from 'material-ui/Progress';
-import green from 'material-ui/colors/green';
-import red from 'material-ui/colors/red';
-import Input, { InputLabel } from 'material-ui/Input';
-import { FormControl, FormHelperText } from 'material-ui/Form';
-import Select from 'material-ui/Select';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import green from '@material-ui/core/colors/green';
+import red from '@material-ui/core/colors/red';
 import Slider from 'react-slick';
 import SettingIcon from '@material-ui/icons/Settings';
 import CreateIcon from '@material-ui/icons/Create';
-import LocationMapFinder from '../../../../components/LocationMapFinder';
-import ImageUploaderModal from '../../../../components/ImageUploaderModal';
 
 const styles = theme => ({
   forms: {

@@ -7,7 +7,8 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'react-router-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import store, { history } from './store';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
@@ -26,15 +27,25 @@ injectTapEventPlugin();
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#AA0808',
+      main: '#052b76',
       contrastText: '#fff',
     },
     secondary: {
-      light: '#484848',
-      main: '#212121',
-      dark: '#000000',
-      contrastText: '#fff',
+      light: '#ffffff',
+      main: '#f3f3f3',
+      dark: '#c3c3c3',
+      contrastText: '#000',
     },
+    background: {
+      default: 'rgb(242,242,242)',
+    },
+  },
+  typography: {
+    fontFamily: [
+      'Nanum',
+      'Arial',
+      'sans-serif',
+    ].join(','),
   },
 });
 render(

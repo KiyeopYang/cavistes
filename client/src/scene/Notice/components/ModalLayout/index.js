@@ -1,14 +1,14 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Dialog, { withMobileDialog } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Dialog from '@material-ui/core/Dialog';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
     padding: theme.spacing.unit * 4,
-
     [theme.breakpoints.up('md')]: {
-      width: 600,
+      minWidth: 600,
     },
   },
 });
@@ -23,6 +23,7 @@ class Layout extends React.Component {
     } = this.props;
     return (
       <Dialog
+        maxWidth="md"
         fullScreen={fullScreen}
         aria-labelledby="login_layout"
         aria-describedby="login_layout_description"

@@ -1,10 +1,15 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Text from 'material-ui/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Text from '@material-ui/core/Typography';
 
-const styles = {};
+const styles = {
+  title: {
+    fontSize: 24,
+    textAlign: 'center',
+  },
+};
 const i = ({ classes, text }) => (
-  <Text variant="headline">
+  <Text className={classes.title}>
     {text}
   </Text>
 );

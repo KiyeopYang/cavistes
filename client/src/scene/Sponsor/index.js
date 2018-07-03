@@ -93,7 +93,7 @@ class Sponsor extends React.Component {
     const managerMode = auth.account && auth.account.type === 'manager';
     return (
       <Layout>
-        <Title text="주최자"/>
+        <Title text="주최자 안내"/>
         {
           managerMode ?
             <Tools onClick={() => this.setState({

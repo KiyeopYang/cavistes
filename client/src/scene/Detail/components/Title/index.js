@@ -1,6 +1,6 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 import IconEvent from '@material-ui/icons/Event';
 import IconPrice from '@material-ui/icons/AttachMoney';
 import IconMap from '@material-ui/icons/Map';
@@ -47,6 +47,11 @@ const styles = theme => ({
   greyText: {
     color: '#9C9C9C',
   },
+  divider: {
+    width: '100%',
+    height: 1,
+    background: 'grey',
+  },
 });
 function makeDateText(date) {
   return `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()}`;
@@ -62,9 +67,10 @@ class Title extends React.Component {
       <div className={classes.root}>
         <div className={classes.titleWrapper}>
           <Typography className={classes.title} gutterBottom>
-            <strong>{event.title}</strong>
+            <strong>{event.title}ss</strong>
           </Typography>
         </div>
+        <div className={classes.divider}/>
         <div>
           <Typography className={classes.subHeading} gutterBottom>
             <IconEvent className={classes.icon}/><strong>{dateText}</strong>

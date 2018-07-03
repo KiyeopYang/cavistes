@@ -1,17 +1,14 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import Table, {
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-} from 'material-ui/Table';
-import Tooltip from 'material-ui/Tooltip';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const columnData = [
   { id: 'datetime', numeric: false, label: '시각' },

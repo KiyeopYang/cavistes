@@ -5,7 +5,6 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { push } from 'react-router-redux';
-import Chart from 'chart.js';
 import * as noticeDialogActions from '../../../../data/noticeDialog/actions';
 import * as webPushActions from '../../../../data/webPush/actions';
 import loader from '../../../../data/loader/actions';

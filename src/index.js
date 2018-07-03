@@ -14,22 +14,6 @@ import auth from './auth';
 
 const app = express();
 
-// 배포 환경에서 추적 로그 설정
-// https
-// if (process.env.NODE_ENV === 'production') {
-//   app.use((req, res, next) => {
-//     if (req.secure) return next();
-//     return res.redirect(`https://${req.headers.host}${req.url}`);
-//   });
-// } else {
-// // ONLY FOR DEVELOPMENT
-//   app.use((req, res, next) => {
-//     res.set('Access-Control-Allow-Origin', '*');
-//     res.set('Access-Control-Allow-Headers', 'Content-Type');
-//     next();
-//   });
-// }
-
 app.set('trust proxy', true);
 
 // Add the request logger before anything else so that it can
@@ -86,11 +70,6 @@ db.on('error', (error) => {
 // POST 연결을 위한 설정
 app.use(bodyParser.urlencoded({ extended: true, limit: '5mb' }));
 app.use(bodyParser.json({ limit: '5mb' }));
-
-// OAuth2
-// app.use(passport.initialize());
-// app.use(passport.session());
-// app.use(oauth2.router);
 
 // API
 app.use('/api', api);

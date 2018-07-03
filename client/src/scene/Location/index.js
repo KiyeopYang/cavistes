@@ -91,9 +91,10 @@ class Location extends React.Component {
     const { location, auth } = this.props;
     const { getLocation } = location;
     const managerMode = auth.account && auth.account.type === 'manager';
+
     return (
       <Layout>
-        <Title text="강의실"/>
+        <Title text="장소 안내"/>
         {
           managerMode ?
             <Tools onClick={() => this.setState({
@@ -111,7 +112,7 @@ class Location extends React.Component {
             const date = new Date(o.datetime);
             return {
               ...o,
-              datetime: `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`,
+              datetime: `${date.getUTCFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
             };
           })}
         />

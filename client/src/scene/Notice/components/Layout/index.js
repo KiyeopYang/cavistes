@@ -1,15 +1,19 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Card, { CardActions, CardContent } from 'material-ui/Card';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 const styles = theme => ({
   root: {
-    width: 600,
+    width: 1000,
     margin: 'auto',
     minHeight: 500,
+    marginTop: 40,
+    marginBottom: 40,
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      width: 'calc(100% - 40px)',
       minHeight: 'auto',
+      margin: 20,
     },
   },
 });

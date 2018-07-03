@@ -1,65 +1,52 @@
 import React from 'react';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MapIcon from '@material-ui/icons/Map';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
 import TermModal from './components/TermModal';
 
 const styles = theme => ({
   root: {
-    paddingBottom: 50,
-    background: theme.palette.secondary.main,
+    paddingTop: 40,
+    paddingBottom: 40,
+    background: 'rgb(44,44,44)',
     [theme.breakpoints.down('sm')]: {
-      paddingBottom: 50,
+      paddingBottom: 40,
     },
   },
   footer: {
     maxWidth: 1000,
+    textAlign: 'center',
     margin: 'auto',
-    display: 'flex',
-    alignItems: 'center',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       padding: 16,
     },
   },
-  flex: {
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
-      flexDirection: 'column',
-    },
-  },
-  title: {
-    padding: 25,
-    color: 'white',
-    fontSize: 32,
-    [theme.breakpoints.down('sm')]: {
-      padding: 0,
-    },
-  },
-  info: {
-    color: 'white',
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  toolbar: {
-    maxWidth: 1000,
-    width: '100%',
-    margin: 'auto',
-    padding: 0,
-  },
-  icon: {
-    color: 'white',
-  },
   footerBtn: {
     color: 'white',
     cursor: 'pointer',
+    display: 'inline-block',
+    textDecoration: 'none',
+  },
+  divider: {
+    height: 14,
+    width: 1,
+    background: 'grey',
+    marginLeft: 6,
+    marginRight: 6,
+    display: 'inline-block',
+  },
+  rowMargin: {
+    marginBottom: 20,
+  },
+  row: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  text: {
+    color: 'grey',
   },
 });
 class Footer extends React.Component {
@@ -72,40 +59,70 @@ class Footer extends React.Component {
     return (
       <div className={classes.root}>
         <div className={classes.footer}>
-          <div className={classes.flex}>
-            <div style={{ paddingTop: 16 }}>
-              <Typography
-                className={classes.footerBtn}
-                onClick={() => this.setState({
-                  isTermModalOpen: true,
-                })}
-              >
-                개인정보취급방침 및 이용약관
-              </Typography>
-              <Typography
-                className={classes.info}
-              >
-                서울시 강남구 대치동 949번지 수암빌딩 1층, 디비알디코리아
-              </Typography>
-              <Typography className={classes.info}>
+          <div className={classNames(classes.row, classes.rowMargin)}>
+            <Typography
+              className={classes.footerBtn}
+              onClick={() => this.setState({
+                isTermModalOpen: true,
+              })}
+            >
+              개인정보취급방침 및 이용약관
+            </Typography>
+            <div className={classes.divider}/>
+            <Typography
+              className={classes.footerBtn}
+              component="a"
+              href="mailto:cavistes@cavistes.co.kr"
+            >
+              메일 문의
+            </Typography>
+          </div>
+          <Hidden smDown>
+            <div className={classes.row}>
+              <Typography className={classes.text}>
                 9, Yeongdong-daero 75-gil, Gangnam-gu,  Seoul, Republic of Korea
               </Typography>
-              <Typography className={classes.info}>
-                대표 : 이민우 / 전화 : 02-565-2223 / 사업자번호 : 120-12-14999
-              </Typography>
-              <Typography className={classes.info}>
-                cavistes@cavistes.co.kr
+              <div className={classes.divider}/>
+              <Typography className={classes.text}>
+                Tel) 02.565.2223
               </Typography>
             </div>
+            <div className={classNames(classes.row, classes.rowMargin)}>
+              <Typography className={classes.text}>
+                Business License 120 12 14999
+              </Typography>
+              <div className={classes.divider}/>
+              <Typography className={classes.text}>
+                Name of Representative: Lee, Minwoo
+              </Typography>
+            </div>
+          </Hidden>
+          <Hidden mdUp>
+            <div className={classes.row}>
+              <Typography className={classes.text}>
+                9, Yeongdong-daero 75-gil, Gangnam-gu,  Seoul, Republic of Korea
+              </Typography>
+            </div>
+            <div className={classes.row}>
+              <Typography className={classes.text}>
+                Tel) 02.565.2223
+              </Typography>
+              <div className={classes.divider}/>
+              <Typography className={classes.text}>
+                Business License 120 12 14999
+              </Typography>
+            </div>
+            <div className={classNames(classes.row, classes.rowMargin)}>
+              <Typography className={classes.text}>
+                Name of Representative: Lee, Minwoo
+              </Typography>
+            </div>
+          </Hidden>
+          <div>
+            <Typography className={classes.text}>
+              Copyright ⓒ 2018 CAVISTES. All rights reserved.
+            </Typography>
           </div>
-          <a href="https://goo.gl/maps/WdxoBjjimWk" target="_blank">
-            <IconButton
-              size="large"
-              className={classes.icon}
-            >
-              <MapIcon/>
-            </IconButton>
-          </a>
         </div>
         <TermModal
           open={isTermModalOpen}

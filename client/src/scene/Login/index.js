@@ -12,22 +12,8 @@ import * as loginActions from './data/login/actions';
 import * as authActions from '../../data/auth/actions';
 import Layout from './components/Layout';
 import Form from './components/Form';
-import PasswordFind from './components/PasswordFind';
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      view: 'login',
-    };
-  }
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.open && nextProps.open) {
-      this.setState({
-        view: 'login',
-      });
-    }
-  }
   handleLogin = (data) => {
     this.props.loginRequest(data)
       .then(() => {
@@ -47,24 +33,12 @@ class Login extends React.Component {
       open,
       onClose,
     } = this.props;
-    const {
-      view,
-    } = this.state;
     return (
-      <Layout
+      <Form
         open={open}
         onClose={onClose}
-      >
-        {
-          view === 'login' ?
-            <Form
-              handlePasswordFind={() => this.setState({
-                view: 'passwordFind',
-              })}
-              handleSubmit={this.handleLogin}
-            /> : <PasswordFind/>
-        }
-      </Layout>
+        handleSubmit={this.handleLogin}
+      />
     );
   }
 }

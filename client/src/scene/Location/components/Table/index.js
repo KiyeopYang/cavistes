@@ -1,26 +1,19 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import Table, {
-  TableBody,
-  TableCell,
-  TableHead,
-  TablePagination,
-  TableRow,
-  TableSortLabel,
-} from 'material-ui/Table';
-import Toolbar from 'material-ui/Toolbar';
-import Typography from 'material-ui/Typography';
-import Paper from 'material-ui/Paper';
-import Checkbox from 'material-ui/Checkbox';
-import IconButton from 'material-ui/IconButton';
-import Tooltip from 'material-ui/Tooltip';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
-import { lighten } from 'material-ui/styles/colorManipulator';
-import Button from 'material-ui/Button';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
-import Card, { CardContent, CardMedia } from 'material-ui/Card';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
+import Tooltip from '@material-ui/core/Tooltip';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import Card from '@material-ui/core/Card';
+import CardMedia from '@material-ui/core/CardMedia';
+import Text from '@material-ui/core/Typography';
 
 const columnData = [
   { id: 'title', numeric: false, disablePadding: true, label: '' },
@@ -88,6 +81,32 @@ const styles = theme => ({
     height: 0,
     paddingTop: '56.25%',
   },
+  flexBox: {
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  flex: {
+    flex: '1 0 33%',
+    [theme.breakpoints.down('sm')]: {
+      flex: '1 0 100%',
+    },
+    padding: 8,
+  },
+  card: {
+    borderRadius: 0,
+    cursor: 'pointer',
+  },
+  divider: {
+    marginTop: 8,
+    marginBottom: 8,
+    width: '100%',
+    height: 1,
+    background: 'lightgrey',
+  },
+  textWrapper: {
+    marginTop: 14,
+    marginBottom: 10,
+  },
 });
 
 class EnhancedTable extends React.Component {
@@ -99,7 +118,7 @@ class EnhancedTable extends React.Component {
       selected: [],
       data: this.props.rows,
       page: 0,
-      rowsPerPage: 5,
+      rowsPerPage: 6,
     };
   }
   componentWillReceiveProps(nextProps) {
@@ -123,7 +142,6 @@ class EnhancedTable extends React.Component {
 
     this.setState({ data, order, orderBy });
   };
-
   handleSelectAllClick = (event, checked) => {
     if (checked) {
       this.setState({ selected: this.state.data.map(n => n.id) });
@@ -131,24 +149,70 @@ class EnhancedTable extends React.Component {
     }
     this.setState({ selected: [] });
   };
-
   handleClick = (event, id) => {
     this.props.handleRowClick(id);
   };
-
   handleChangePage = (event, page) => {
     this.setState({ page });
   };
-
   handleChangeRowsPerPage = event => {
     this.setState({ rowsPerPage: event.target.value });
   };
-
   render() {
     const { classes, handleClick } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
+    return (
+      <React.Fragment>
+        <div className={classes.flexBox}>
+          {
+            data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(n => (
+              <div
+                key={n.id}
+                className={classes.flex}
+                onClick={() => this.props.handleClick(n.id)}
+              >
+                <Card className={classes.card} elevation={0}>
+                  <CardMedia
+                    className={classes.imgWrapper}
+                    image={n.images[0].path}
+                  />
+                  <div className={classes.textWrapper}>
+                    <Text>
+                      {n.title}
+                    </Text>
+                    <Text>
+                      {n.datetime}
+                    </Text>
+                  </div>
+                </Card>
+                <div className={classes.divider}/>
+              </div>
+            ))
+          }
+        </div>
+        <TablePagination
+          component="div"
+          count={data.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          rowsPerPageOptions={[6, 12, 24]}
+          labelRowsPerPage="페이지당 개수"
+          labelDisplayedRows={({ from, to, count }) => (
+            `${count}개 중 ${from}부터 ${to}`
+          )}
+          backIconButtonProps={{
+            'aria-label': 'Previous Page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'Next Page',
+          }}
+          onChangePage={this.handleChangePage}
+          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+        />
+      </React.Fragment>
+    );
     return (
       <Fragment>
         <div className={classes.tableWrapper}>
@@ -171,7 +235,7 @@ class EnhancedTable extends React.Component {
                     className={classes.row}
                   >
                     <div className={classes.cell}>
-                      <Card>
+                      <Card className={classes.card} elevation={0}>
                         <CardMedia
                           className={classes.imgWrapper}
                           image={n.images[0].path}
@@ -201,6 +265,9 @@ class EnhancedTable extends React.Component {
           rowsPerPage={rowsPerPage}
           page={page}
           labelRowsPerPage="행 개수"
+          labelDisplayedRows={({ from, to, count }) => (
+            `${count}개 중 ${from}부터 ${to}`
+          )}
           backIconButtonProps={{
             'aria-label': 'Previous Page',
           }}

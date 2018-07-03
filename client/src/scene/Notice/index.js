@@ -107,11 +107,12 @@ class Notice extends React.Component {
             editModalMode: managerMode ? 'update' : 'view',
             selected: getNotice.notice.find(o => o.id === id),
           })}
-          rows={getNotice.notice.map((o) => {
+          rows={getNotice.notice.map((o, i, arr) => {
             const date = new Date(o.datetime);
             return {
               ...o,
-              datetime: `${date.getUTCFullYear()}/${date.getMonth()+1}/${date.getDate()} ${date.getHours()}시 ${date.getMinutes()}분`,
+              index: arr.length - i,
+              datetime: `${date.getUTCFullYear()}.${date.getMonth()+1}.${date.getDate()}`,
             };
           })}
         />

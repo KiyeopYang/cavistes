@@ -1,14 +1,6 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import IconEvent from '@material-ui/icons/Event';
-import IconPrice from '@material-ui/icons/AttachMoney';
-import IconMap from '@material-ui/icons/Map';
-import IconGroup from '@material-ui/icons/Group';
-import IconComment from '@material-ui/icons/Comment';
-import Paper from 'material-ui/Paper';
-import Button from 'material-ui/Button';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import withStyles from '@material-ui/core/styles/withStyles';
+import List from '@material-ui/core/List';
 import Block from '../Block';
 import Input from './components/Input';
 import Text from './components/Text';

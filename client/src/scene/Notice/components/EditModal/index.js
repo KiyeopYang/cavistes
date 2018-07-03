@@ -1,8 +1,8 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import TextField from 'material-ui/TextField';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import CreateIcon from '@material-ui/icons/Create';
 import DeleteIcon from '@material-ui/icons/Delete';
 import SettingIcon from '@material-ui/icons/Settings';
@@ -10,9 +10,6 @@ import Layout from '../ModalLayout';
 import RemoveModal from '../../../../components/RemoveModal';
 
 const styles = theme => ({
-  title: {
-    fontSize: 24,
-  },
   submit: {
     marginTop: 16,
   },
@@ -25,6 +22,16 @@ const styles = theme => ({
   },
   icon: {
     marginRight: theme.spacing.unit,
+  },
+  title: {
+    fontSize: 22,
+  },
+  divider: {
+    marginTop: 8,
+    marginBottom: 8,
+    width: '100%',
+    height: 1,
+    background: 'lightgrey',
   },
 });
 class EditModal extends React.Component {
@@ -119,10 +126,11 @@ class EditModal extends React.Component {
             </div>
           </div> :
           <div>
-            <Typography variant="subheading" gutterBottom>
+            <Typography className={classes.title}>
               <strong>{title}</strong>
             </Typography>
-            <Typography className={classes.text} variant="body2" gutterBottom>
+            <div className={classes.divider}/>
+            <Typography className={classes.text}>
               {text}
             </Typography>
           </div>

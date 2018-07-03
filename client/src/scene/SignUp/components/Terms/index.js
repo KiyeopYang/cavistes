@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import Block from './components/Block';
 import TermModal from './components/TermModal';
 import rules from '../../../../rules';
@@ -12,6 +12,17 @@ const styles = {
   },
   next: {
     marginTop: 16,
+    borderRadius: 0,
+  },
+  titleImg: {
+    width: 200,
+  },
+  titleImgWrapper: {
+    background: 'white',
+    height: 60,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 };
 class Terms extends React.Component {
@@ -43,13 +54,9 @@ class Terms extends React.Component {
     } = this.state;
     return (
       <Fragment>
-        <Typography
-          className={classes.title}
-          align="center"
-          gutterBottom
-        >
-          CAVISTES
-        </Typography>
+        <div className={classes.titleImgWrapper}>
+          <img className={classes.titleImg} src="/title.PNG"/>
+        </div>
         <Block
           title="이용약관"
           content={rules.ruleForUse}

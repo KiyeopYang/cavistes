@@ -1,9 +1,9 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import classNames from 'classnames';
-import Typography from 'material-ui/Typography';
-import Divider  from 'material-ui/Divider';
-import Paper from 'material-ui/Paper';
+import Typography from '@material-ui/core/Typography';
+import Divider  from '@material-ui/core/Divider';
+import Paper from '@material-ui/core/Paper';
 import prefixer from '../../../../../../modules/prefixer';
 
 const styles = theme => prefixer({

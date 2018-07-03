@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
+import withStyles from '@material-ui/core/styles/withStyles';
 import Calendar from 'react-calendar';
 
 const styles = theme => ({

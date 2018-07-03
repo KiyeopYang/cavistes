@@ -1,66 +1,99 @@
 import React, {Fragment} from 'react';
 import classNames from 'classnames';
-import { withStyles } from 'material-ui/styles';
-import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
-import Hidden from 'material-ui/Hidden';
-import IconButton from 'material-ui/IconButton';
+import withStyles from '@material-ui/core/styles/withStyles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
+import Hidden from '@material-ui/core/Hidden';
+import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import MoreIcon from '@material-ui/icons/KeyboardArrowDown';
-import Menu, { MenuItem } from 'material-ui/Menu';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 const styles = theme => ({
   root: {
     flexGrow: 1,
-    position: 'fixed',
+    position: 'absolute',
     width: '100%',
     zIndex: 1000,
   },
+  verticalLine: {
+    width: 1,
+    height: 15,
+    background: 'grey',
+  },
   flex: {
     flex: 1,
-  },
-  title: {
-    padding: 8,
-    paddingTop: 8,
-    paddingBottom: 8,
-    cursor: 'pointer',
-    [theme.breakpoints.up('sm')]: {
-      fontSize: 26,
-    },
-    [theme.breakpoints.down('sm')]: {
-      fontSize: 20,
-    },
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
+    display: 'flex',
+    alignItems: 'center',
   },
   toolbar: {
+    display: 'flex',
+    justifyContent: 'center',
     maxWidth: 1000,
-    minHeight: 32,
     width: '100%',
     margin: 'auto',
     padding: 0,
   },
+  toolbar1: {
+    minHeight: 30,
+    height: 30,
+  },
+  toolbar2: {
+    minHeight: 45,
+    height: 45,
+  },
   dummyDiv: {
-    height: 94,
+    minHeight: 170,
     [theme.breakpoints.down('sm')]: {
-      height: 80,
+      minHeight: 75,
     },
   },
   user: {
     display: 'flex',
     cursor: 'pointer',
   },
-  imgWrapper: {
-    display: 'inline-block',
-    width: 50,
-    padding: 4,
+  titleImgWrapper: {
+    background: 'white',
+    height: 95,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
-  img: {
+  titleImg: {
+    width: 200,
+  },
+  titleMobileImg: {
+    height: 35,
+    marginLeft: 16,
+  },
+  menuButton: {
+    color: 'white',
+  },
+  menuButtonSelected: {
+    color: 'yellow',
+  },
+  menu: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
     width: '100%',
+    height: '100%',
+    background: 'rgb(48,48,48,0.8)',
+    textAlign: 'center',
+    zIndex: 1000,
+  },
+  menuItems: {
+    marginTop: 100,
+  },
+  menuItem: {
+    fontSize: 20,
+    marginBottom: 8,
+    cursor: 'pointer',
   },
 });
 class Header extends React.Component {
@@ -68,7 +101,7 @@ class Header extends React.Component {
     super(props);
     this.state = {
       userAnchorEl: null,
-      menuAnchorEl: null,
+      menuOn: false,
     };
   }
   handleMenuOpen = anchorEl => e => {
@@ -76,6 +109,15 @@ class Header extends React.Component {
   };
   handleMenuClose = anchorEl => () => {
     this.setState({ [anchorEl]: null });
+  };
+  closeMobileMenu = (label) => {
+    this.props.onClick(label);
+    this.setState({ menuOn: false });
+  };
+  pathIncluded = path => {
+    const { pathname } = this.props.location;
+    if (path === '/' && pathname !== '/') return false;
+    return pathname.indexOf(path) > -1
   };
   render() {
     const {
@@ -86,29 +128,78 @@ class Header extends React.Component {
       onClickLogin,
       onClickSignUp,
     } = this.props;
-    const { userAnchorEl, menuAnchorEl } = this.state;
+    const { userAnchorEl, menuOn } = this.state;
     const open = {
       user: Boolean(userAnchorEl),
-      menu: Boolean(menuAnchorEl),
     };
-    console.log(open);
-    console.log(menuAnchorEl);
     return (
       <React.Fragment>
+        {
+          menuOn ?
+            <div className={classes.menu}>
+              <div className={classes.menuItems}>
+                <Typography
+                  className={
+                    classNames(classes.menuItem, this.pathIncluded('notice') ?
+                      classes.menuButtonSelected:classes.menuButton
+                    )
+                  }
+                  onClick={() => this.closeMobileMenu('notice')}
+                >
+                  공지사항
+                </Typography>
+                <Typography
+                  className={
+                    classNames(classes.menuItem, this.pathIncluded('location') ?
+                      classes.menuButtonSelected:classes.menuButton
+                    )
+                  }
+                  onClick={() => this.closeMobileMenu('location')}
+                >
+                  장소안내
+                </Typography>
+                <Typography
+                  className={
+                    classNames(classes.menuItem, this.pathIncluded('sponsor') ?
+                      classes.menuButtonSelected:classes.menuButton
+                    )
+                  }
+                  onClick={() => this.closeMobileMenu('sponsor')}
+                >
+                  주최자안내
+                </Typography>
+                <Typography
+                  className={
+                    classNames(classes.menuItem, this.pathIncluded('/') ?
+                      classes.menuButtonSelected:classes.menuButton
+                    )
+                  }
+                  onClick={() => this.closeMobileMenu('event')}
+                >
+                  참가신청
+                </Typography>
+              </div>
+            </div> : null
+        }
         <div className={classes.root}>
-          <AppBar position="static">
-            <Toolbar classes={{ root: classes.toolbar}}>
+          <AppBar position="static" color="secondary">
+            <Toolbar classes={{
+              root: classNames(classes.toolbar, classes.toolbar1),
+            }}>
               <div className={classes.flex} />
               {
                 !user ?
                   <React.Fragment>
                     <Button
+                      size="small"
                       color="inherit"
                       onClick={onClickLogin}
                     >
                       로그인
                     </Button>
+                    <div className={classes.verticalLine}/>
                     <Button
+                      size="small"
                       color="inherit"
                       onClick={onClickSignUp}
                     >
@@ -204,21 +295,27 @@ class Header extends React.Component {
               }
             </Toolbar>
           </AppBar>
-          <AppBar position="static" color="white">
-            <Toolbar classes={{ root: classes.toolbar}}>
-              <div className={classes.imgWrapper}>
-                <img className={classes.img} src="/caviste.PNG"/>
+          <AppBar position="static">
+            <Hidden smDown>
+              <div className={classes.titleImgWrapper}>
+                <img className={classes.titleImg} src="/title.PNG"/>
               </div>
-              <Typography
-                color="inherit"
-                className={classNames(classes.flex, classes.title)}
-                onClick={() => onClick('about')}
-              >
-                카비스트
-                { window.innerWidth < 400 ? '' : ` 와인&치즈 아카데미` }
-              </Typography>
+            </Hidden>
+            <Toolbar classes={{
+                root: classNames(classes.toolbar, classes.toolbar2),
+              }}
+            >
+              <Hidden mdUp>
+                <div className={classes.flex}>
+                  <img className={classes.titleMobileImg} src="/titleMobile.PNG"/>
+                </div>
+              </Hidden>
               <Hidden smDown>
                 <Button
+                  className={
+                    this.pathIncluded('notice') ?
+                      classes.menuButtonSelected:classes.menuButton
+                  }
                   size="large"
                   onClick={() => {
                     onClick('notice');
@@ -227,86 +324,51 @@ class Header extends React.Component {
                   공지사항
                 </Button>
                 <Button
+                  className={
+                    this.pathIncluded('location') ?
+                      classes.menuButtonSelected:classes.menuButton
+                  }
                   size="large"
                   onClick={() => {
                     onClick('location');
                   }}
                 >
-                  강의실
+                  장소 안내
                 </Button>
                 <Button
+                  className={
+                    this.pathIncluded('sponsor') ?
+                      classes.menuButtonSelected:classes.menuButton
+                  }
                   size="large"
                   onClick={() => {
                     onClick('sponsor');
                   }}
                 >
-                  주최자
+                  주최자 안내
                 </Button>
                 <Button
+                  className={
+                    this.pathIncluded('/') ?
+                      classes.menuButtonSelected:classes.menuButton
+                  }
                   size="large"
                   onClick={() => {
                     onClick('event');
                   }}
                 >
-                  이벤트
+                  참가 신청
                 </Button>
               </Hidden>
               <Hidden mdUp>
                 <IconButton
                   aria-owns={open.menu ? 'menu-appbar' : null}
                   aria-haspopup="true"
-                  onClick={this.handleMenuOpen('menuAnchorEl')}
+                  onClick={() => this.setState({ menuOn: !this.state.menuOn })}
                   color="inherit"
                 >
                   <MenuIcon />
                 </IconButton>
-                <Menu
-                  id="menu-appbar"
-                  anchorEl={menuAnchorEl}
-                  anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                  }}
-                  open={open.menu}
-                  onClose={this.handleMenuClose('menuAnchorEl')}
-                >
-                  <MenuItem
-                    onClick={() => {
-                      this.handleMenuClose('menuAnchorEl')();
-                      onClick('notice');
-                    }}
-                  >
-                    공지사항
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleMenuClose('menuAnchorEl')();
-                      onClick('location');
-                    }}
-                  >
-                    강의실
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleMenuClose('menuAnchorEl')();
-                      onClick('sponsor');
-                    }}
-                  >
-                    주최자
-                  </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      this.handleMenuClose('menuAnchorEl')();
-                      onClick('event');
-                    }}
-                  >
-                    이벤트
-                  </MenuItem>
-                </Menu>
               </Hidden>
             </Toolbar>
           </AppBar>

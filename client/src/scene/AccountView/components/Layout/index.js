@@ -1,8 +1,12 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Dialog, { DialogTitle, DialogContent, withMobileDialog } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Dialog from '@material-ui/core/Dialog';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 
 const styles = theme => ({
   title: {

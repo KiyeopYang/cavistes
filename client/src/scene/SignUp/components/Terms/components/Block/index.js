@@ -1,8 +1,8 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Checkbox from 'material-ui/Checkbox';
-import { FormControlLabel } from 'material-ui/Form';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 import IconZoom from '@material-ui/icons/ZoomIn';
 
 const styles = theme => ({
@@ -11,6 +11,7 @@ const styles = theme => ({
     padding: 4,
   },
   title: {
+    marginLeft: 8,
     color: theme.palette.primary.contrastText,
     fontSize: 16,
     display: 'flex',

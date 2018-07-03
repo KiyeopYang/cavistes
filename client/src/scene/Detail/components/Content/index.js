@@ -1,6 +1,6 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 import IconEvent from '@material-ui/icons/Event';
 import IconPrice from '@material-ui/icons/AttachMoney';
 import IconMap from '@material-ui/icons/Map';

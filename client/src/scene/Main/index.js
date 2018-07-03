@@ -7,13 +7,14 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { push } from 'react-router-redux';
-import Button from 'material-ui/Button';
-import Typography from 'material-ui/Typography';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import { Element, animateScroll } from 'react-scroll';
 import EventCalendarModal from '../../components/EventCalendarModal';
 import Layout from '../../components/Layout';
 import Title from './components/Title';
 import Events from './components/Events';
+import Sponsor from './components/Sponsor';
 import Contact from './components/Contact';
 import More from './components/More';
 import * as noticeDialogActions from '../../data/noticeDialog/actions';
@@ -96,6 +97,7 @@ class Main extends React.Component {
             />
           </Element>
           <More handleClick={this.handleClickMore}/>
+          <Sponsor/>
         </Layout>
         <EventCalendarModal
           selectedEvent={selectedEvent}

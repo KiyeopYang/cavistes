@@ -1,11 +1,11 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 import IconPerson from '@material-ui/icons/Person';
 import IconDelete from '@material-ui/icons/Delete';
-import IconButton from 'material-ui/IconButton';
-import Paper from 'material-ui/Paper';
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List';
+import IconButton from '@material-ui/core/IconButton';
+import ListItem from '@material-ui/core/ListItem';
+
 
 const styles = theme => ({
   reply: {
@@ -24,7 +24,7 @@ const styles = theme => ({
   },
   deleteButton: {
     display: 'flex',
-    justfiyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 });

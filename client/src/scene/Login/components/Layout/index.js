@@ -1,7 +1,8 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Dialog, { withMobileDialog } from 'material-ui/Dialog';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Dialog from '@material-ui/core/Dialog';
+import withMobileDialog from '@material-ui/core/withMobileDialog';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
   root: {
@@ -9,6 +10,13 @@ const styles = theme => ({
   },
   dialog: {
     maxWidth: 400,
+  },
+  divider: {
+    width: '100%',
+    height: 1,
+    marginTop: 16,
+    marginBottom: 16,
+    background: 'grey',
   },
 });
 class Layout extends React.Component {
@@ -19,6 +27,7 @@ class Layout extends React.Component {
       onClose,
       children,
       fullScreen,
+      handlePasswordFind
     } = this.props;
     return (
       <Dialog
@@ -31,6 +40,12 @@ class Layout extends React.Component {
       >
         <div className={classes.root}>
           { children }
+          <div className={classes.divider} />
+          <Button
+            onClick={handlePasswordFind}
+          >
+            비밀번호 찾기
+          </Button>
         </div>
         {
           fullScreen ?

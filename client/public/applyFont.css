@@ -1,6 +1,20 @@
 @font-face {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: 400;
-    src: local('Roboto'), url('NanumSquareRound.ttf');
+    font-family: Nanum;
+    src: local('Nanum'), url('./nanumSquareR.ttf');
+}
+@font-face {
+    font-family: Nanum;
+    src: url('nanumSquareB.ttf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: CircularBook;
+    src: local('CircularBook'), url('./circularStd-Book.otf');
+}
+@font-face {
+    font-family: CircularMedium;
+    src: local('CircularMedium'), url('./circularStd-Medium.otf');
+}
+html, body {
+    font-family: 'Nanum';
 }

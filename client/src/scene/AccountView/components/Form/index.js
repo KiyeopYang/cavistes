@@ -1,20 +1,17 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
-import Iframe from 'react-iframe';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import {
-  FormControl,
-  FormHelperText,
-  FormControlLabel,
-  FormLabel,
-} from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Select from 'material-ui/Select';
-import TextField from 'material-ui/TextField';
-import Switch from 'material-ui/Switch';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
+import Switch from '@material-ui/core/Switch';
 import LocationMapFinder from '../../../../components/LocationMapFinder';
 
 const styles = theme => ({

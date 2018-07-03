@@ -1,7 +1,7 @@
 import React from 'react';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import CreateIcon from '@material-ui/icons/Create';
 import IconEvent from '@material-ui/icons/Event';
 import Event from './components/Event';
@@ -14,6 +14,8 @@ const styles = theme => ({
     alignItems: 'center',
   },
   events: {
+    display: 'flex',
+    flexWrap: 'wrap',
     [theme.breakpoints.down('sm')]: {
       padding: 10,
     },
@@ -23,11 +25,12 @@ const styles = theme => ({
     color: 'white',
   },
   titleWrapper: {
-    display: 'flex',
+    textAlign: 'right',
   },
-  titleIcon: {
-    fontSize: 28,
-    marginRight: theme.spacing.unit,
+  eventFlex: {
+    flex: '1 0 33%',
+    display: 'flex',
+    justifyContent: 'center',
   },
 });
 class Events extends React.Component {
@@ -43,9 +46,6 @@ class Events extends React.Component {
     return (
       <div>
         <div className={classes.titleWrapper}>
-          <Typography className={classes.title} variant="headline">
-            <IconEvent className={classes.titleIcon}/>Event
-          </Typography>
           {
             createMode ?
                 <Button
@@ -61,12 +61,16 @@ class Events extends React.Component {
         <div className={classes.events}>
           {
             eventList.map((o, i) => (
-              <Event
+              <div
                 key={i}
-                event={o}
-                handleCalendar={handleCalendar}
-                handleClick={() => handleClick(o.id)}
-              />
+                className={classes.eventFlex}
+              >
+                <Event
+                  event={o}
+                  handleCalendar={handleCalendar}
+                  handleClick={() => handleClick(o.id)}
+                />
+              </div>
             ))
           }
         </div>

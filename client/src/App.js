@@ -10,7 +10,7 @@ import { push } from 'react-router-redux';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'fine-uploader';
-import CssBaseline from 'material-ui/CssBaseline';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { scroller, animateScroll } from 'react-scroll';
 import * as cookie from './modules/cookie';
 import * as noticeDialogActions from './data/noticeDialog/actions';
@@ -33,10 +33,8 @@ import Loader from './components/Loader';
 import AccountManager from './scene/AccountManager';
 import AccountAttendanceManager from './scene/AccountAttendanceManager';
 import ServiceManager from './scene/ServiceManager';
-import AccountView from './scene/AccountView';
 import PaymentManager from './scene/PaymentManager';
 import loaderDOM from './modules/loader';
-import AuthRoute from './modules/AuthRoute';
 
 class App extends React.Component {
   constructor(props) {
@@ -106,13 +104,6 @@ class App extends React.Component {
       this.props.push('/sponsor');
     } else {
       this.props.push('/');
-      // setTimeout(() => {
-      //   scroller.scrollTo(label, {
-      //     smooth: true,
-      //     offset: -100,
-      //     duration: 500,
-      //   });
-      // }, 300);
     }
   };
   render() {
@@ -135,16 +126,22 @@ class App extends React.Component {
     return (
       <React.Fragment>
         <CssBaseline />
-        <Header
-          user={auth.account}
-          onClick={this.handleMenuClick}
-          onClickUserMenu={this.handleUserMenuClick}
-          onClickLogin={() => this.setState({
-            isLoginModalOpen: true,
-          })}
-          onClickSignUp={() => this.setState({
-            isSignUpModalOpen: true,
-          })}
+        <Route
+          path="/"
+          render={props => (
+            <Header
+              {...props}
+              user={auth.account}
+              onClick={this.handleMenuClick}
+              onClickUserMenu={this.handleUserMenuClick}
+              onClickLogin={() => this.setState({
+                isLoginModalOpen: true,
+              })}
+              onClickSignUp={() => this.setState({
+                isSignUpModalOpen: true,
+              })}
+            />
+          )}
         />
         <Route
           exact

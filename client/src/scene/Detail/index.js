@@ -7,6 +7,7 @@ import {
   Redirect,
 } from 'react-router-dom';
 import { push } from 'react-router-redux';
+import { animateScroll } from 'react-scroll';
 import {
   getEventByIdRequest,
 } from '../../data/event/actions';
@@ -185,23 +186,6 @@ class Detail extends React.Component {
     else {
       event.datetimes = event.datetimes.map(o => new Date(o));
     }
-    // {/*<Front*/}
-    //   {/*images={event.images}*/}
-    // {/*/>*/}
-    //
-    // {/*<Title*/}
-    // {/*event={event}*/}
-    // {/*/>*/}
-    // {
-    //   this.isOwner() ?
-    //     <OwnerButtons
-    //       onClick={v => v === 'remove' ? this.setState({
-    //         isRemoveModalOpen: true,
-    //       }) : this.setState({
-    //         isUpdateModalOpen: true,
-    //       })}
-    //     /> : null
-    // }
     const isOwner = this.isOwner();
     return (
       <Fragment>
@@ -218,14 +202,17 @@ class Detail extends React.Component {
                 });
               } : null
             }
-          >
-            <Content
-              event={event}
-              handleReplySubmit={this.handleReplySubmit}
-              handleReplyRemove={this.handleReplyRemove}
-              account={auth.account}
-            />
-          </Test>
+            handleReplySubmit={this.handleReplySubmit}
+            handleReplyRemove={this.handleReplyRemove}
+            account={auth.account}
+            toList={() => {
+              animateScroll.scrollToTop({
+                smooth: false,
+                duration: 0,
+              });
+              this.props.push('/')
+            }}
+          />
         </Layout>
         {
           isOwner ?

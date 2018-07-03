@@ -1,27 +1,18 @@
 import React, { Fragment } from 'react';
 import classNames from 'classnames';
-import Iframe from 'react-iframe';
-import { withStyles } from 'material-ui/styles';
-import Typography from 'material-ui/Typography';
-import Button from 'material-ui/Button';
-import Input, { InputLabel } from 'material-ui/Input';
-import {
-  FormControl,
-  FormHelperText,
-  FormControlLabel,
-  FormLabel,
-} from 'material-ui/Form';
-import Radio, { RadioGroup } from 'material-ui/Radio';
-import Select from 'material-ui/Select';
-import LocationMapFinder from '../../../../components/LocationMapFinder';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import Select from '@material-ui/core/Select';
 
 const styles = theme => ({
-  title: {
-    fontSize: 32,
-  },
-  next: {
-    marginTop: 16,
-  },
   typeForm: {
     flexDirection: 'row',
   },
@@ -62,6 +53,19 @@ const styles = theme => ({
   },
   signIn: {
     marginTop: 16,
+  },
+  password: {
+    fontFamily: 'sans-serif',
+  },
+  titleImg: {
+    width: 200,
+  },
+  titleImgWrapper: {
+    background: 'white',
+    height: 60,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });
 
@@ -163,13 +167,9 @@ class Form extends React.Component {
     }
     return (
       <Fragment>
-        <Typography
-          className={classes.title}
-          align="center"
-          gutterBottom
-        >
-          CAVISTES
-        </Typography>
+        <div className={classes.titleImgWrapper}>
+          <img className={classes.titleImg} src="/title.PNG"/>
+        </div>
         <div>
           <FormControl
             component="fieldset"
@@ -397,6 +397,7 @@ class Form extends React.Component {
                     value={password}
                     onChange={this.handleChange('password')}
                     type="password"
+                    className={classes.password}
                   />
                 </FormControl>
                 <Button
