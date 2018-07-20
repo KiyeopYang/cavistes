@@ -25,9 +25,6 @@ class AccountManager extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.open && nextProps.open) {
       this.props.accountRequest()
-        .then(() => {
-          console.log(this.props.account);
-        })
     }
   }
   handleRowClick = (accountId) => {

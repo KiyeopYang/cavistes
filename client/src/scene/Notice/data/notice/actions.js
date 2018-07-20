@@ -178,7 +178,6 @@ export const updateNoticeRequest = (id, input) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(updateNoticeSuccess(res.data));
         }

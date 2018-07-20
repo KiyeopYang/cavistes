@@ -77,7 +77,6 @@ export const removeReplyRequest = (input) => {
       body: JSON.stringify(input),
     })
       .then((res) => {
-        console.log(res);
         dispatch(loader(false));
         if (res.ok) { return res.json(); }
         return res.json().then((error) => {

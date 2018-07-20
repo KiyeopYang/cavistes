@@ -76,7 +76,6 @@ export const removeAttendanceRequest = (id) => {
       headers: { 'Content-Type': 'application/json' },
     })
       .then((res) => {
-        console.log(res);
         dispatch(loader(false));
         if (res.ok) { return res.json(); }
         return res.json().then((error) => {

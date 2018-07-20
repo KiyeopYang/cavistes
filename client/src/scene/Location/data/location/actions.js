@@ -130,7 +130,6 @@ export const removeLocationRequest = (id) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(removeLocationSuccess(res.data));
         }
@@ -179,7 +178,6 @@ export const updateLocationRequest = (id, input) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(updateLocationSuccess(res.data));
         }

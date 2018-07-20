@@ -130,7 +130,6 @@ export const removeSponsorRequest = (id) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(removeSponsorSuccess(res.data));
         }
@@ -179,7 +178,6 @@ export const updateSponsorRequest = (id, input) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(updateSponsorSuccess(res.data));
         }

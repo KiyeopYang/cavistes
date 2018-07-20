@@ -176,7 +176,6 @@ export const removeEventRequest = (input) => {
       body: JSON.stringify(input),
     })
       .then((res) => {
-        console.log(res);
         dispatch(loader(false));
         if (res.ok) { return res.json(); }
         return res.json().then((error) => {
@@ -184,7 +183,6 @@ export const removeEventRequest = (input) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(removeEventSuccess(res.data));
         }
@@ -233,7 +231,6 @@ export const updateEventRequest = (id, input) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(updateEventSuccess(res.data));
         }
