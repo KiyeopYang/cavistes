@@ -173,6 +173,21 @@ class Form extends React.Component {
       <Fragment>
         <div>
           <FormControl
+            margin="dense"
+            disabled={!managerMode || attendanceMode}
+          >
+            <InputLabel htmlFor="type">타입</InputLabel>
+            <Select
+              onChange={this.handleChange('type')}
+              native
+              value={type}
+              input={<Input id="type" />}
+            >
+              <option value="default">일반</option>
+              <option value="manager">관리자</option>
+            </Select>
+          </FormControl>
+          <FormControl
             required
             fullWidth
             margin="dense"

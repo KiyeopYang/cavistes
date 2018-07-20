@@ -23,7 +23,6 @@ class AccountView extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (!this.props.open && nextProps.open) {
       const { accountId } = nextProps;
-      console.log('acocuntId', accountId);
       this.props.accountRequest(accountId);
     }
   }
@@ -64,10 +63,6 @@ class AccountView extends React.Component {
       auth,
       attendanceMode,
     } = this.props;
-    const {
-      view,
-    } = this.state;
-    console.log(account);
     return (
       <Layout
         open={open}

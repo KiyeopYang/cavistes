@@ -218,42 +218,45 @@ class Form extends React.Component {
               </FormControl>
             </div>
           </div>
-          <div className={classes.wrapperOfTwoForm}>
-            <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
-              <FormControl
-                required
-                margin="dense"
-                fullWidth
-              >
-                <InputLabel htmlFor="password">비밀번호 (8자 이상)</InputLabel>
-                <Input
-                  id="password"
-                  value={password}
-                  onChange={this.handleChange('password')}
-                  type="password"
-                  className={classes.password}
-                  disabled={!isPasswordConfirmed}
-                />
-              </FormControl>
-            </div>
-            <div className={classNames(classes.rightOfTwoForm, classes.oneOfTwoForm)}>
-              <FormControl
-                required
-                margin="dense"
-                fullWidth
-              >
-                <InputLabel htmlFor="passwordCheck">비밀번호 확인</InputLabel>
-                <Input
-                  id="passwordCheck"
-                  value={passwordCheck}
-                  onChange={this.handleChange('passwordCheck')}
-                  type="password"
-                  className={classes.password}
-                  disabled={!isPasswordConfirmed}
-                />
-              </FormControl>
-            </div>
-          </div>
+          {
+            isPasswordConfirmed ?
+              <div className={classes.wrapperOfTwoForm}>
+                <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
+                  <FormControl
+                    required
+                    margin="dense"
+                    fullWidth
+                  >
+                    <InputLabel htmlFor="password">비밀번호 (8자 이상)</InputLabel>
+                    <Input
+                      id="password"
+                      value={password}
+                      onChange={this.handleChange('password')}
+                      type="password"
+                      className={classes.password}
+                      disabled={!isPasswordConfirmed}
+                    />
+                  </FormControl>
+                </div>
+                <div className={classNames(classes.rightOfTwoForm, classes.oneOfTwoForm)}>
+                  <FormControl
+                    required
+                    margin="dense"
+                    fullWidth
+                  >
+                    <InputLabel htmlFor="passwordCheck">비밀번호 확인</InputLabel>
+                    <Input
+                      id="passwordCheck"
+                      value={passwordCheck}
+                      onChange={this.handleChange('passwordCheck')}
+                      type="password"
+                      className={classes.password}
+                      disabled={!isPasswordConfirmed}
+                    />
+                  </FormControl>
+                </div>
+              </div> : null
+          }
           <FormControl
             component="fieldset"
             required
