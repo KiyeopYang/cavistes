@@ -29,7 +29,8 @@ const styles = theme => ({
     marginBottom: 36,
   },
   img: {
-    width: 300,
+    width: 150,
+    height: 'auto',
   },
 });
 class Sponsor extends React.Component {
@@ -53,7 +54,7 @@ class Sponsor extends React.Component {
         </Text>
         <img
           className={classes.img}
-          src="/sponsors.PNG"
+          src="/sponsors2.PNG"
         />
       </div>
     )
