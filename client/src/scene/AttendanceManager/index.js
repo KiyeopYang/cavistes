@@ -9,7 +9,8 @@ import {
 import { push } from 'react-router-redux';
 import * as noticeDialogActions from '../../data/noticeDialog/actions';
 import {
-  getAttendanceRequest
+  getAttendanceRequest,
+  updateAttendanceRequest,
 } from './data/attendance/actions';
 import Layout from './components/Layout';
 import Table from './components/Table';
@@ -44,6 +45,9 @@ class AttendanceManager extends React.Component {
       clickedAccountId,
     });
   };
+  handleUpdateAttendance = ({ id, status }) => {
+    this.props.updateAttendanceRequest({ id, status, eventId: this.props.eventId });
+  };
   render() {
     const {
       open,
@@ -58,11 +62,12 @@ class AttendanceManager extends React.Component {
       <Layout
         open={open}
         onClose={onClose}
-        title="참여 내역"
+        title="신청 인원 보기"
       >
         <Table
           rows={getAttendance.attendance}
           handleClick={this.handleAccountClick}
+          handleUpdate={this.handleUpdateAttendance}
         />
         <AccountView
           open={isAccountViewModalOpen}
@@ -80,11 +85,13 @@ class AttendanceManager extends React.Component {
 const mapStateToProps = state => ({
   auth: state.data.auth,
   getAttendance: state.AttendanceManager.data.attendance.getAttendance,
+  updateAttendance: state.AttendanceManager.data.attendance.updateAttendance,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
   push,
   noticeDialogOn: noticeDialogActions.on,
   getAttendanceRequest,
+  updateAttendanceRequest,
 }, dispatch);
 export default withRouter(connect(
   mapStateToProps,

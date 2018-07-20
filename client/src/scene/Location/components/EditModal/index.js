@@ -59,6 +59,24 @@ const styles = theme => ({
     height: 1,
     background: 'lightgrey',
   },
+  clearBar: {
+    display: 'flex',
+    background: theme.palette.primary.main,
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
+  },
+  clearBarFlex: {
+    flex: 1,
+  },
+  clearBarText: {
+    color: 'white',
+  },
+  iconButton: {
+    fill: 'white',
+    color: 'white',
+    margin: theme.spacing.unit,
+  },
 });
 class EditModal extends React.Component {
   constructor(props) {
@@ -81,6 +99,8 @@ class EditModal extends React.Component {
         images: [{
           path: '/caviste.PNG'
         }],
+        isImageUploaderModalOpen: false,
+        isRemoveModalOpen: false,
       });
     }
     if (JSON.stringify(this.props.selected) !== JSON.stringify(nextProps.selected)) {
@@ -89,6 +109,8 @@ class EditModal extends React.Component {
         title,
         text,
         images,
+        isImageUploaderModalOpen: false,
+        isRemoveModalOpen: false,
       });
     }
   }
@@ -164,6 +186,7 @@ class EditModal extends React.Component {
               required
               fullWidth
               multiline
+              rows={15}
               label="내용"
               value={text}
               onChange={this.handleChange('text')}

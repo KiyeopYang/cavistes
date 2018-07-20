@@ -291,7 +291,6 @@ class From extends React.Component {
             onClick={() => this.setState({
               isLocationMapFinderOpen: true,
             })}
-
             disabled={disabled}
           >
             <MapIcon className={classes.icon}/>

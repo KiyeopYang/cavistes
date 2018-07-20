@@ -114,13 +114,11 @@ class App extends React.Component {
       isAccountManagerModalOpen,
       isAccountAttendanceManagerModalOpen,
       isServiceManagerModalOpen,
-      isAccountViewModalOpen,
       isPaymentManagerModalOpen,
     } = this.state;
     const {
       noticeDialog,
       auth,
-      push,
       loaderState,
     } = this.props;
     return (
@@ -128,9 +126,9 @@ class App extends React.Component {
         <CssBaseline />
         <Route
           path="/"
-          render={props => (
+          render={({ location })=> (
             <Header
-              {...props}
+              pathname={location.pathname}
               user={auth.account}
               onClick={this.handleMenuClick}
               onClickUserMenu={this.handleUserMenuClick}

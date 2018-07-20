@@ -64,10 +64,12 @@ const styles = theme => ({
   },
   titleImg: {
     width: 200,
+    cursor: 'pointer',
   },
   titleMobileImg: {
     height: 35,
     marginLeft: 16,
+    cursor: 'pointer',
   },
   menuButton: {
     color: 'white',
@@ -115,7 +117,7 @@ class Header extends React.Component {
     this.setState({ menuOn: false });
   };
   pathIncluded = path => {
-    const { pathname } = this.props.location;
+    const pathname = this.props.pathname;
     if (path === '/' && pathname !== '/') return false;
     return pathname.indexOf(path) > -1
   };
@@ -189,23 +191,28 @@ class Header extends React.Component {
               <div className={classes.flex} />
               {
                 !user ?
-                  <React.Fragment>
+                  [
                     <Button
+                      key={1}
                       size="small"
                       color="inherit"
                       onClick={onClickLogin}
                     >
                       로그인
-                    </Button>
-                    <div className={classes.verticalLine}/>
+                    </Button>,
+                    <div
+                      key={2}
+                      className={classes.verticalLine}
+                    />,
                     <Button
+                      key={3}
                       size="small"
                       color="inherit"
                       onClick={onClickSignUp}
                     >
                       회원가입
                     </Button>
-                  </React.Fragment> :
+                  ]:
                   <div
                     className={classes.user}
                     aria-owns={open.user? 'menu-user' : null}
@@ -264,24 +271,27 @@ class Header extends React.Component {
                           참여내역
                         </MenuItem> :
                         user.type === 'manager' ?
-                          <Fragment>
+                          [
                             <MenuItem
+                              key={1}
                               onClick={() => {
                                 this.handleMenuClose('userAnchorEl')();
                                 onClickUserMenu('accountManager');
                               }}
                             >
                               계정 관리
-                            </MenuItem>
+                            </MenuItem>,
                             <MenuItem
+                              key={2}
                               onClick={() => {
                                 this.handleMenuClose('userAnchorEl')();
                                 onClickUserMenu('serviceManager');
                               }}
                             >
                               서비스 관리
-                            </MenuItem>
+                            </MenuItem>,
                             <MenuItem
+                              key={3}
                               onClick={() => {
                                 this.handleMenuClose('userAnchorEl')();
                                 onClickUserMenu('paymentManager');
@@ -289,7 +299,7 @@ class Header extends React.Component {
                             >
                               결제 내역
                             </MenuItem>
-                          </Fragment> : null
+                          ] : null
                     }
                   </Menu> : null
               }
@@ -298,7 +308,11 @@ class Header extends React.Component {
           <AppBar position="static">
             <Hidden smDown>
               <div className={classes.titleImgWrapper}>
-                <img className={classes.titleImg} src="/title.PNG"/>
+                <img
+                  onClick={() => onClick()}
+                  className={classes.titleImg}
+                  src="/title.PNG"
+                />
               </div>
             </Hidden>
             <Toolbar classes={{
@@ -307,7 +321,11 @@ class Header extends React.Component {
             >
               <Hidden mdUp>
                 <div className={classes.flex}>
-                  <img className={classes.titleMobileImg} src="/titleMobile.PNG"/>
+                  <img
+                    onClick={() => onClick()}
+                    className={classes.titleMobileImg}
+                    src="/titleMobile.PNG"
+                  />
                 </div>
               </Hidden>
               <Hidden smDown>

@@ -8,15 +8,31 @@ import IconCreate from '@material-ui/icons/Create'
 const styles = theme => ({
   root: {
     marginBottom: 20,
-  },
-  textField: {
-    width: '100%',
+    display: 'flex',
     [theme.breakpoints.down('sm')]: {
-      width: '100%',
+      display: 'inherit',
     },
   },
-  buttonWrapper: {
-    textAlign: 'right',
+  textField: {
+    flex: 1,
+    background: 'rgb(249,249,249)',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      minHeight: 50,
+    },
+  },
+  button: {
+    width: 100,
+    height: '100%',
+    background: 'rgb(117,117,117)',
+    color: 'white',
+    borderRadius: 0,
+    margin: 0,
+    padding: 0,
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      height: 'auto',
+    },
   },
 });
 class Input extends React.Component {
@@ -42,18 +58,24 @@ class Input extends React.Component {
     return (
       <div className={classes.root}>
         <TextField
-          label="댓글 작성"
+          placeholder="댓글 작성"
           className={classes.textField}
-          fullWidth
           multiline
           value={this.state.value}
           onChange={this.onChange}
+          InputProps={{
+            disableUnderline: true,
+          }}
+          InputLabelProps={{
+            shrink: true,
+          }}
         />
-        <div className={classes.buttonWrapper}>
+        <div>
           <Button
+            className={classes.button}
             onClick={this.handleSubmit}
           >
-            <IconCreate/>글쓰기
+            APPLY
           </Button>
         </div>
       </div>

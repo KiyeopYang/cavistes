@@ -21,11 +21,13 @@ class OwnerButtons extends React.Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <Button color="primary" onClick={() => onClick('update')}>
+        <Button
+          color="primary" onClick={() => onClick('update')}>
           <IconSetting className={classes.icon}/>
           수정
         </Button>
-        <Button color="primary" onClick={() => onClick('remove')}>
+        <Button
+          color="primary" onClick={() => onClick('remove')}>
           <IconDelete className={classes.icon}/>
           삭제
         </Button>

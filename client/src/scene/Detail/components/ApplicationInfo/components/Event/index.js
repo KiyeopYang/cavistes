@@ -19,7 +19,6 @@ class Event extends React.Component {
   render() {
     const {
       classes,
-      handleNext,
       event,
     }  = this.props;
     let datetimeText = '';

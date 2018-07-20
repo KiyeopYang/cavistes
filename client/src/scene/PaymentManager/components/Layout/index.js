@@ -55,16 +55,13 @@ class Layout extends React.Component {
         <DialogContent className={classes.dialogContent}>
           { children }
         </DialogContent>
-        {
-          fullScreen ?
-            <Button
-              color="primary"
-              onClick={onClose}
-              size="large"
-            >
-              취소
-            </Button> : null
-        }
+        <Button
+          color="primary"
+          onClick={onClose}
+          size="large"
+        >
+          취소
+        </Button>
       </Dialog>
     );
   }

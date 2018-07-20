@@ -28,7 +28,6 @@ class Reply extends React.Component {
     } = this.props;
     return (
       <div className={classes.root}>
-        <Block title="댓글"/>
         <div className={classes.reply}>
           {
             account ?

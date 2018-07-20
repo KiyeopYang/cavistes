@@ -130,7 +130,6 @@ export const removeNoticeRequest = (id) => {
         });
       })
       .then((res) => {
-        console.log(res.data);
         if (res.data) {
           return dispatch(removeNoticeSuccess(res.data));
         }

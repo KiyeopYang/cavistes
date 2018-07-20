@@ -10,7 +10,6 @@ import { push } from 'react-router-redux';
 import * as noticeDialogActions from '../../data/noticeDialog/actions';
 import * as loginActions from './data/login/actions';
 import * as authActions from '../../data/auth/actions';
-import Layout from './components/Layout';
 import Form from './components/Form';
 
 class Login extends React.Component {

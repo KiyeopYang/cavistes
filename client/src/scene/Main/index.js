@@ -75,6 +75,7 @@ class Main extends React.Component {
       isModalOpen,
       selectedEvent,
     } = this.state;
+    console.log(getEvent);
     const type = auth.account && auth.account.type;
     const level = auth.account && auth.account.level || 1;
     return (

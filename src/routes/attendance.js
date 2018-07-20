@@ -71,6 +71,54 @@ router.get(
       });
   },
 );
+router.put(
+  '/eventId/:id',
+  (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    Attendance.updateOne({
+      _id: id,
+    }, {
+      $set: { status },
+    }).exec()
+      .then((result) => {
+        console.log(result);
+        console.log(id, status);
+        return Event.updateOne({
+          _id: result.eventId,
+        }, status === '취소' ? {
+          $pull: { attendees: mongoose.Types.ObjectId(id) },
+        }:{
+          $push: { attendees: mongoose.Types.ObjectId(id) },
+        })
+          .exec()
+          .then(() => {
+            res.json({
+              data: fromMongo(result),
+            });
+          });
+      })
+      .catch((error) => {
+        res.status(400).json({ success: false });
+        throw error;
+      });
+    // Attendance.find({
+    //   eventId: mongoose.Types.ObjectId(id),
+    // })
+    //   .populate('eventId')
+    //   .populate('accountId')
+    //   .exec()
+    //   .then((result) => {
+    //     return res.json({
+    //       data: result.map(o => fromMongo(o.toObject())),
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     res.status(400).json({ success: false });
+    //     throw error;
+    //   });
+  },
+);
 router.get(
   '/accountId/:id',
   (req, res) => {

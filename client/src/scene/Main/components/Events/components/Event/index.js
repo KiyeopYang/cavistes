@@ -22,6 +22,7 @@ const styles = theme => ({
   media: {
     height: 205,
     paddingTop: '64%',
+    cursor: 'pointer',
   },
   title: {
     fontSize: 24,
@@ -70,6 +71,9 @@ class Event extends React.Component {
     } = this.props;
     event.datetimes = event.datetimes.map(o => new Date(o));
     const datetimes = event.datetimes;
+    const completed = event.attendees.filter(o=>o.status==='입금완료').length;
+    const application = event.attendees.filter(o=>o.status==='입금대기').length;
+
     return (
       <Card
         className={classes.root}
@@ -78,6 +82,7 @@ class Event extends React.Component {
         <CardMedia
           className={classes.media}
           image={event.images[0].path}
+          onClick={handleClick}
         />
         <CardContent className={classes.content}>
           <div
@@ -130,7 +135,7 @@ class Event extends React.Component {
               </Typography>
               <Typography>
                 {
-                  `${event.attendees.length}/${event.maxPeople}명`
+                  `${completed}/${event.maxPeople}명 (입금 대기:${application}명)`
                 }
               </Typography>
             </div>

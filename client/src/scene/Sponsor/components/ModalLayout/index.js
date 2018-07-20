@@ -8,7 +8,7 @@ const styles = theme => ({
   root: {
     // padding: theme.spacing.unit * 4,
     [theme.breakpoints.up('md')]: {
-      width: 600,
+      width: 400,
     },
   },
   paper: {
@@ -37,16 +37,13 @@ class Layout extends React.Component {
         <div className={classes.root}>
           { children }
         </div>
-        {
-          fullScreen ?
-            <Button
-              color="primary"
-              onClick={onClose}
-              size="large"
-            >
-              닫기
-            </Button> : null
-        }
+        <Button
+          color="primary"
+          onClick={onClose}
+          size="large"
+        >
+          닫기
+        </Button>
       </Dialog>
     );
   }

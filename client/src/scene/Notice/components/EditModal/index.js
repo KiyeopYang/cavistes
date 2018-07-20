@@ -48,6 +48,7 @@ class EditModal extends React.Component {
       this.setState({
         title: '',
         text: '',
+        isRemoveModalOpen: false,
       });
     }
     if (JSON.stringify(this.props.selected) !== JSON.stringify(nextProps.selected)) {
@@ -55,6 +56,7 @@ class EditModal extends React.Component {
       this.setState({
         title,
         text,
+        isRemoveModalOpen: false,
       });
     }
   }
@@ -93,6 +95,7 @@ class EditModal extends React.Component {
               onChange={this.handleChange('title')}
             />
             <TextField
+              rows={15}
               required
               fullWidth
               multiline

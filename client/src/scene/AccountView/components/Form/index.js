@@ -173,52 +173,6 @@ class Form extends React.Component {
       <Fragment>
         <div>
           <FormControl
-            component="fieldset"
-            required
-            disabled={!managerMode || attendanceMode}
-          >
-            <FormLabel component="legend">가입 유형</FormLabel>
-            <RadioGroup
-              aria-label="type"
-              name="type1"
-              value={type}
-              onChange={this.handleChange('type')}
-              className={classes.typeForm}
-              disabled
-            >
-              <FormControlLabel
-                value="default"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="일반 고객"
-                disabled
-              />
-              <FormControlLabel
-                value="sponsor"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="매장 점주"
-                disabled
-              />
-              <FormControlLabel
-                value="manager"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="관리자"
-                disabled
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl
             required
             fullWidth
             margin="dense"

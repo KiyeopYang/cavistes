@@ -172,40 +172,6 @@ class Form extends React.Component {
         </div>
         <div>
           <FormControl
-            component="fieldset"
-            required
-            disabled
-          >
-            <FormLabel component="legend">가입 유형</FormLabel>
-            <RadioGroup
-              aria-label="type"
-              name="type1"
-              value={type}
-              onChange={this.handleChange('type')}
-              className={classes.typeForm}
-              disabled={!isPasswordConfirmed}
-            >
-              <FormControlLabel
-                value="default"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="일반 고객"
-              />
-              <FormControlLabel
-                value="sponsor"
-                control={
-                  <Radio
-                    color="primary"
-                  />
-                }
-                label="매장 점주"
-              />
-            </RadioGroup>
-          </FormControl>
-          <FormControl
             required
             fullWidth
             margin="dense"

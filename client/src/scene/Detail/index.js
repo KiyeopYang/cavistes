@@ -14,17 +14,13 @@ import {
 import {
   on,
 } from '../../data/noticeDialog/actions';
-import Content from './components/Content';
-import Front from './components/Front';
 import Layout from './components/Layout';
-import Title from './components/Title';
 import Submit from './components/Submit';
 import ApplicationForm from './components/ApplicationForm';
 import ApplicationInfo from './components/ApplicationInfo';
-import OwnerButtons from './components/OwnerButtons';
 import RemoveModal from '../../components/RemoveModal';
 import UpdateModal from './components/UpdateModal';
-import Test from './components/Test';
+import Content from './components/Content';
 import AttendanceManager from '../AttendanceManager';
 import {
   addReplyRequest,
@@ -35,7 +31,6 @@ import {
   removeAttendanceRequest,
 } from './data/attendance/actions';
 import * as eventActions from '../../data/event/actions';
-import * as noticeDialogActions from '../../data/noticeDialog/actions';
 
 class Detail extends React.Component {
   constructor(props) {
@@ -190,7 +185,7 @@ class Detail extends React.Component {
     return (
       <Fragment>
         <Layout>
-          <Test
+          <Content
             images={event.images}
             event={event}
             handler={

@@ -194,20 +194,6 @@ class Form extends React.Component {
         >
           아래 사항을 기입 해 주십시요.
         </Typography>
-        <div className={classes.typeButtonWrapper}>
-          <Button
-            onClick={() => this.setState({ type: 'default'})}
-            className={classNames({[classes.typeButtonSelected]: type === 'default'}, classes.typeButton)}
-          >
-            일반 고객
-          </Button>
-          <Button
-            onClick={() => this.setState({ type: 'sponsor'})}
-            className={classNames({[classes.typeButtonSelected]: type === 'sponsor'}, classes.typeButton)}
-          >
-            주최자
-          </Button>
-        </div>
         <div className={classes.wrapperOfTwoForm}>
           <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
             <FormControl

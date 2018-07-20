@@ -7,12 +7,6 @@ import IconEvent from '@material-ui/icons/Event';
 import Event from './components/Event';
 
 const styles = theme => ({
-  title: {
-    padding: 10,
-    flexGrow: 1,
-    display: 'flex',
-    alignItems: 'center',
-  },
   events: {
     display: 'flex',
     flexWrap: 'wrap',
@@ -32,6 +26,9 @@ const styles = theme => ({
     display: 'flex',
     justifyContent: 'center',
   },
+  button: {
+    margin: 4,
+  },
 });
 class Events extends React.Component {
   render() {
@@ -49,11 +46,12 @@ class Events extends React.Component {
           {
             createMode ?
                 <Button
+                  className={classes.button}
                   color="primary"
                   onClick={onClickCreate}
                 >
                   <CreateIcon/>
-                  이벤트 생성
+                  생성
                 </Button>
               : null
           }

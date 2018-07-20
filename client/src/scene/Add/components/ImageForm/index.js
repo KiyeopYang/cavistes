@@ -27,14 +27,6 @@ const styles = theme => ({
       backgroundColor: red[700],
     },
   },
-  buttonProgress: {
-    color: green[500],
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
   formControl: {
     width: '100%',
     marginTop: theme.spacing.unit,
@@ -73,7 +65,7 @@ class From extends React.Component {
         </Typography>
         <Slider {...settings}>
           {
-            event.images.map((img) => (
+            event.images.map(img => (
               <img key={img.path} className={classes.img} src={img.path} />
             ))
           }

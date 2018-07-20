@@ -77,12 +77,11 @@ app.use('/api', api);
 app.use(express.static(path.join(__dirname, '../', 'public')));
 
 // Express only serves static assets in production
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../', 'client/build')));
-  app.get('/*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../', 'client/build', 'index.html'));
-  });
-}
+app.use(express.static(path.join(__dirname, '../', 'client/build')));
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../', 'client/build', 'index.html'));
+});
+
 
 // Add the error logger after all middleware and routes so that
 // it can log errors from the whole application. Any custom error

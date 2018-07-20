@@ -9,10 +9,14 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
 
 const columnData = [
   { id: 'name', numeric: false, label: '고객' },
   { id: 'status', numeric: false, label: '결제 상태' },
+  { id: 'info', numeric: false, label: '기타' },
 ];
 
 class EnhancedTableHead extends React.Component {
@@ -124,7 +128,7 @@ class EnhancedTable extends React.Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, handleUpdate } = this.props;
     const { data, order, orderBy, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
     return (
@@ -143,8 +147,6 @@ class EnhancedTable extends React.Component {
                 return (
                   <TableRow
                     className={classes.row}
-                    hover
-                    onClick={event => this.handleClick(event, n.id)}
                     tabIndex={-1}
                     key={n.id}
                   >
@@ -152,7 +154,23 @@ class EnhancedTable extends React.Component {
                       <Typography>{n.name}{`(입금자명: ${n.nameForPayment})`}</Typography>
                       <Typography>{n.phone}</Typography>
                     </TableCell>
-                    <TableCell padding="dense">{n.status}</TableCell>
+                    <TableCell padding="dense">
+                      <NativeSelect
+                        value={n.status}
+                        onChange={e => handleUpdate({ id: n.id, status: e.target.value })}
+                      >
+                        <option value="취소">취소</option>
+                        <option value="입금대기">입금대기</option>
+                        <option value="입금완료">입금완료</option>
+                      </NativeSelect>
+                    </TableCell>
+                    <TableCell padding="dense">
+                      <Button
+                        onClick={event => this.handleClick(event, n.id)}
+                      >
+                        고객 정보
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}

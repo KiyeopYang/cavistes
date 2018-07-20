@@ -11,7 +11,8 @@ const styles = {
 };
 const i = ({ classes, onClick }) => (
   <div className={classes.root}>
-    <Button color="primary" onClick={onClick}><CreateIcon/>생성</Button>
+    <Button
+      color="primary" onClick={onClick}><CreateIcon/>생성</Button>
   </div>
 );
 export default withStyles(styles)(i);
