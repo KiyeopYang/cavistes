@@ -3,7 +3,6 @@ import path from 'path';
 import express from 'express';
 import session from 'express-session';
 import cookieParser from 'cookie-parser';
-import passport from 'passport';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import bluebird from 'bluebird';

@@ -1,8 +1,11 @@
 import express from 'express';
 import passport from 'passport';
 import mongoose from 'mongoose';
+import random from 'randomstring';
+import bcrypt from 'bcrypt';
 import { Account } from '../models';
 import { fromMongo } from '../lib/dbConnector';
+import sendEmail from '../lib/sendEmail';
 
 const router = express.Router();
 
@@ -70,12 +73,17 @@ router.post(
 );
 router.put(
   '/:id',
-  (req, res) => {
-    const { body, user } = req;
+  async (req, res) => {
+    const { password, ...rest } = req.body;
+
+    const set = rest;
+    if (password && password.length >= 8 ) {
+      set.password = await bcrypt.hash(password, 8);
+    }
     Account.updateOne({
       _id: req.params.id,
     }, {
-      $set: body,
+      $set: set,
     }).exec()
       .then(() => res.json({
         success: true,
@@ -144,6 +152,63 @@ router.get(
       });
   },
 );
-
+router.post('/isPasswordCorrect', async (req, res) => {
+  const { email, password } = req.body;
+  Account.findOne({
+    email,
+  }).exec()
+    .then(async (result) => {
+    if (!result) {
+      res.status(400).json({ message: '이메일 정보가 없습니다.' });
+    } else {
+      const valid = await result.passwordIsValid(password);
+      if (valid) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ message: '패스워드가 맞지 않습니다.' });
+      }
+    }
+  })
+    .catch((error) => {
+      res.status(400).json({ message: '오류가 있습니다.' });
+      throw error;
+    });
+});
+router.post('/passwordFind', async (req, res) => {
+  const { email } = req.body;
+  const ori = random.generate(8);
+  const ran =  await bcrypt.hash(ori, 8);
+  Account.findOne({ email })
+    .exec()
+    .then((account) => {
+      if (!account) {
+        res.status(500).json({
+          message: '에러가 있습니다.',
+        });
+      } else {
+        Account.updateOne({
+          email,
+        }, {
+          $set: { password: ran },
+        })
+          .then(async () => {
+            await sendEmail({
+              to: email,
+              title: '카비스트 임시 비밀번호입니다.',
+              content: `임시 비밀번호 : ${ori}`,
+            });
+            res.json({
+              success: true,
+            });
+          })
+          .catch((error) => {
+            res.status(400).json({
+              message: '에러가 있습니다.',
+            });
+            throw error;
+          });
+      }
+    })
+});
 
 export default router;

@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const { Schema } = mongoose;
 const Account = new Schema({
@@ -43,26 +44,24 @@ const Account = new Schema({
   house: String,
 });
 
-Account.pre('save', async function hashing(next) {
-  return next();
-  // if (!this.isModified('password')) {
-  //   return next;
-  // }
-  // try {
-  //   const hash = await bcrypt.hashAsync(this.password, 16.5);
-  //   this.password = hash;
-  //   return next();
-  // } catch (error) {
-  //   return next(error);
-  // }
+Account.pre('validate', async function hashing(next) {
+  if (!this.isModified('password')) {
+    return next;
+  }
+  try {
+    this.password = await bcrypt.hash(this.password, 8);
+    return next();
+  } catch (error) {
+    return next(error);
+  }
 });
-Account.methods.passwordIsValid = function passwordIsValid(password){
-  return password === this.password;
-  // try {
-  //   return bcrypt.compareAsync(password, this.password);
-  // } catch (err) {
-  //   throw err;
-  // }
+
+Account.methods.passwordIsValid = async function passwordIsValid(password){
+  try {
+    return await bcrypt.compare(password, this.password);
+  } catch (err) {
+    throw err;
+  }
 };
 const model = mongoose.model('account', Account);
 

@@ -14,6 +14,7 @@ import * as noticeDialogActions from '../../data/noticeDialog/actions';
 import * as authActions from '../../data/auth/actions';
 import * as modifyActions from './data/modify/actions';
 import * as removeActions from './data/remove/actions';
+import * as isPasswordCorrectActions from './data/isPasswordCorrect/actions';
 
 class MyInfo extends React.Component {
   constructor(props) {
@@ -59,6 +60,29 @@ class MyInfo extends React.Component {
         this.props.noticeDialogOn(error);
       });
   };
+  handleIsPasswordCorrect = (password, cb, onError) => {
+    const { isPasswordCorrectRequest, user } = this.props;
+    isPasswordCorrectRequest({
+      email: user.email,
+      password,
+    })
+      .then(() => {
+        if (this.props.isPasswordCorrect.status === 'FAILURE') {
+          onError();
+        } else {
+          cb();
+        }
+      })
+      .catch(onError);
+
+    // if (this.state.password === this.props.user.password) {
+    //   this.setState({
+    //     isPasswordConfirmed: true,
+    //   });
+    // } else {
+    //   this.props.handleError('비밀번호가 맞지 않습니다.');
+    // }
+  };
   render() {
     const {
       open,
@@ -81,6 +105,7 @@ class MyInfo extends React.Component {
             isExitModalOpen: true,
           })}
           handleModify={this.handleModify}
+          isPasswordCorrect={this.handleIsPasswordCorrect}
         />
         <Layout
           open={isExitModalOpen}
@@ -100,12 +125,14 @@ const mapStateToProps = state => ({
   auth: state.data.auth,
   modify: state.MyInfo.data.modify,
   remove: state.MyInfo.data.remove,
+  isPasswordCorrect: state.MyInfo.data.isPasswordCorrect,
 });
 const mapDispatchToProps = dispatch => bindActionCreators({
   noticeDialogOn: noticeDialogActions.on,
   modifyRequest: modifyActions.request,
   removeRequest: removeActions.request,
   authRequest: authActions.request,
+  isPasswordCorrectRequest: isPasswordCorrectActions.request,
 }, dispatch);
 export default withRouter(connect(
   mapStateToProps,

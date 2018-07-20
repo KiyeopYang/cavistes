@@ -86,9 +86,11 @@ const styles = theme => ({
     flexWrap: 'wrap',
   },
   flex: {
+    maxWidth: '33%',
     flex: '1 0 33%',
     [theme.breakpoints.down('sm')]: {
       flex: '1 0 100%',
+      maxWidth: '100%',
     },
     padding: 8,
   },

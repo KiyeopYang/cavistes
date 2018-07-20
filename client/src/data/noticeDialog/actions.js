@@ -29,7 +29,7 @@ export const on = (data) => {
     type: ON,
     open: true,
     title: title || message ? '에러' : '알림',
-    text: text || message || '내용',
+    text: text || message || '에러가 있습니다.',
     onConfirm,
   };
 };

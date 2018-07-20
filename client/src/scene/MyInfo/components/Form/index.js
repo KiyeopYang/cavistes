@@ -79,6 +79,7 @@ class Form extends React.Component {
       type: user.type,
       email: user.email,
       password: '',
+      passwordCheck: '',
       name: user.name,
       phone: user.phone,
       gender: user.gender,
@@ -101,13 +102,23 @@ class Form extends React.Component {
     this.setState({ [name]: event.target.value });
   };
   handlePasswordConfirm = () => {
-    if (this.state.password === this.props.user.password) {
+    const { isPasswordCorrect } = this.props;
+    isPasswordCorrect(this.state.password, () => {
       this.setState({
         isPasswordConfirmed: true,
+        password: '',
       });
-    } else {
+    }, () => {
       this.props.handleError('비밀번호가 맞지 않습니다.');
-    }
+    });
+
+    // if (this.state.password === this.props.user.password) {
+    //   this.setState({
+    //     isPasswordConfirmed: true,
+    //   });
+    // } else {
+    //   this.props.handleError('비밀번호가 맞지 않습니다.');
+    // }
   };
   handleModify = () => {
     const {
@@ -120,6 +131,7 @@ class Form extends React.Component {
       birthDate,
       work,
       house,
+      password,
     } = this.state;
     this.props.handleModify({
       name,
@@ -129,6 +141,7 @@ class Form extends React.Component {
       type,
       work,
       house,
+      password,
     });
   };
   render() {
@@ -141,6 +154,7 @@ class Form extends React.Component {
       type,
       email,
       password,
+      passwordCheck,
       name,
       phone,
       gender,
@@ -201,6 +215,42 @@ class Form extends React.Component {
               >
                 <InputLabel htmlFor="phone">전화번호</InputLabel>
                 <Input id="phone" value={phone} onChange={this.handleChange('phone')} />
+              </FormControl>
+            </div>
+          </div>
+          <div className={classes.wrapperOfTwoForm}>
+            <div className={classNames(classes.leftOfTwoForm, classes.oneOfTwoForm)}>
+              <FormControl
+                required
+                margin="dense"
+                fullWidth
+              >
+                <InputLabel htmlFor="password">비밀번호 (8자 이상)</InputLabel>
+                <Input
+                  id="password"
+                  value={password}
+                  onChange={this.handleChange('password')}
+                  type="password"
+                  className={classes.password}
+                  disabled={!isPasswordConfirmed}
+                />
+              </FormControl>
+            </div>
+            <div className={classNames(classes.rightOfTwoForm, classes.oneOfTwoForm)}>
+              <FormControl
+                required
+                margin="dense"
+                fullWidth
+              >
+                <InputLabel htmlFor="passwordCheck">비밀번호 확인</InputLabel>
+                <Input
+                  id="passwordCheck"
+                  value={passwordCheck}
+                  onChange={this.handleChange('passwordCheck')}
+                  type="password"
+                  className={classes.password}
+                  disabled={!isPasswordConfirmed}
+                />
               </FormControl>
             </div>
           </div>
@@ -385,6 +435,7 @@ class Form extends React.Component {
                   size="large"
                   fullWidth
                   onClick={this.handleModify}
+                  disabled={password !== passwordCheck || (password !== '' && password.length < 8)}
                 >
                   수정하기
                 </Button>

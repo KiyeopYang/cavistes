@@ -93,6 +93,9 @@ class Form extends React.Component {
   handleSubmit = () => {
     this.props.handleSubmit(this.state);
   };
+  handlePasswordFind = () => {
+    this.props.handlePasswordFind(this.state.email);
+  };
   render() {
     const {
       classes,
@@ -144,6 +147,7 @@ class Form extends React.Component {
                     color="primary"
                     variant="raised"
                     size="large"
+                    onClick={this.handlePasswordFind}
                   >
                     비밀번호 찾기
                   </Button>
